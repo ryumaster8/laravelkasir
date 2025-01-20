@@ -73,12 +73,12 @@ Route::put('dashboard/user-permissions/update/{id}', [UserPermissionsController:
 Route::delete('dashboard/user-permissions/delete/{id}', [UserPermissionsController::class, 'destroy'])->name('user-permissions.destroy');
 
 //Manajemen Pengguna
-Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/users/create', [UserController::class, 'store'])->name('user.store');
-Route::get('/users', [UserController::class, 'index'])->name('user.index');
-Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
-Route::post('/users/update/{user}', [UserController::class, 'update'])->name('user.update');
-Route::get('/users/delete/{user}', [UserController::class, 'destroy'])->name('user.delete');
+Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user.store');
+Route::get('/dashboard/users', [UserController::class, 'index'])->name('user.index');
+Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
+Route::post('/dashboard/users/update/{user}', [UserController::class, 'update'])->name('user.update');
+Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user.delete');
 
 //Manajemen Kasir
 Route::prefix('kasir')->middleware(['web', 'auth'])->group(function () {
@@ -106,12 +106,12 @@ Route::prefix('kasir')->middleware(['web', 'auth'])->group(function () {
 });
 
 //Manajemen Cabang
-Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
-Route::get('/branches/create', [BranchController::class, 'create'])->name('branches.create');
-Route::post('/branches', [BranchController::class, 'store'])->name('branches.store');
-Route::get('/branches/{outlet}/edit', [BranchController::class, 'edit'])->name('branches.edit');
-Route::delete('/branches/{outlet}', [BranchController::class, 'destroy'])->name('branches.destroy');
-Route::put('/branches/{outlet}', [BranchController::class, 'update'])->name('branches.update');
+Route::get('/dashboard/branches', [BranchController::class, 'index'])->name('branches.index');
+Route::get('/dashboard/branches/create', [BranchController::class, 'create'])->name('branches.create'); 
+Route::post('/dashboard/branches', [BranchController::class, 'store'])->name('branches.store');
+Route::get('/dashboard/branches/{outlet}/edit', [BranchController::class, 'edit'])->name('branches.edit');
+Route::delete('/dashboard/branches/{outlet}', [BranchController::class, 'destroy'])->name('branches.destroy');
+Route::put('/dashboard/branches/{outlet}', [BranchController::class, 'update'])->name('branches.update');
 
 // Manajemen Kategori
 Route::get('/categories', [CategoriesController::class, 'create'])->name('categories.index');
@@ -196,18 +196,18 @@ Route::middleware([\App\Http\Middleware\CheckLogin::class])->group(function () {
 });
 
 //Manajemen Diskon
-Route::get('discounts/create', [DiscountsController::class, 'create'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.create');
-Route::post('discounts/store', [DiscountsController::class, 'store'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.store');
-Route::get('discounts', [DiscountsController::class, 'index'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.index');
-Route::get('/edit/{id}', [DiscountsController::class, 'edit'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.edit');
-Route::put('/update/{id}', [DiscountsController::class, 'update'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.update');
-Route::delete('/destroy/{id}', [DiscountsController::class, 'destroy'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.destroy');
-Route::get('/toggle/{id}', [DiscountsController::class, 'toggle'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.toggle');
-Route::get('/show/{id}', [DiscountsController::class, 'show'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.show');
-Route::get('/discounts/form/{id?}', [DiscountsController::class, 'form'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.form');
-Route::post('/discounts/save/{id?}', [DiscountsController::class, 'save'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.save');
-Route::get('/discounts/applyProduct', [DiscountsController::class, 'applyProduct'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.applyProduct');
-Route::get('/discounts/applyCategory', [DiscountsController::class, 'applyCategory'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.applyCategory');
+Route::get('/dashboard/discounts/create', [DiscountsController::class, 'create'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.create');
+Route::post('/dashboard/discounts/store', [DiscountsController::class, 'store'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.store');
+Route::get('/dashboard/discounts', [DiscountsController::class, 'index'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.index');
+Route::get('/dashboard/discounts/edit/{id}', [DiscountsController::class, 'edit'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.edit');
+Route::put('/dashboard/discounts/update/{id}', [DiscountsController::class, 'update'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.update');
+Route::delete('/dashboard/discounts/destroy/{id}', [DiscountsController::class, 'destroy'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.destroy');
+Route::get('/dashboard/discounts/toggle/{id}', [DiscountsController::class, 'toggle'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.toggle');
+Route::get('/dashboard/discounts/show/{id}', [DiscountsController::class, 'show'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.show');
+Route::get('/dashboard/discounts/form/{id?}', [DiscountsController::class, 'form'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.form');
+Route::post('/dashboard/discounts/save/{id?}', [DiscountsController::class, 'save'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.save');
+Route::get('/dashboard/discounts/applyProduct', [DiscountsController::class, 'applyProduct'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.applyProduct');
+Route::get('/dashboard/discounts/applyCategory', [DiscountsController::class, 'applyCategory'])->middleware([\App\Http\Middleware\CheckLogin::class])->name('discounts.applyCategory');
 
 //Manajemen Aktivitas
 //ujicoba github kedua
