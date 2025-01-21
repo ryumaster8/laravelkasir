@@ -28,7 +28,7 @@
                     <select name="role_id" id="role_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         <option value="">Pilih Role</option>
                         @foreach($roles as $role)
-                            @if($role->role_name !== 'superadmin')
+                            @if($role->role_name !== 'owner')
                                 <option value="{{$role->role_id}}" {{ old('role_id', isset($userPermission) ? $userPermission->role_id : '') == $role->role_id ? 'selected' : '' }}>
                                     {{$role->role_name}}
                                 </option>

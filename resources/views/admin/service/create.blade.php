@@ -1,103 +1,153 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="container mx-auto px-4 py-8 max-w-4xl">
-    <!-- Card -->
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <!-- Header -->
-        <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-            <h3 class="text-xl font-semibold text-gray-800">Tambah Diskon</h3>
-        </div>
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">Tambah Data Service</h1>
 
-        <!-- Body -->
-        <div class="p-6">
-            <x-flash-message />
-
-            <form action="{{ route('discounts.store') }}" method="POST">
-                @csrf
-
-                <!-- Nama Diskon -->
-                <div class="mb-6">
-                    <label for="discount_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Diskon</label>
-                    <input type="text" 
-                           name="discount_name" 
-                           id="discount_name" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                           placeholder="Masukkan nama diskon" 
-                           required>
+        <form action="{{ route('services.store') }}" method="POST">
+            @csrf
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Faktur -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Faktur</label>
+                    <input type="text" name="faktur" value="{{ $faktur }}" readonly 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100">
                 </div>
 
-                <!-- Tipe Diskon -->
-                <div class="mb-6">
-                    <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Tipe Diskon</label>
-                    <select name="type" 
-                            id="type" 
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                            required>
-                        <option value="percentage">Persentase</option>
-                        <option value="fixed">Nominal Tetap</option>
+                <!-- Tanggal Masuk -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Masuk</label>
+                    <input type="date" name="tanggal_masuk" value="{{ date('Y-m-d') }}" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Teknisi -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Teknisi</label>
+                    <select name="teknisi" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Pilih Teknisi</option>
+                        @foreach($teknisi as $t)
+                            <option value="{{ $t->teknisi_id }}">{{ $t->nama_teknisi }}</option>
+                        @endforeach
                     </select>
                 </div>
 
-                <!-- Nilai Diskon -->
-                <div class="mb-6">
-                    <label for="value" class="block text-sm font-medium text-gray-700 mb-2">Nilai Diskon</label>
-                    <input type="number" 
-                           name="value" 
-                           id="value" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                           placeholder="Masukkan nilai diskon" 
-                           required>
+                <!-- Nama Pelanggan -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Pelanggan</label>
+                    <input type="text" name="nama_pelanggan" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <!-- Berlaku Untuk -->
-                <div class="mb-6">
-                    <label for="applies_to" class="block text-sm font-medium text-gray-700 mb-2">Berlaku Untuk</label>
-                    <select name="applies_to" 
-                            id="applies_to" 
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                            required>
-                        <option value="product">Produk Tertentu</option>
-                        <option value="category">Kategori Produk</option>
+                <!-- Nama Perangkat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Perangkat</label>
+                    <input type="text" name="nama_perangkat" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Tipe Perangkat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tipe Perangkat</label>
+                    <select name="tipe_perangkat" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Pilih Tipe</option>
+                        <option value="Handphone">Handphone</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="PC">PC</option>
+                        <option value="Lainnya">Lainnya</option>
                     </select>
                 </div>
 
-                <!-- Date Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <!-- Tanggal Mulai -->
-                    <div>
-                        <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-                        <input type="date" 
-                               name="start_date" 
-                               id="start_date" 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                               required>
-                    </div>
-
-                    <!-- Tanggal Berakhir -->
-                    <div>
-                        <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Berakhir</label>
-                        <input type="date" 
-                               name="end_date" 
-                               id="end_date" 
-                               class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200"
-                               required>
-                    </div>
+                <!-- Serial Number -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Serial Number</label>
+                    <input type="text" name="serial_number" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <!-- Footer -->
-                <div class="flex justify-between items-center pt-6 border-t border-gray-200">
-                    <a href="{{ route('discounts.index') }}" 
-                       class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md transition duration-200">
-                        Kembali
-                    </a>
-                    <button type="submit" 
-                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition duration-200">
-                        Simpan
-                    </button>
+                <!-- Keluhan -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Keluhan</label>
+                    <textarea name="keluhan" required rows="3"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
                 </div>
-            </form>
-        </div>
+
+                <!-- Kelengkapan Perangkat -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Kelengkapan Perangkat</label>
+                    <textarea name="kelengkapan_perangkat" required rows="2"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+
+                <!-- Kerusakan -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Kerusakan</label>
+                    <textarea name="kerusakan" rows="2"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+
+                <!-- Estimasi Penyelesaian -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Estimasi Penyelesaian</label>
+                    <input type="date" name="estimasi_penyelesaian"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Biaya -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Biaya</label>
+                    <input type="number" name="biaya" required min="0"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Status Pembayaran -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Pembayaran</label>
+                    <select name="pembayaran" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="Belum Lunas">Belum Lunas</option>
+                        <option value="Uang Muka">Uang Muka</option>
+                        <option value="Lunas">Lunas</option>
+                    </select>
+                </div>
+
+                <!-- Uang Muka -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Uang Muka</label>
+                    <input type="number" name="uang_muka" min="0"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-6 flex items-center justify-end space-x-3">
+                <a href="{{ route('services.index') }}" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Batal
+                </a>
+                <button type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Simpan
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+@if ($errors->any())
+<div class="fixed bottom-0 right-0 m-6">
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+        <p class="font-bold">Validation Error</p>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endif
+
 @endsection

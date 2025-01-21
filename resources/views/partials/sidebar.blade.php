@@ -51,7 +51,7 @@
                                 </li>
                                 <!-- Kasir Grosir -->
                                 <li>
-                                    <a href="/admin/wholesalecashier/select-customer" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                    <a href="/kasir/select-wholesale-customer" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         <span class="flex items-center">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
@@ -324,28 +324,13 @@
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                                 <li>
-                                    <a href="/transactions" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Semua Transaksi</a>
+                                    <a href="{{ route('transactions.index') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Semua Transaksi</a>
                                 </li>
                                 <li>
-                                    <a href="/admin/transactions/product-history" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Riwayat Transaksi Per Produk</a>
+                                    <a href="{{ route('transactions.data') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Riwayat Transaksi Per Produk</a>
                                 </li>
                                 <li>
-                                    <a href="/admin/transactions/add" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tambah Transaksi</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/transactions/discounts-promos" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Diskon & Promo</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/transactions/installment-payments" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pembayaran Cicilan</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/transactions/payment-status" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Cek Status Pembayaran</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/transactions/uncompleted" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Transaksi Belum Selesai</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/transactions/today" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Transaksi Hari Ini</a>
+                                    <a href="{{ route('transactions.group') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Transaksi Group</a>
                                 </li>
                             </ul>
                         </li>

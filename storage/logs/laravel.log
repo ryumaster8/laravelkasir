@@ -1331,3 +1331,20 @@
 "} 
 [2025-01-21 11:47:49] local.INFO: ProductsController@create: Session data set {"outletName":"Almera 20 Cell","username":"almera12"} 
 [2025-01-21 12:57:37] local.INFO: ProductsController@create: Session data set {"outletName":"Almera 20 Cell","username":"almera12"} 
+[2025-01-21 13:50:41] local.INFO: Showing transactions index  
+[2025-01-21 13:52:47] local.INFO: Showing transactions index  
+[2025-01-21 13:52:59] local.INFO: getOutletGroupTransactions accessed {"user":{"App\\Models\\ModelUser":{"user_id":59,"username":"almera12","first_name":null,"last_name":null,"email":"almera12@gmail.com","phone_number":"085789959385","profile_photo":null,"is_owner":0,"last_login":null,"status":"active","is_parent":0,"is_verified":0,"verification_token":null,"is_deletable":0,"role_id":3,"outlet_id":54,"created_at":"2025-01-02T09:08:45.000000Z","updated_at":"2025-01-02T09:08:45.000000Z"}},"is_parent":0} 
+[2025-01-21 13:52:59] local.WARNING: Unauthorized access attempt to group transactions  
+[2025-01-21 13:53:00] local.INFO: Showing transactions index  
+[2025-01-21 13:56:39] local.INFO: Search Products Started {"term":"sc","outlet_id":54,"session_type":"ecer","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0","ip":"127.0.0.1"} 
+[2025-01-21 13:56:39] local.INFO: Products Query Result {"count":1,"search_term":"sc","first_product":{"name":"Screen Protector iPhone 14","has_serial":"No"}} 
+[2025-01-21 13:56:39] local.INFO: Search Products Completed {"total_mapped":1,"response_size":186} 
+[2025-01-21 13:56:40] local.INFO: Search Products Started {"term":"scr","outlet_id":54,"session_type":"ecer","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0","ip":"127.0.0.1"} 
+[2025-01-21 13:56:40] local.INFO: Products Query Result {"count":1,"search_term":"scr","first_product":{"name":"Screen Protector iPhone 14","has_serial":"No"}} 
+[2025-01-21 13:56:40] local.INFO: Search Products Completed {"total_mapped":1,"response_size":186} 
+[2025-01-21 13:56:40] local.INFO: Search Products Started {"term":"scre","outlet_id":54,"session_type":"ecer","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0","ip":"127.0.0.1"} 
+[2025-01-21 13:56:40] local.INFO: Products Query Result {"count":1,"search_term":"scre","first_product":{"name":"Screen Protector iPhone 14","has_serial":"No"}} 
+[2025-01-21 13:56:40] local.INFO: Search Products Completed {"total_mapped":1,"response_size":186} 
+[2025-01-21 13:56:40] local.INFO: Search Products Started {"term":"scree","outlet_id":54,"session_type":"ecer","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0","ip":"127.0.0.1"} 
+[2025-01-21 13:56:40] local.INFO: Products Query Result {"count":1,"search_term":"scree","first_product":{"name":"Screen Protector iPhone 14","has_serial":"No"}} 
+[2025-01-21 13:56:40] local.INFO: Search Products Completed {"total_mapped":1,"response_size":186} 

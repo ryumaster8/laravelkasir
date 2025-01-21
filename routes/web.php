@@ -323,7 +323,7 @@ Route::post('/set-kasir-type', function(Request $request) {
 });
 
 // Manajemen Transaksi
-Route::prefix('transactions')->middleware(['web', 'auth'])->group(function () {
+Route::prefix('/dashboard/transactions')->middleware(['web', 'auth'])->group(function () {
     Route::get('/group', [TransactionController::class, 'getOutletGroupTransactions'])
         ->name('transactions.group');
     Route::get('/', [TransactionController::class, 'index'])->name('transactions.index');
