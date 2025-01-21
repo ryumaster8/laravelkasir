@@ -251,7 +251,7 @@
                         </li>
 
                         <!-- Manajemen Pelanggan -->
-                        <li class="menu-item">
+                        {{-- <li class="menu-item">
                             <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
                                 <span class="flex items-center">
                                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,7 +268,7 @@
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Pelanggan</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         <!-- Manajemen Grosir -->
                         <li class="menu-item">
@@ -458,11 +458,11 @@
                                         Tampilkan Kategori
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('categories.set-default') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Set Default Kategori
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
 
@@ -490,11 +490,11 @@
                                         Tampilkan Supplier
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="/admin/suppliers/set_default" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Set Default Supplier
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
 

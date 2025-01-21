@@ -1330,3 +1330,4 @@
 #59 {main}
 "} 
 [2025-01-21 11:47:49] local.INFO: ProductsController@create: Session data set {"outletName":"Almera 20 Cell","username":"almera12"} 
+[2025-01-21 12:57:37] local.INFO: ProductsController@create: Session data set {"outletName":"Almera 20 Cell","username":"almera12"} 
