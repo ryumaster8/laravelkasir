@@ -185,14 +185,14 @@ Route::get('/services/create', [ServicesController::class, 'create'])->name('ser
 Route::post('/services/store', [ServicesController::class, 'store'])->name('services.store');
 
 Route::middleware([\App\Http\Middleware\CheckLogin::class])->group(function () {
-    Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
-    Route::get('/service/pengambilan/{id}', [ServicesController::class, 'pengambilan'])->name('service.pengambilan');
-    Route::put('/service/pengambilan/{id}', [ServicesController::class, 'updatePengambilan'])->name('service.updatePengambilan');
-    Route::get('/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
-    Route::put('/services/{id}', [ServicesController::class, 'update'])->name('services.update');
-    Route::delete('/services/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
-    Route::get('/services/{id}/cancel', [ServicesController::class, 'cancelView'])->name('services.cancel.view');
-    Route::post('/services/{id}/cancel', [ServicesController::class, 'cancel'])->name('services.cancel');
+    Route::get('/dashboard/services', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'pengambilan'])->name('service.pengambilan');
+    Route::put('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'updatePengambilan'])->name('service.updatePengambilan'); 
+    Route::get('/dashboard/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
+    Route::put('/dashboard/services/{id}', [ServicesController::class, 'update'])->name('services.update');
+    Route::delete('/dashboard/services/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
+    Route::get('/dashboard/services/{id}/cancel', [ServicesController::class, 'cancelView'])->name('services.cancel.view');
+    Route::post('/dashboard/services/{id}/cancel', [ServicesController::class, 'cancel'])->name('services.cancel');
 });
 
 //Manajemen Diskon
