@@ -175,7 +175,7 @@ Route::post('/dashboard/services/store', [ServicesController::class, 'store'])->
 
 Route::middleware([\App\Http\Middleware\CheckLogin::class])->group(function () {
     Route::get('/dashboard/services', [ServicesController::class, 'index'])->name('services.index');
-    Route::get('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'pengambilan']);
+    Route::get('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'pengambilan'])->name('service.pengambilan'); // Add name here
     Route::put('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'updatePengambilan'])->name('service.updatePengambilan'); 
     Route::get('/dashboard/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
     Route::put('/dashboard/services/{id}', [ServicesController::class, 'update'])->name('services.update');

@@ -92,7 +92,7 @@
                                             </button>
                                         </form>
 
-                                        <a href="{{ route('service.pengambilan', $item->service_id) }}" 
+                                        <a href="{{ route('service.pengambilan', ['id' => $item->service_id]) }}" 
                                            class="inline-flex items-center px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md disabled:opacity-50 disabled:cursor-not-allowed
                                            {{ in_array($item->progress_status, ['Selesai', 'Dibatalkan']) ? 'opacity-50 cursor-not-allowed' : '' }}">
                                            Pengambilan

@@ -109,18 +109,28 @@ class ServicesController extends Controller
             'estimasi_penyelesaian' => 'nullable|date',
             'tanggal_ambil' => 'nullable|date',
             'biaya' => 'required|numeric|min:0',
-            'pembayaran' => 'required|string|in:Belum Lunas,Uang Muka,Lunas',
+            'pembayaran' => 'required|string|max:50',
             'uang_muka' => 'nullable|numeric|min:0',
         ]);
 
-        // Ambil operator yang sedang login
+        if (!in_array($request->pembayaran, ModelService::$valid_status_pembayaran)) {
+            return redirect()->back()->withErrors(['pembayaran' => 'Status pembayaran tidak valid']);
+        }
+
         $authUser = Auth::user();
 
         if (!$authUser || !$authUser->outlet_id) {
             return redirect()->back()->withErrors('Operator tidak memiliki outlet yang valid.');
         }
 
-        // Simpan data service
+        // Calculate sisa_pembayaran based on status_pembayaran
+        $sisa_pembayaran = match ($request->pembayaran) {
+            ModelService::STATUS_PEMBAYARAN_BELUM_LUNAS => $request->biaya,
+            ModelService::STATUS_PEMBAYARAN_LUNAS => 0,
+            ModelService::STATUS_PEMBAYARAN_UANG_MUKA => $request->biaya - ($request->uang_muka ?? 0),
+            default => $request->biaya
+        };
+
         ModelService::create([
             'faktur' => $request->faktur,
             'service_operator_id' => $authUser->user_id,
@@ -134,12 +144,13 @@ class ServicesController extends Controller
             'equipment_included' => $request->kelengkapan_perangkat,
             'kerusakan' => $request->kerusakan,
             'sparepart' => $request->sparepart,
-            'description' => $request->description ?? '', // Beri nilai default
+            'description' => $request->description ?? '',
             'completion_estimate' => $request->estimasi_penyelesaian,
             'tanggal_ambil' => $request->tanggal_ambil,
             'biaya' => $request->biaya,
             'status_pembayaran' => $request->pembayaran,
-            'uang_muka' => $request->pembayaran === 'Uang Muka' ? $request->uang_muka : null,
+            'uang_muka' => $request->pembayaran === ModelService::STATUS_PEMBAYARAN_UANG_MUKA ? $request->uang_muka : null,
+            'sisa_pembayaran' => $sisa_pembayaran,
             'tanggal_masuk' => $request->tanggal_masuk,
         ]);
 
@@ -198,15 +209,19 @@ class ServicesController extends Controller
             $service->progress_status = 'Selesai';
         }
 
-        // Logika pembayaran jika status_servis adalah Berhasil
+        // Update payment status logic
         if ($request->status_servis === 'Berhasil') {
             $biaya = $service->biaya;
-            $uangMuka = $service->uang_muka ?? 0; // Default ke 0 jika uang_muka null
+            $uangMuka = $service->uang_muka ?? 0;
             $service->sisa_pembayaran = max($biaya - $uangMuka, 0);
-            $service->status_pembayaran = $service->sisa_pembayaran > 0 ? 'Belum Lunas' : 'Lunas';
+            $service->status_pembayaran = $service->sisa_pembayaran > 0 ? 
+                ModelService::STATUS_PEMBAYARAN_BELUM_LUNAS : 
+                ModelService::STATUS_PEMBAYARAN_LUNAS;
         } elseif ($request->status_servis === 'Gagal' || $request->status_servis === 'Sedang Pengerjaan') {
             $service->sisa_pembayaran = 0;
-            $service->status_pembayaran = $request->status_servis === 'Gagal' ? 'Dibatalkan' : $service->status_pembayaran;
+            $service->status_pembayaran = $request->status_servis === 'Gagal' ? 
+                ModelService::STATUS_PEMBAYARAN_DIBATALKAN : 
+                $service->status_pembayaran;
         }
 
         // Perbarui kolom lainnya

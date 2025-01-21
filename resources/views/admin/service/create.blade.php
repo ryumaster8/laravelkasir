@@ -115,10 +115,17 @@
                 </div>
 
                 <!-- Uang Muka -->
-                <div>
+                <div id="uangMukaContainer" class="hidden">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Uang Muka</label>
-                    <input type="number" name="uang_muka" min="0"
+                    <input type="number" name="uang_muka" id="uangMuka" min="0"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Sisa Pembayaran -->
+                <div id="sisaPembayaranContainer" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Sisa Pembayaran</label>
+                    <input type="number" id="sisaPembayaran" readonly
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100">
                 </div>
             </div>
 
@@ -136,6 +143,51 @@
         </form>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const statusPembayaran = document.querySelector('select[name="pembayaran"]');
+    const uangMukaContainer = document.getElementById('uangMukaContainer');
+    const sisaPembayaranContainer = document.getElementById('sisaPembayaranContainer');
+    const biayaInput = document.querySelector('input[name="biaya"]');
+    const uangMukaInput = document.getElementById('uangMuka');
+    const sisaPembayaranInput = document.getElementById('sisaPembayaran');
+
+    function updatePaymentFields() {
+        const selectedStatus = statusPembayaran.value;
+        
+        // Reset fields
+        uangMukaContainer.classList.add('hidden');
+        sisaPembayaranContainer.classList.add('hidden');
+        uangMukaInput.value = '';
+        sisaPembayaranInput.value = '';
+
+        // Show/hide fields based on payment status
+        if (selectedStatus === 'Uang Muka') {
+            uangMukaContainer.classList.remove('hidden');
+            sisaPembayaranContainer.classList.remove('hidden');
+        }
+    }
+
+    function calculateSisaPembayaran() {
+        const biaya = parseFloat(biayaInput.value) || 0;
+        const uangMuka = parseFloat(uangMukaInput.value) || 0;
+        
+        if (statusPembayaran.value === 'Uang Muka') {
+            const sisa = biaya - uangMuka;
+            sisaPembayaranInput.value = sisa >= 0 ? sisa : 0;
+        }
+    }
+
+    // Event listeners
+    statusPembayaran.addEventListener('change', updatePaymentFields);
+    biayaInput.addEventListener('input', calculateSisaPembayaran);
+    uangMukaInput.addEventListener('input', calculateSisaPembayaran);
+
+    // Initial setup
+    updatePaymentFields();
+});
+</script>
 
 @if ($errors->any())
 <div class="fixed bottom-0 right-0 m-6">

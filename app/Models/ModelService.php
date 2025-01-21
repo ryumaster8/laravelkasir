@@ -9,6 +9,24 @@ class ModelService extends Model
 {
     use HasFactory;
 
+    // Add constants for payment status
+    const STATUS_PEMBAYARAN_LUNAS = 'Lunas';
+    const STATUS_PEMBAYARAN_BELUM_LUNAS = 'Belum Lunas';
+    const STATUS_PEMBAYARAN_UANG_MUKA = 'Uang Muka';
+    const STATUS_PEMBAYARAN_DIBATALKAN = 'Dibatalkan';
+
+    // Add array of valid payment statuses
+    public static $valid_status_pembayaran = [
+        self::STATUS_PEMBAYARAN_LUNAS,
+        self::STATUS_PEMBAYARAN_BELUM_LUNAS,
+        self::STATUS_PEMBAYARAN_UANG_MUKA,
+        self::STATUS_PEMBAYARAN_DIBATALKAN
+    ];
+
+    protected $attributes = [
+        'status_pembayaran' => self::STATUS_PEMBAYARAN_BELUM_LUNAS,
+    ];
+
     protected $table = 'services';
     protected $primaryKey = 'service_id';
     public $timestamps = true;
