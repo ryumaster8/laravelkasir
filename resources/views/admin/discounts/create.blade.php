@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 mt-10">
     <div class="bg-white rounded-lg shadow-md">
-        <div class="border-b border-gray-200 px-6 py-4">
+        <div class="border-b border-gray-400 px-6 py-4">
             <h3 class="text-xl font-semibold text-gray-800">Tambah Diskon</h3>
         </div>
         <div class="p-6">
@@ -15,7 +15,7 @@
                 <div class="mb-4">
                     <label for="discount_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Diskon</label>
                     <input type="text" name="discount_name" id="discount_name" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                            placeholder="Masukkan nama diskon" 
                            value="{{ old('discount_name') }}" 
                            required>
@@ -25,7 +25,7 @@
                 <div class="mb-4">
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Tipe Diskon</label>
                     <select name="type" id="type" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                             required>
                         <option value="percentage" {{ old('type') == 'percentage' ? 'selected' : '' }}>Persentase</option>
                         <option value="fixed" {{ old('type') == 'fixed' ? 'selected' : '' }}>Nominal Tetap</option>
@@ -36,7 +36,7 @@
                 <div class="mb-4">
                     <label for="value" class="block text-sm font-medium text-gray-700 mb-2">Nilai Diskon</label>
                     <input type="number" name="value" id="value" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                            placeholder="Masukkan nilai diskon" 
                            value="{{ old('value') }}" 
                            required>
@@ -46,7 +46,7 @@
                 <div class="mb-4">
                     <label for="applies_to" class="block text-sm font-medium text-gray-700 mb-2">Berlaku Untuk</label>
                     <select name="applies_to" id="applies_to" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                             required>
                         <option value="">-- Pilih --</option>
                         <option value="product" {{ old('applies_to') == 'product' ? 'selected' : '' }}>Produk Tertentu</option>
@@ -58,7 +58,7 @@
                 <div class="mb-4 {{ old('applies_to') == 'product' ? '' : 'hidden' }}" id="product_select">
                     <label for="product_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Produk</label>
                     <select name="product_id" id="product_id" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">-- Pilih Produk --</option>
                         @foreach($products as $product)
                             <option value="{{ $product->product_id }}" {{ old('product_id') == $product->product_id ? 'selected' : '' }}>
@@ -72,7 +72,7 @@
                 <div class="mb-4 {{ old('applies_to') == 'category' ? '' : 'hidden' }}" id="category_select">
                     <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Kategori</label>
                     <select name="category_id" id="category_id" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">-- Pilih Kategori --</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->category_id }}" {{ old('category_id') == $category->category_id ? 'selected' : '' }}>
@@ -86,7 +86,7 @@
                 <div class="mb-4">
                     <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
                     <input type="date" name="start_date" id="start_date" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                            value="{{ old('start_date') }}" 
                            required>
                 </div>
@@ -95,13 +95,13 @@
                 <div class="mb-4">
                     <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Berakhir</label>
                     <input type="date" name="end_date" id="end_date" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                            value="{{ old('end_date') }}" 
                            required>
                 </div>
 
                 <!-- Footer -->
-                <div class="border-t border-gray-200 px-6 py-4 mt-6 flex justify-between">
+                <div class="border-t border-gray-400 px-6 py-4 mt-6 flex justify-between">
                     <a href="{{ route('discounts.index') }}" 
                        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors">
                         Kembali

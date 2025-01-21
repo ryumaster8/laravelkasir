@@ -336,6 +336,71 @@
         #dataTable td:nth-child(7) {
             width: 12% !important; /* Aksi */
         }
+
+        /* Global Form Styles */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="search"],
+        input[type="tel"],
+        input[type="url"],
+        select,
+        textarea {
+            @apply w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 text-gray-700;
+        }
+
+        /* Style untuk Select2 agar konsisten */
+        .select2-container--default .select2-selection--single,
+        .select2-container--default .select2-selection--multiple {
+            @apply border border-gray-400 rounded-lg;
+            min-height: 42px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            @apply text-gray-700 leading-loose px-3;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            @apply bg-blue-100 border-blue-200 rounded-md px-2 py-1 text-sm text-blue-700;
+        }
+
+        /* Label styling */
+        label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+
+        /* Form group spacing */
+        .form-group, 
+        div:has(> input),
+        div:has(> select),
+        div:has(> textarea) {
+            @apply mb-4;
+        }
+
+        /* Disabled state */
+        input:disabled,
+        select:disabled,
+        textarea:disabled {
+            @apply bg-gray-100 cursor-not-allowed;
+        }
+
+        /* Error state */
+        input.error,
+        select.error,
+        textarea.error {
+            @apply border-red-500 focus:ring-red-400 focus:border-red-500;
+        }
+
+        /* Success state */
+        input.success,
+        select.success,
+        textarea.success {
+            @apply border-green-500 focus:ring-green-400 focus:border-green-500;
+        }
     </style>
 </head>
 <body class="bg-gray-100">

@@ -18,7 +18,7 @@
                 <div>
                     <label for="discount_name" class="block text-sm font-medium text-gray-700 mb-1">Nama Diskon</label>
                     <input type="text" name="discount_name" id="discount_name" 
-                           class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" 
+                           class="w-full px-3 py-2 text-gray-700 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
                            placeholder="Masukkan nama diskon" 
                            value="{{ old('discount_name', $discount->discount_name ?? '') }}">
                 </div>
@@ -26,7 +26,8 @@
                 <!-- Tipe Diskon -->
                 <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Diskon</label>
-                    <select name="type" id="type" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <select name="type" id="type" 
+                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
                         <option value="percentage" {{ old('type', $discount->type ?? '') == 'percentage' ? 'selected' : '' }}>Persentase</option>
                         <option value="fixed" {{ old('type', $discount->type ?? '') == 'fixed' ? 'selected' : '' }}>Nominal Tetap</option>
                     </select>
@@ -36,7 +37,7 @@
                 <div>
                     <label for="value" class="block text-sm font-medium text-gray-700 mb-1">Nilai Diskon</label>
                     <input type="number" name="value" id="value" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
                            placeholder="Masukkan nilai diskon" 
                            value="{{ old('value', $discount->value ?? '') }}">
                 </div>
@@ -44,7 +45,9 @@
                 <!-- Berlaku Untuk -->
                 <div>
                     <label for="applies_to" class="block text-sm font-medium text-gray-700 mb-1">Berlaku Untuk</label>
-                    <select name="applies_to" id="applies_to" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <select name="applies_to" id="applies_to" 
+                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500">
+                        <option value="">-- Pilih --</option>
                         <option value="product" {{ old('applies_to', $discount->applies_to ?? '') == 'product' ? 'selected' : '' }}>Produk Tertentu</option>
                         <option value="category" {{ old('applies_to', $discount->applies_to ?? '') == 'category' ? 'selected' : '' }}>Kategori Produk</option>
                     </select>
@@ -53,34 +56,49 @@
                 <!-- Pilih Produk -->
                 <div id="product_field" class="hidden">
                     <label for="product_id" class="block text-sm font-medium text-gray-700 mb-1">Pilih Produk</label>
-                    <select name="product_id" id="product_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 select2">
-                        <option value="">-- Pilih Produk --</option>
+                    <select name="product_id[]" id="product_id" multiple="multiple"
+                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 select2">
                         @foreach ($products as $product)
-                            <option value="{{ $product->product_id }}" {{ old('product_id', $discount->product_id ?? '') == $product->product_id ? 'selected' : '' }}>
-                                {{ $product->product_name }}
+                            @php
+                                $stock = $product->productStock->sum('stock');
+                                $serialCount = $product->serials->count();
+                                $totalStock = $product->has_serial_number ? $serialCount : $stock;
+                                
+                                $selectedProducts = old('product_id', isset($discount) ? $discount->products->pluck('product_id')->toArray() : []);
+                            @endphp
+                            <option value="{{ $product->product_id }}" 
+                                    {{ in_array($product->product_id, $selectedProducts) ? 'selected' : '' }}>
+                                {{ $product->product_name }} 
+                                ({{ $product->has_serial_number ? 'Serial' : 'Non-Serial' }} - Stok: {{ $totalStock }})
                             </option>
                         @endforeach
                     </select>
+                    <p class="mt-1 text-sm text-gray-500">Anda dapat memilih beberapa produk sekaligus</p>
                 </div>
 
                 <!-- Pilih Kategori -->
                 <div id="category_field" class="hidden">
                     <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">Pilih Kategori</label>
-                    <select name="category_id" id="category_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 select2">
-                        <option value="">-- Pilih Kategori --</option>
+                    <select name="category_id[]" id="category_id" multiple="multiple"
+                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 select2">
                         @foreach ($categories as $category)
-                            <option value="{{ $category->category_id }}" {{ old('category_id', $discount->category_id ?? '') == $category->category_id ? 'selected' : '' }}>
+                            @php
+                                $selectedCategories = old('category_id', isset($discount) ? $discount->categories->pluck('category_id')->toArray() : []);
+                            @endphp
+                            <option value="{{ $category->category_id }}" 
+                                    {{ in_array($category->category_id, $selectedCategories) ? 'selected' : '' }}>
                                 {{ $category->category_name }}
                             </option>
                         @endforeach
                     </select>
+                    <p class="mt-1 text-sm text-gray-500">Anda dapat memilih beberapa kategori sekaligus</p>
                 </div>
 
                 <!-- Tanggal Mulai -->
                 <div>
                     <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
                     <input type="date" name="start_date" id="start_date" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
                            value="{{ old('start_date', $discount->start_date ?? '') }}">
                 </div>
 
@@ -88,7 +106,7 @@
                 <div>
                     <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Berakhir</label>
                     <input type="date" name="end_date" id="end_date" 
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                           class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
                            value="{{ old('end_date', $discount->end_date ?? '') }}">
                 </div>
             </div>
@@ -104,9 +122,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Select2
         $('.select2').select2({
             theme: 'default',
-            width: '100%'
+            width: '100%',
+            placeholder: 'Pilih item...',
+            allowClear: true
         });
 
         const appliesToField = document.getElementById('applies_to');
@@ -115,8 +136,20 @@
 
         function toggleFields() {
             const appliesTo = appliesToField.value;
-            productField.style.display = appliesTo === 'product' ? 'block' : 'none';
-            categoryField.style.display = appliesTo === 'category' ? 'block' : 'none';
+            
+            // Reset selections when switching
+            if (appliesTo === 'product') {
+                productField.style.display = 'block';
+                categoryField.style.display = 'none';
+                $('#category_id').val(null).trigger('change');
+            } else if (appliesTo === 'category') {
+                productField.style.display = 'none';
+                categoryField.style.display = 'block';
+                $('#product_id').val(null).trigger('change');
+            } else {
+                productField.style.display = 'none';
+                categoryField.style.display = 'none';
+            }
         }
 
         appliesToField.addEventListener('change', toggleFields);

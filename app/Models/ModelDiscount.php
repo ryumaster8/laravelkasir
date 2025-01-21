@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ModelDiscount extends Model
 {
@@ -28,6 +29,7 @@ class ModelDiscount extends Model
         'is_active',
         'tipe_kasir',
     ];
+
     public function product()
     {
         return $this->belongsTo(ModelProduct::class, 'product_id');
@@ -36,5 +38,15 @@ class ModelDiscount extends Model
     public function category()
     {
         return $this->belongsTo(ModelCategories::class, 'category_id');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(ModelProduct::class, 'discount_products', 'discount_id', 'product_id');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(ModelCategories::class, 'discount_categories', 'discount_id', 'category_id');
     }
 }

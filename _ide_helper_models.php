@@ -244,8 +244,12 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon $updated_at
  * @property int $is_active Status diskon, 1 untuk aktif, 0 untuk tidak aktif
  * @property string $tipe_kasir
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ModelCategories> $categories
+ * @property-read int|null $categories_count
  * @property-read \App\Models\ModelCategories|null $category
  * @property-read \App\Models\ModelProduct|null $product
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ModelProduct> $products
+ * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelDiscount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelDiscount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelDiscount query()
