@@ -844,6 +844,31 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $saran_id
+ * @property int $outlet_id
+ * @property int $created_by
+ * @property string $saran
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\ModelOutlet $outlet
+ * @property-read \App\Models\ModelUser $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereOutletId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereSaran($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereSaranId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ModelSaran whereUpdatedAt($value)
+ */
+	class ModelSaran extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $service_id
  * @property int $service_operator_id
  * @property int $service_outlet_id

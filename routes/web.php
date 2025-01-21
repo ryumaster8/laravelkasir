@@ -8,10 +8,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckRetailType;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\SaranController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\OutletController;
 //use test remoteadsdd
 
+use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeknisiController;
@@ -479,6 +480,11 @@ Route::delete('/owner/membership/delete-request/{id}', [MembershipChangeRequestC
 //     Route::get('/access-control', [SettingsController::class, 'accessControl'])->name('access-control'); 
 //     Route::get('/security', [SettingsController::class, 'security'])->name('security');
 // });
+
+// ...existing code...
+
+Route::get('/dashboard/saran/create', [SaranController::class, 'create'])->name('saran.create');
+Route::post('/dashboard/saran', [SaranController::class, 'store'])->name('saran.store');
 
 // ...existing code...
 

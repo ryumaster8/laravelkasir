@@ -511,7 +511,7 @@
                                 </svg>
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
-                                <li><a href="/admin/saran/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kirim Saran</a></li>
+                                <li><a href="/dashboard/saran/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kirim Saran</a></li>
                             </ul>
                         </li>
 
