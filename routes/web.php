@@ -42,13 +42,13 @@ Route::get('/confirm-payment-success', [PaymentConfirmationController::class, 'c
 Route::get('/clear', [AuthController::class, 'clearTables']);
 
 // Tema & Tampilan
-Route::get('/dashboard/settings/theme', [SettingsController::class, 'theme'])->name('settings.theme');
+Route::get('/dashboard/settings/themse', [SettingsController::class, 'theme'])->name('settings.theme');
 // Privasi
 Route::get('/dashboard/settings/privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
 // Dashboard Kustomisasi
-Route::get('/dashboard/settings/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('settings.dashboardCustomization');
+Route::get('/dashboard/settings/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('settings.dashboard-customization');
 // Pengaturan Hak Akses
-Route::get('/dashboard/settings/access-control', [SettingsController::class, 'accessControl'])->name('settings.accessControl');
+Route::get('/dashboard/settings/access-control', [SettingsController::class, 'accessControl'])->name('settings.access-control');
 // Keamanan
 Route::get('/dashboard/settings/security', [SettingsController::class, 'security'])->name('settings.security');
 
@@ -171,23 +171,23 @@ Route::put('/wholesale-customer/{id}', [WholesaleCustomersController::class, 'up
 Route::delete('/wholesale-customer/{id}', [WholesaleCustomersController::class, 'destroy']);
 
 //Manajemen Teknisi
-Route::get('/teknisi/create', [TeknisiController::class, 'create'])->name('teknisi.create');
-Route::post('/teknisi', [TeknisiController::class, 'store'])->name('teknisi.store');
-Route::get('/teknisi', [TeknisiController::class, 'index'])->name('teknisi.index');
-Route::get('/teknisi/semua', [TeknisiController::class, 'semua'])->name('teknisi.semua');
-Route::get('/teknisi/{id}/edit', [TeknisiController::class, 'edit'])->name('teknisi.edit');
-Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('teknisi.update');
-Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('teknisi.destroy');
-Route::get('/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'pindahCabang'])->name('teknisi.pindahcabang');
-Route::post('/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'prosesPindahCabang'])->name('teknisi.pindahcabang.proses');
+Route::get('/dashboard/teknisi/create', [TeknisiController::class, 'create'])->name('teknisi.create');
+Route::post('/dashboard/teknisi', [TeknisiController::class, 'store'])->name('teknisi.store');
+Route::get('/dashboard/teknisi', [TeknisiController::class, 'index'])->name('teknisi.index');
+Route::get('/dashboard/teknisi/semua', [TeknisiController::class, 'semua'])->name('teknisi.semua');
+Route::get('/dashboard/teknisi/{id}/edit', [TeknisiController::class, 'edit'])->name('teknisi.edit');
+Route::put('/dashboard/teknisi/{id}', [TeknisiController::class, 'update'])->name('teknisi.update');
+Route::delete('/dashboard/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('teknisi.destroy');
+Route::get('/dashboard/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'pindahCabang'])->name('teknisi.pindahcabang');
+Route::post('/dashboard/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'prosesPindahCabang'])->name('teknisi.pindahcabang.proses');
 
 //Manajemen Service
-Route::get('/services/create', [ServicesController::class, 'create'])->name('services.create');
-Route::post('/services/store', [ServicesController::class, 'store'])->name('services.store');
+Route::get('/dashboard/services/create', [ServicesController::class, 'create'])->name('services.create');
+Route::post('/dashboard/services/store', [ServicesController::class, 'store'])->name('services.store');
 
 Route::middleware([\App\Http\Middleware\CheckLogin::class])->group(function () {
     Route::get('/dashboard/services', [ServicesController::class, 'index'])->name('services.index');
-    Route::get('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'pengambilan'])->name('service.pengambilan');
+    Route::get('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'pengambilan']);
     Route::put('/dashboard/service/pengambilan/{id}', [ServicesController::class, 'updatePengambilan'])->name('service.updatePengambilan'); 
     Route::get('/dashboard/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
     Route::put('/dashboard/services/{id}', [ServicesController::class, 'update'])->name('services.update');
@@ -484,13 +484,13 @@ Route::delete('/owner/membership/delete-request/{id}', [MembershipChangeRequestC
     ->name('owner.membership.delete-request');
 
 // Settings Routes
-Route::prefix('settings')->name('settings.')->middleware(['auth'])->group(function() {
-    Route::get('/theme', [SettingsController::class, 'theme'])->name('theme');
-    Route::get('/privacy', [SettingsController::class, 'privacy'])->name('privacy');
-    Route::get('/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('dashboard-customization');
-    Route::get('/access-control', [SettingsController::class, 'accessControl'])->name('access-control'); 
-    Route::get('/security', [SettingsController::class, 'security'])->name('security');
-});
+// Route::prefix('settings')->name('settings.')->middleware(['auth'])->group(function() {
+//     Route::get('/theme', [SettingsController::class, 'theme'])->name('theme');
+//     Route::get('/privacy', [SettingsController::class, 'privacy'])->name('privacy');
+//     Route::get('/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('dashboard-customization');
+//     Route::get('/access-control', [SettingsController::class, 'accessControl'])->name('access-control'); 
+//     Route::get('/security', [SettingsController::class, 'security'])->name('security');
+// });
 
 // ...existing code...
 

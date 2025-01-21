@@ -213,16 +213,16 @@
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                                 <li>
-                                    <a href="/discounts" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Daftar Diskon</a>
+                                    <a href="<?php echo e(route('discounts.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Daftar Diskon</a>
                                 </li>
                                 <li>
-                                    <a href="/discounts/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tambah Diskon</a>
+                                    <a href="<?php echo e(route('discounts.create')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tambah Diskon</a>
                                 </li>
                                 <li>
-                                    <a href="/discounts/applyProduct" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Diskon per Produk</a>
+                                    <a href="<?php echo e(route('discounts.applyProduct')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Diskon per Produk</a>
                                 </li>
                                 <li>
-                                    <a href="/discounts/applyCategory" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Diskon per Kategori</a>
+                                    <a href="<?php echo e(route('discounts.applyCategory')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Diskon per Kategori</a>
                                 </li>
                             </ul>
                         </li>
@@ -401,25 +401,17 @@
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                                 <li>
-                                    <a href="/services" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                    <a href="<?php echo e(route('services.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Tampil Servis
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/services/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                    <a href="<?php echo e(route('services.create')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Tambah Servis
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="/services/history" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
-                                        Riwayat Servis
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/services/ambil" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
-                                        Ambil Servis
-                                    </a>
-                                </li>
+                                
+                                
                                 <!-- Teknisi submenu -->
                                 <li class="menu-item">
                                     <button class="w-full flex items-center justify-between px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
@@ -435,12 +427,12 @@
                                     </button>
                                     <ul class="submenu ml-4 mt-1 space-y-1 hidden">
                                         <li>
-                                            <a href="/teknisi/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                            <a href="<?php echo e(route('teknisi.create')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                                 Tambah Teknisi
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/teknisi" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                            <a href="<?php echo e(route('teknisi.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                                 Tampil Teknisi
                                             </a>
                                         </li>
@@ -523,11 +515,7 @@
                                 </svg>
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
-                                <li><a href="<?php echo e(route('settings.theme')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tema & Tampilan</a></li>
-                                <li><a href="<?php echo e(route('settings.privacy')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Privasi</a></li>
-                                <li><a href="<?php echo e(route('settings.dashboard-customization')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Dashboard Kustomisasi</a></li>
-                                <li><a href="<?php echo e(route('settings.access-control')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan Hak Akses</a></li>
-                                <li><a href="<?php echo e(route('settings.security')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Keamanan</a></li>
+                                
                                 <li><a href="<?php echo e(route('user-permissions.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan User Permissions</a></li>
                             </ul>
                         </li>

@@ -1,59 +1,64 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="text-dark text-left">Tambah Diskon</h3>
+<div class="container mx-auto px-4 mt-10">
+    <div class="bg-white rounded-lg shadow-md">
+        <div class="border-b border-gray-200 px-6 py-4">
+            <h3 class="text-xl font-semibold text-gray-800">Tambah Diskon</h3>
         </div>
-        <div class="card-body">
+        <div class="p-6">
             <x-flash-message />
             <form action="{{ route('discounts.store') }}" method="POST">
                 @csrf
 
                 <!-- Nama Diskon -->
-                <div class="mb-3">
-                    <label for="discount_name" class="form-label">Nama Diskon</label>
+                <div class="mb-4">
+                    <label for="discount_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Diskon</label>
                     <input type="text" name="discount_name" id="discount_name" 
-                           class="form-control" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
                            placeholder="Masukkan nama diskon" 
                            value="{{ old('discount_name') }}" 
                            required>
                 </div>
 
                 <!-- Tipe Diskon -->
-                <div class="mb-3">
-                    <label for="type" class="form-label">Tipe Diskon</label>
-                    <select name="type" id="type" class="form-control" required>
+                <div class="mb-4">
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Tipe Diskon</label>
+                    <select name="type" id="type" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            required>
                         <option value="percentage" {{ old('type') == 'percentage' ? 'selected' : '' }}>Persentase</option>
                         <option value="fixed" {{ old('type') == 'fixed' ? 'selected' : '' }}>Nominal Tetap</option>
                     </select>
                 </div>
 
                 <!-- Nilai Diskon -->
-                <div class="mb-3">
-                    <label for="value" class="form-label">Nilai Diskon</label>
+                <div class="mb-4">
+                    <label for="value" class="block text-sm font-medium text-gray-700 mb-2">Nilai Diskon</label>
                     <input type="number" name="value" id="value" 
-                           class="form-control" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
                            placeholder="Masukkan nilai diskon" 
                            value="{{ old('value') }}" 
                            required>
                 </div>
 
                 <!-- Berlaku Untuk -->
-                <div class="mb-3">
-                    <label for="applies_to" class="form-label">Berlaku Untuk</label>
-                    <select name="applies_to" id="applies_to" class="form-control" required>
-                        <option value="" {{ old('applies_to') == '' ? 'selected' : '' }}>-- Pilih --</option>
+                <div class="mb-4">
+                    <label for="applies_to" class="block text-sm font-medium text-gray-700 mb-2">Berlaku Untuk</label>
+                    <select name="applies_to" id="applies_to" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            required>
+                        <option value="">-- Pilih --</option>
                         <option value="product" {{ old('applies_to') == 'product' ? 'selected' : '' }}>Produk Tertentu</option>
                         <option value="category" {{ old('applies_to') == 'category' ? 'selected' : '' }}>Kategori Produk</option>
                     </select>
                 </div>
 
                 <!-- Pilih Produk -->
-                <div class="mb-3 {{ old('applies_to') == 'product' ? '' : 'd-none' }}" id="product_select">
-                    <label for="product_id" class="form-label">Pilih Produk</label>
-                    <select name="product_id" id="product_id" class="form-control select2">
+                <div class="mb-4 {{ old('applies_to') == 'product' ? '' : 'hidden' }}" id="product_select">
+                    <label for="product_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Produk</label>
+                    <select name="product_id" id="product_id" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">-- Pilih Produk --</option>
                         @foreach($products as $product)
                             <option value="{{ $product->product_id }}" {{ old('product_id') == $product->product_id ? 'selected' : '' }}>
@@ -64,9 +69,10 @@
                 </div>
 
                 <!-- Pilih Kategori -->
-                <div class="mb-3 {{ old('applies_to') == 'category' ? '' : 'd-none' }}" id="category_select">
-                    <label for="category_id" class="form-label">Pilih Kategori</label>
-                    <select name="category_id" id="category_id" class="form-control select2">
+                <div class="mb-4 {{ old('applies_to') == 'category' ? '' : 'hidden' }}" id="category_select">
+                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Kategori</label>
+                    <select name="category_id" id="category_id" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="">-- Pilih Kategori --</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->category_id }}" {{ old('category_id') == $category->category_id ? 'selected' : '' }}>
@@ -77,27 +83,33 @@
                 </div>
 
                 <!-- Tanggal Mulai -->
-                <div class="mb-3">
-                    <label for="start_date" class="form-label">Tanggal Mulai</label>
+                <div class="mb-4">
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
                     <input type="date" name="start_date" id="start_date" 
-                           class="form-control" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
                            value="{{ old('start_date') }}" 
                            required>
                 </div>
 
                 <!-- Tanggal Berakhir -->
-                <div class="mb-3">
-                    <label for="end_date" class="form-label">Tanggal Berakhir</label>
+                <div class="mb-4">
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Berakhir</label>
                     <input type="date" name="end_date" id="end_date" 
-                           class="form-control" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
                            value="{{ old('end_date') }}" 
                            required>
                 </div>
 
                 <!-- Footer -->
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="{{ route('discounts.index') }}" class="btn btn-secondary">Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                <div class="border-t border-gray-200 px-6 py-4 mt-6 flex justify-between">
+                    <a href="{{ route('discounts.index') }}" 
+                       class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors">
+                        Kembali
+                    </a>
+                    <button type="submit" 
+                            class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
+                        Simpan
+                    </button>
                 </div>
             </form>
         </div>
@@ -116,12 +128,12 @@
             const value = this.value;
 
             if (value === 'product') {
-                productSelect.classList.remove('d-none');
-                categorySelect.classList.add('d-none');
+                productSelect.classList.remove('hidden');
+                categorySelect.classList.add('hidden');
                 categoryInput.value = 0; // Set kategori ke 0 jika tidak relevan
             } else if (value === 'category') {
-                productSelect.classList.add('d-none');
-                categorySelect.classList.remove('d-none');
+                productSelect.classList.add('hidden');
+                categorySelect.classList.remove('hidden');
                 productInput.value = 0; // Set produk ke 0 jika tidak relevan
             }
         });
@@ -131,7 +143,4 @@
     });
 </script>
 
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 @endsection

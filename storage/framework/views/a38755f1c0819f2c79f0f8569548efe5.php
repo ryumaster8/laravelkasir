@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
 
 <?php if (isset($component)) { $__componentOriginalbb0843bd48625210e6e530f88101357e = $component; } ?>
