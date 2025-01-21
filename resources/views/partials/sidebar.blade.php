@@ -565,7 +565,6 @@
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                                 <li><a href="/dashboard/sales-report" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Laporan Penjualan</a></li>
-                                <li><a href="/admin/membership-details" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Detail Membership</a></li>
                             </ul>
                         </li>
 
