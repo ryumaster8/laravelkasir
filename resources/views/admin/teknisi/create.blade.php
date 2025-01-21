@@ -34,7 +34,7 @@
                                     </svg>
                                 </div>
                                 <input type="text" 
-                                    class="pl-10 w-full rounded-lg border-gray-200 bg-gray-50 text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    class="pl-10 w-full rounded-lg border-2 border-gray-400 bg-gray-50 text-base py-3 focus:border-blue-500 focus:ring-blue-500"
                                     id="operator_id"
                                     value="{{ old('operatorName', $operatorName ?? '') }}"
                                     readonly>
@@ -62,7 +62,7 @@
                                     </svg>
                                 </div>
                                 <input type="text"
-                                    class="pl-10 w-full rounded-lg border-gray-200 bg-gray-50 text-sm focus:border-blue-500 focus:ring-blue-500"
+                                    class="pl-10 w-full rounded-lg border-2 border-gray-400 bg-gray-50 text-base py-3 focus:border-blue-500 focus:ring-blue-500"
                                     id="teknisi_outlet_id"
                                     value="{{ old('outletName', $outletName ?? '') }}"
                                     readonly>
@@ -90,7 +90,7 @@
                                     </svg>
                                 </div>
                                 <input type="text"
-                                    class="pl-10 w-full rounded-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                                    class="pl-10 w-full rounded-lg border-2 border-gray-400 text-base py-3 focus:border-blue-500 focus:ring-blue-500"
                                     id="nama_teknisi"
                                     name="nama_teknisi"
                                     value="{{ old('nama_teknisi') }}"
@@ -119,7 +119,7 @@
                                     </svg>
                                 </div>
                                 <input type="text"
-                                    class="pl-10 w-full rounded-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                                    class="pl-10 w-full rounded-lg border-2 border-gray-400 text-base py-3 focus:border-blue-500 focus:ring-blue-500"
                                     id="kontak"
                                     name="kontak"
                                     value="{{ old('kontak') }}"

@@ -55,43 +55,46 @@
 
                 <!-- Pilih Produk -->
                 <div id="product_field" class="hidden">
-                    <label for="product_id" class="block text-sm font-medium text-gray-700 mb-1">Pilih Produk</label>
-                    <select name="product_id[]" id="product_id" multiple="multiple"
-                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 select2">
-                        @foreach ($products as $product)
-                            @php
-                                $stock = $product->productStock->sum('stock');
-                                $serialCount = $product->serials->count();
-                                $totalStock = $product->has_serial_number ? $serialCount : $stock;
-                                
-                                $selectedProducts = old('product_id', isset($discount) ? $discount->products->pluck('product_id')->toArray() : []);
-                            @endphp
-                            <option value="{{ $product->product_id }}" 
-                                    {{ in_array($product->product_id, $selectedProducts) ? 'selected' : '' }}>
-                                {{ $product->product_name }} 
-                                ({{ $product->has_serial_number ? 'Serial' : 'Non-Serial' }} - Stok: {{ $totalStock }})
-                            </option>
-                        @endforeach
-                    </select>
-                    <p class="mt-1 text-sm text-gray-500">Anda dapat memilih beberapa produk sekaligus</p>
+                    <label for="product_search" class="block text-sm font-medium text-gray-700 mb-1">Cari Produk</label>
+                    <div class="relative">
+                        <input type="text" id="product_search" 
+                               class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
+                               placeholder="Ketik untuk mencari produk...">
+                        <div id="product_results" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Selected Products -->
+                    <div id="selected_products" class="mt-3">
+                        <h4 class="text-sm font-medium text-gray-700 mb-2">Produk Terpilih:</h4>
+                        <div id="product_tags" class="flex flex-wrap gap-2">
+                            <!-- Selected products will be shown here -->
+                        </div>
+                        <input type="hidden" name="product_id[]" id="product_ids">
+                    </div>
                 </div>
 
                 <!-- Pilih Kategori -->
                 <div id="category_field" class="hidden">
-                    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">Pilih Kategori</label>
-                    <select name="category_id[]" id="category_id" multiple="multiple"
-                            class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 select2">
-                        @foreach ($categories as $category)
-                            @php
-                                $selectedCategories = old('category_id', isset($discount) ? $discount->categories->pluck('category_id')->toArray() : []);
-                            @endphp
-                            <option value="{{ $category->category_id }}" 
-                                    {{ in_array($category->category_id, $selectedCategories) ? 'selected' : '' }}>
-                                {{ $category->category_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <p class="mt-1 text-sm text-gray-500">Anda dapat memilih beberapa kategori sekaligus</p>
+                    <label for="category_search" class="block text-sm font-medium text-gray-700 mb-1">Cari Kategori</label>
+                    <div class="relative">
+                        <input type="text" id="category_search" 
+                               class="w-full px-3 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500" 
+                               placeholder="Ketik untuk mencari kategori...">
+                        <div id="category_results" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Selected Categories -->
+                    <div id="selected_categories" class="mt-3">
+                        <h4 class="text-sm font-medium text-gray-700 mb-2">Kategori Terpilih:</h4>
+                        <div id="category_tags" class="flex flex-wrap gap-2">
+                            <!-- Selected categories will be shown here -->
+                        </div>
+                        <input type="hidden" name="category_id[]" id="category_ids">
+                    </div>
                 </div>
 
                 <!-- Tanggal Mulai -->
@@ -120,16 +123,152 @@
     </form>
 </div>
 
+@push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Initialize Select2
-        $('.select2').select2({
-            theme: 'default',
-            width: '100%',
-            placeholder: 'Pilih item...',
-            allowClear: true
+    $(document).ready(function() {
+        let selectedProducts = new Map();
+        let selectedCategories = new Map();
+        
+        // Product Search
+        $('#product_search').on('input', function() {
+            const searchTerm = $(this).val();
+            if (searchTerm.length >= 2) {
+                $.get(`/api/products/search?term=${searchTerm}`, function(data) {
+                    let html = '';
+                    data.forEach(product => {
+                        if (!selectedProducts.has(product.product_id)) {
+                            html += `<div class="product-item p-2 hover:bg-gray-100 cursor-pointer" 
+                                        data-id="${product.product_id}" 
+                                        data-name="${product.product_name}"
+                                        data-stock="${product.stock_total}">
+                                        ${product.product_name} (Stok: ${product.stock_total})
+                                    </div>`;
+                        }
+                    });
+                    $('#product_results').html(html).removeClass('hidden');
+                });
+            } else {
+                $('#product_results').addClass('hidden');
+            }
         });
 
+        // Category Search
+        $('#category_search').on('input', function() {
+            const searchTerm = $(this).val();
+            if (searchTerm.length >= 2) {
+                $.get(`/api/categories/search?term=${searchTerm}`, function(data) {
+                    let html = '';
+                    data.forEach(category => {
+                        if (!selectedCategories.has(category.category_id)) {
+                            html += `<div class="category-item p-2 hover:bg-gray-100 cursor-pointer" 
+                                        data-id="${category.category_id}" 
+                                        data-name="${category.category_name}">
+                                        ${category.category_name}
+                                    </div>`;
+                        }
+                    });
+                    $('#category_results').html(html).removeClass('hidden');
+                });
+            } else {
+                $('#category_results').addClass('hidden');
+            }
+        });
+
+        // Select Product
+        $(document).on('click', '.product-item', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            const stock = $(this).data('stock');
+            
+            selectedProducts.set(id, {name, stock});
+            updateProductTags();
+            $('#product_search').val('');
+            $('#product_results').addClass('hidden');
+        });
+
+        // Select Category
+        $(document).on('click', '.category-item', function() {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            
+            selectedCategories.set(id, {name});
+            updateCategoryTags();
+            $('#category_search').val('');
+            $('#category_results').addClass('hidden');
+        });
+
+        function updateProductTags() {
+            let html = '';
+            let ids = [];
+            selectedProducts.forEach((data, id) => {
+                html += `
+                    <div class="inline-flex items-center bg-blue-100 text-blue-800 rounded px-2 py-1">
+                        <span>${data.name}</span>
+                        <button type="button" class="ml-1 text-blue-600 hover:text-blue-800 remove-product" data-id="${id}">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                ids.push(id);
+            });
+            $('#product_tags').html(html);
+            $('#product_ids').val(ids.join(','));
+        }
+
+        function updateCategoryTags() {
+            let html = '';
+            let ids = [];
+            selectedCategories.forEach((data, id) => {
+                html += `
+                    <div class="inline-flex items-center bg-green-100 text-green-800 rounded px-2 py-1">
+                        <span>${data.name}</span>
+                        <button type="button" class="ml-1 text-green-600 hover:text-green-800 remove-category" data-id="${id}">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                ids.push(id);
+            });
+            $('#category_tags').html(html);
+            $('#category_ids').val(ids.join(','));
+        }
+
+        // Remove Product
+        $(document).on('click', '.remove-product', function() {
+            const id = $(this).data('id');
+            selectedProducts.delete(id);
+            updateProductTags();
+        });
+
+        // Remove Category
+        $(document).on('click', '.remove-category', function() {
+            const id = $(this).data('id');
+            selectedCategories.delete(id);
+            updateCategoryTags();
+        });
+
+        // Initialize with existing selections if any
+        @if(isset($discount))
+            @foreach($discount->products as $product)
+                selectedProducts.set({{ $product->product_id }}, {
+                    name: '{{ $product->product_name }}',
+                    stock: '{{ $product->productStock->sum("stock") }}'
+                });
+            @endforeach
+            @foreach($discount->categories as $category)
+                selectedCategories.set({{ $category->category_id }}, {
+                    name: '{{ $category->category_name }}'
+                });
+            @endforeach
+            updateProductTags();
+            updateCategoryTags();
+        @endif
+
+        // Toggle fields function
         const appliesToField = document.getElementById('applies_to');
         const productField = document.getElementById('product_field');
         const categoryField = document.getElementById('category_field');
@@ -137,7 +276,6 @@
         function toggleFields() {
             const appliesTo = appliesToField.value;
             
-            // Reset selections when switching
             if (appliesTo === 'product') {
                 productField.style.display = 'block';
                 categoryField.style.display = 'none';
@@ -156,6 +294,7 @@
         toggleFields();
     });
 </script>
+@endpush
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>

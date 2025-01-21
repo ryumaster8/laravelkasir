@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <!-- Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -401,6 +401,52 @@
         textarea.success {
             @apply border-green-500 focus:ring-green-400 focus:border-green-500;
         }
+
+        /* Select2 Custom Styling */
+        .select2-container {
+            width: 100% !important;
+        }
+        
+        .select2-container--default .select2-selection--multiple,
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #9CA3AF;
+            border-radius: 0.5rem;
+            min-height: 42px;
+            padding: 0.375rem;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple,
+        .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 0.375rem;
+            padding: 2px 8px;
+            margin: 2px;
+        }
+
+        .select2-dropdown {
+            border-color: #9CA3AF;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .select2-search__field {
+            border-radius: 0.375rem !important;
+            padding: 0.5rem !important;
+        }
+
+        .select2-results__option {
+            padding: 0.5rem;
+        }
+
+        .select2-results__option--highlighted[aria-selected] {
+            background-color: #3B82F6 !important;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -450,6 +496,26 @@
 
         // Update script untuk toggle menu
         document.addEventListener('DOMContentLoaded', function() {
+            // Hapus bagian ini untuk menghindari konflik
+            /*
+            // Select2 biasa
+            $('.select2').select2({
+                theme: 'classic',
+                width: '100%',
+                placeholder: 'Pilih opsi...',
+                allowClear: true
+            });
+
+            // Select2 multiple
+            $('.select2-multiple').select2({
+                theme: 'classic',
+                width: '100%',
+                placeholder: 'Pilih role...',
+                allowClear: true,
+                tags: true
+            });
+            */
+            
             // Fungsi untuk toggle submenu
             function setupSubmenus() {
                 const menuItems = document.querySelectorAll('.menu-item > button');

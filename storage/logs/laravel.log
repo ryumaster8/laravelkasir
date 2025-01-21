@@ -1329,3 +1329,4 @@
 #58 C:\\xampp\\htdocs\\laravelkasir\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #59 {main}
 "} 
+[2025-01-21 11:47:49] local.INFO: ProductsController@create: Session data set {"outletName":"Almera 20 Cell","username":"almera12"} 
