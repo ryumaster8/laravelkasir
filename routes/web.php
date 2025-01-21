@@ -114,12 +114,15 @@ Route::delete('/dashboard/branches/{outlet}', [BranchController::class, 'destroy
 Route::put('/dashboard/branches/{outlet}', [BranchController::class, 'update'])->name('branches.update');
 
 // Manajemen Kategori
-Route::get('/categories', [CategoriesController::class, 'create'])->name('categories.index');
-Route::get('/categories/data', [CategoriesController::class, 'data'])->name('categories.data');
-Route::get('/categories/{id}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
-Route::get('/categories/{id}/delete', [CategoriesController::class, 'destroy'])->name('categories.delete');
-Route::post('/categories', [CategoriesController::class, 'store'])->name('categories.store');
-Route::put('/categories/{id}', [CategoriesController::class, 'update'])->name('categories.update');
+Route::get('/dashboard/categories', [CategoriesController::class, 'create'])->name('categories.index');
+Route::get('/dashboard/categories/data', [CategoriesController::class, 'data'])->name('categories.data');
+Route::get('/dashboard/categories/{id}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
+Route::get('/dashboard/categories/{id}/delete', [CategoriesController::class, 'destroy'])->name('categories.delete');
+Route::post('/dashboard/categories', [CategoriesController::class, 'store'])->name('categories.store');
+Route::put('/dashboard/categories/{id}', [CategoriesController::class, 'update'])->name('categories.update');
+Route::get('/dashboard/categories/delete/{id}', [CategoriesController::class, 'destroy'])->name('categories.delete');
+
+
 
 // Manajemen Supplier
 Route::prefix('dashboard/suppliers')->group(function () {
@@ -132,28 +135,28 @@ Route::prefix('dashboard/suppliers')->group(function () {
 });
 
 // Manajemen Produk
-Route::get('/products-all-outlets', [ProductOutletsController::class, 'index'])->name('products-all-outlets');
-Route::get('/products/add', [ProductsController::class, 'create'])->name('products.index');
-Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
-Route::get('/self-products', [ProductsController::class, 'selfProducts'])->name('self-products');
-Route::get('/self-products/{product}/edit', [ProductsController::class, 'edit'])->name('self-products.edit');
-Route::put('/self-products/{product}', [ProductsController::class, 'update'])->name('self-products.update');
-Route::get('/products/self-data', [ProductsController::class, 'dataSelfProducts'])->name('products.dataSelfProducts');
-Route::get('/self-products/{product}/edit-non-serial', [ProductsController::class, 'editNonSerial'])->name('self-products.edit-non-serial');
-Route::put('/self-products/{product}/update-non-serial', [ProductsController::class, 'updateNonSerial'])->name('self-products.update-non-serial');
-Route::get('/self-products/{product}/add-serial', [ProductsController::class, 'addSerial'])->name('self-products.add-serial');
-Route::post('/self-products/{product}/store-serial', [ProductsController::class, 'storeSerial'])->name('self-products.store-serial');
-Route::get('/self-products/delete-serial/{serial}', [ProductsController::class, 'deleteSerial'])->name('self-products.delete-serial');
-Route::get('/self-products/{product}/reduce-unit', [ProductsController::class, 'reduceUnit'])->name('self-products.reduce-unit');
-Route::post('/self-products/{product}/update-reduce-unit', [ProductsController::class, 'updateReduceUnit'])->name('self-products.update-reduce-unit');
-Route::get('/self-products/{product}/transfer-unit', [ProductsController::class, 'transferUnit'])->name('self-products.transfer-unit');
-Route::post('/self-products/{product}/store-transfer-unit', [ProductsController::class, 'storeTransferUnit'])->name('self-products.store-transfer-unit');
-Route::get('/self-products/{product}/add-stock', [ProductsController::class, 'addStock'])->name('self-products.add-stock');
-Route::post('/self-products/{product}/store-add-stock', [ProductsController::class, 'storeAddStock'])->name('self-products.store-add-stock');
-Route::get('/self-products/{product}/reduce-stock', [ProductsController::class, 'reduceStock'])->name('self-products.reduce-stock');
-Route::post('/self-products/{product}/store-reduce-stock', [ProductsController::class, 'storeReduceStock'])->name('self-products.store-reduce-stock');
-Route::get('/self-products/{product}/transfer-stock', [ProductsController::class, 'transferStock'])->name('self-products.transfer-stock');
-Route::post('/self-products/{product}/store-transfer-stock', [ProductsController::class, 'storeTransferStock'])->name('self-products.store-transfer-stock');
+Route::get('/dashboard/products-all-outlets', [ProductOutletsController::class, 'index'])->name('products-all-outlets');
+Route::get('/dashboard/products/add', [ProductsController::class, 'create'])->name('products.index');
+Route::post('/dashboard/products', [ProductsController::class, 'store'])->name('products.store');
+Route::get('/dashboard/self-products', [ProductsController::class, 'selfProducts'])->name('self-products');
+Route::get('/dashboard/self-products/{product}/edit', [ProductsController::class, 'edit'])->name('self-products.edit');
+Route::put('/dashboard/self-products/{product}', [ProductsController::class, 'update'])->name('self-products.update');
+Route::get('/dashboard/products/self-data', [ProductsController::class, 'dataSelfProducts'])->name('products.dataSelfProducts');
+Route::get('/dashboard/self-products/{product}/edit-non-serial', [ProductsController::class, 'editNonSerial'])->name('self-products.edit-non-serial');
+Route::put('/dashboard/self-products/{product}/update-non-serial', [ProductsController::class, 'updateNonSerial'])->name('self-products.update-non-serial');
+Route::get('/dashboard/self-products/{product}/add-serial', [ProductsController::class, 'addSerial'])->name('self-products.add-serial');
+Route::post('/dashboard/self-products/{product}/store-serial', [ProductsController::class, 'storeSerial'])->name('self-products.store-serial');
+Route::get('/dashboard/self-products/delete-serial/{serial}', [ProductsController::class, 'deleteSerial'])->name('self-products.delete-serial');
+Route::get('/dashboard/self-products/{product}/reduce-unit', [ProductsController::class, 'reduceUnit'])->name('self-products.reduce-unit');
+Route::post('/dashboard/self-products/{product}/update-reduce-unit', [ProductsController::class, 'updateReduceUnit'])->name('self-products.update-reduce-unit');
+Route::get('/dashboard/self-products/{product}/transfer-unit', [ProductsController::class, 'transferUnit'])->name('self-products.transfer-unit');
+Route::post('/dashboard/self-products/{product}/store-transfer-unit', [ProductsController::class, 'storeTransferUnit'])->name('self-products.store-transfer-unit');
+Route::get('/dashboard/self-products/{product}/add-stock', [ProductsController::class, 'addStock'])->name('self-products.add-stock');
+Route::post('/dashboard/self-products/{product}/store-add-stock', [ProductsController::class, 'storeAddStock'])->name('self-products.store-add-stock');
+Route::get('/dashboard/self-products/{product}/reduce-stock', [ProductsController::class, 'reduceStock'])->name('self-products.reduce-stock');
+Route::post('/dashboard/self-products/{product}/store-reduce-stock', [ProductsController::class, 'storeReduceStock'])->name('self-products.store-reduce-stock');
+Route::get('/dashboard/self-products/{product}/transfer-stock', [ProductsController::class, 'transferStock'])->name('self-products.transfer-stock');
+Route::post('/dashboard/self-products/{product}/store-transfer-stock', [ProductsController::class, 'storeTransferStock'])->name('self-products.store-transfer-stock');
 
 Route::get('/admin/products/transfer-requests', [ProductsController::class, 'transferRequests'])->name('products.transfer-requests');
 Route::get('/admin/products/history-transfer-requests', [ProductsController::class, 'historyTransferRequests'])->name('products.history-transfer-requests');
@@ -162,27 +165,27 @@ Route::get('/admin/products/reject-transfer/{transit}', [ProductsController::cla
 Route::get('/admin/products/submission-transfer-requests', [ProductsController::class, 'transferRequestsSubmission'])->name('products.transfer-requests-submission');
 
 //Manajemen Pelanggan Grosir
-Route::get('/wholesale-customer', [WholesaleCustomersController::class, 'index']);
-Route::get('/wholesale-customer/create', [WholesaleCustomersController::class, 'create']);
-Route::post('/wholesale-customer', [WholesaleCustomersController::class, 'store']);
-Route::get('/wholesale-customer/{id}/edit', [WholesaleCustomersController::class, 'edit']);
-Route::put('/wholesale-customer/{id}', [WholesaleCustomersController::class, 'update']);
-Route::delete('/wholesale-customer/{id}', [WholesaleCustomersController::class, 'destroy']);
+Route::get('/dashboard/wholesale-customer', [WholesaleCustomersController::class, 'index'])->name('wholesale-customer.index');
+Route::get('/dashboard/wholesale-customer/create', [WholesaleCustomersController::class, 'create'])->name('wholesale-customer.create');
+Route::post('/dashboard/wholesale-customer', [WholesaleCustomersController::class, 'store'])->name('wholesale-customer.store');
+Route::get('/dashboard/wholesale-customer/{id}/edit', [WholesaleCustomersController::class, 'edit'])->name('wholesale-customer.edit');
+Route::put('/dashboard/wholesale-customer/{id}', [WholesaleCustomersController::class, 'update'])->name('wholesale-customer.update');
+Route::delete('/dashboard/wholesale-customer/{id}', [WholesaleCustomersController::class, 'destroy'])->name('wholesale-customer.destroy');
 
 //Manajemen Teknisi
-Route::get('/teknisi/create', [TeknisiController::class, 'create'])->name('teknisi.create');
-Route::post('/teknisi', [TeknisiController::class, 'store'])->name('teknisi.store');
-Route::get('/teknisi', [TeknisiController::class, 'index'])->name('teknisi.index');
-Route::get('/teknisi/semua', [TeknisiController::class, 'semua'])->name('teknisi.semua');
-Route::get('/teknisi/{id}/edit', [TeknisiController::class, 'edit'])->name('teknisi.edit');
-Route::put('/teknisi/{id}', [TeknisiController::class, 'update'])->name('teknisi.update');
-Route::delete('/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('teknisi.destroy');
-Route::get('/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'pindahCabang'])->name('teknisi.pindahcabang');
-Route::post('/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'prosesPindahCabang'])->name('teknisi.pindahcabang.proses');
+Route::get('/dashboard/teknisi/create', [TeknisiController::class, 'create'])->name('teknisi.create');
+Route::post('/dashboard/teknisi', [TeknisiController::class, 'store'])->name('teknisi.store');
+Route::get('/dashboard/teknisi', [TeknisiController::class, 'index'])->name('teknisi.index');
+Route::get('/dashboard/teknisi/semua', [TeknisiController::class, 'semua'])->name('teknisi.semua');
+Route::get('/dashboard/teknisi/{id}/edit', [TeknisiController::class, 'edit'])->name('teknisi.edit');
+Route::put('/dashboard/teknisi/{id}', [TeknisiController::class, 'update'])->name('teknisi.update');
+Route::delete('/dashboard/teknisi/{id}', [TeknisiController::class, 'destroy'])->name('teknisi.destroy');
+Route::get('/dashboard/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'pindahCabang'])->name('teknisi.pindahcabang');
+Route::post('/dashboard/teknisi/{id}/pindah-cabang', [TeknisiController::class, 'prosesPindahCabang'])->name('teknisi.pindahcabang.proses');
 
 //Manajemen Service
-Route::get('/services/create', [ServicesController::class, 'create'])->name('services.create');
-Route::post('/services/store', [ServicesController::class, 'store'])->name('services.store');
+Route::get('/dashboard/services/create', [ServicesController::class, 'create'])->name('services.create');
+Route::post('/dashboard/services/store', [ServicesController::class, 'store'])->name('services.store');
 
 Route::middleware([\App\Http\Middleware\CheckLogin::class])->group(function () {
     Route::get('/dashboard/services', [ServicesController::class, 'index'])->name('services.index');
@@ -248,7 +251,6 @@ Route::get('/tampilkan-semua-session', [SessionController::class, 'index'])->nam
 // Logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/categories/delete/{id}', [CategoriesController::class, 'destroy'])->name('categories.delete');
 
 // Temporary debug route
 Route::get('/suppliers/debug-data', function () {
