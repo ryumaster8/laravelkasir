@@ -69,4 +69,9 @@ class SettingsController extends Controller
         $userPermission->delete();
         return redirect()->route('settings.userPermissions')->with('success', 'User permission deleted successfully.');
     }
+
+    public function dashboardCustomization()
+    {
+        return view('settings.dashboard-customization');
+    }
 }

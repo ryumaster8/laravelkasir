@@ -42,15 +42,15 @@ Route::get('/confirm-payment-success', [PaymentConfirmationController::class, 'c
 Route::get('/clear', [AuthController::class, 'clearTables']);
 
 // Tema & Tampilan
-Route::get('/settings/theme', [SettingsController::class, 'theme'])->name('settings.theme');
+Route::get('/dashboard/settings/theme', [SettingsController::class, 'theme'])->name('settings.theme');
 // Privasi
-Route::get('/settings/privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
+Route::get('/dashboard/settings/privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
 // Dashboard Kustomisasi
-Route::get('/settings/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('settings.dashboardCustomization');
+Route::get('/dashboard/settings/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('settings.dashboardCustomization');
 // Pengaturan Hak Akses
-Route::get('/settings/access-control', [SettingsController::class, 'accessControl'])->name('settings.accessControl');
+Route::get('/dashboard/settings/access-control', [SettingsController::class, 'accessControl'])->name('settings.accessControl');
 // Keamanan
-Route::get('/settings/security', [SettingsController::class, 'security'])->name('settings.security');
+Route::get('/dashboard/settings/security', [SettingsController::class, 'security'])->name('settings.security');
 
 // Pengaturan User Permissions
 // Route::get('/settings/user-permissions', [SettingsController::class, 'userPermissions'])->name('settings.userPermissions');
@@ -482,6 +482,15 @@ Route::post('/owner/membership/process-request/{id}', [MembershipChangeRequestCo
     ->name('owner.membership.process-request');
 Route::delete('/owner/membership/delete-request/{id}', [MembershipChangeRequestController::class, 'deleteRequest'])
     ->name('owner.membership.delete-request');
+
+// Settings Routes
+Route::prefix('settings')->name('settings.')->middleware(['auth'])->group(function() {
+    Route::get('/theme', [SettingsController::class, 'theme'])->name('theme');
+    Route::get('/privacy', [SettingsController::class, 'privacy'])->name('privacy');
+    Route::get('/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])->name('dashboard-customization');
+    Route::get('/access-control', [SettingsController::class, 'accessControl'])->name('access-control'); 
+    Route::get('/security', [SettingsController::class, 'security'])->name('security');
+});
 
 // ...existing code...
 

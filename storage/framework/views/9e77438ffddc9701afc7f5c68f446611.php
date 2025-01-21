@@ -523,12 +523,12 @@
                                 </svg>
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
-                                <li><a href="/settings/theme" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tema & Tampilan</a></li>
-                                <li><a href="/settings/privacy" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Privasi</a></li>
-                                <li><a href="/settings/dashboard-customization" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Dashboard Kustomisasi</a></li>
-                                <li><a href="/settings/access-control" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan Hak Akses</a></li>
-                                <li><a href="/settings/security" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Keamanan</a></li>
-                                <li><a href="/user-permissions" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan User Permissions</a></li>
+                                <li><a href="<?php echo e(route('settings.theme')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tema & Tampilan</a></li>
+                                <li><a href="<?php echo e(route('settings.privacy')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Privasi</a></li>
+                                <li><a href="<?php echo e(route('settings.dashboard-customization')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Dashboard Kustomisasi</a></li>
+                                <li><a href="<?php echo e(route('settings.access-control')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan Hak Akses</a></li>
+                                <li><a href="<?php echo e(route('settings.security')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Keamanan</a></li>
+                                <li><a href="<?php echo e(route('user-permissions.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan User Permissions</a></li>
                             </ul>
                         </li>
 
