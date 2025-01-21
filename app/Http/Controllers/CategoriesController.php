@@ -224,4 +224,10 @@ class CategoriesController extends Controller
             return redirect()->route('categories.index')->with('error', 'Kategori tidak ditemukan!');
         }
     }
+
+    public function setDefault()
+    {
+        // Add your logic here
+        return view('categories.set-default');
+    }
 }

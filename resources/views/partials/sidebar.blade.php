@@ -464,17 +464,12 @@
                             </button>
                             <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                                 <li>
-                                    <a href="/categories" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                    <a href="{{ route('categories.index') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Tampilkan Kategori
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/categories/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
-                                        Tambah Kategori
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/admin/categories/set_default" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                    <a href="{{ route('categories.set-default') }}" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                         Set Default Kategori
                                     </a>
                                 </li>
