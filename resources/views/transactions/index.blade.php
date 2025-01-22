@@ -2,6 +2,23 @@
 
 @section('title', 'Daftar Transaksi')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+<style>
+.btn-group .btn {
+    padding: 0.375rem 1rem;
+    font-size: 0.9rem;
+}
+.btn-group .btn i {
+    margin-right: 5px;
+}
+.alert i {
+    margin-right: 5px;
+}
+</style>
+@endpush
+
 @section('content')
 <div class="p-6 bg-gray-100 min-h-screen">
     <div class="max-w-7xl mx-auto">
@@ -79,27 +96,26 @@
                 </div>
 
                 <!-- Table -->
-                <div>
-                    <table id="transactionsTable" class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                <div class="table-responsive">
+                    <table id="transactionsTable" class="table table-striped table-bordered">
+                        <thead>
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">No</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID Transaksi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Operator</th>
+                                <th>No</th>
+                                <th>ID Transaksi</th>
+                                <th>Operator</th>
                                 @if(isset($showingGroupData))
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Outlet</th>
+                                    <th>Outlet</th>
                                 @endif
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Outlet</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jenis Penjualan</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Amount</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah Produk</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Transaksi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode Pembayaran</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                                <th>Jenis Penjualan</th>
+                                <th>Total Amount</th>
+                                <th>Jumlah Produk</th>
+                                <th>Tanggal Transaksi</th>
+                                <th>Metode Pembayaran</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody>
                             @forelse($transactions as $index => $transaction)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -170,13 +186,15 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#transactionsTable').DataTable({
-            pageLength: 10,
-            ordering: true,
-            searching: true,
             responsive: true,
+            processing: true,
             language: {
                 search: "Cari:",
                 lengthMenu: "Tampilkan _MENU_ data per halaman",
@@ -189,26 +207,19 @@
                     last: "Terakhir",
                     next: "Selanjutnya",
                     previous: "Sebelumnya"
-                },
-            }
+                }
+            },
+            order: [[0, 'asc']],
+            columnDefs: [
+                {
+                    targets: -1,
+                    orderable: false,
+                    searchable: false
+                }
+            ]
         });
     });
 </script>
-@endpush
-
-@push('styles')
-<style>
-.btn-group .btn {
-    padding: 0.375rem 1rem;
-    font-size: 0.9rem;
-}
-.btn-group .btn i {
-    margin-right: 5px;
-}
-.alert i {
-    margin-right: 5px;
-}
-</style>
 @endpush
 
 @endsection
