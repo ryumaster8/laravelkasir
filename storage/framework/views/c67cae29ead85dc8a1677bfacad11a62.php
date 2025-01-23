@@ -1,7 +1,5 @@
-
-
 <?php $__env->startSection('content'); ?>
-<section class="py-26 px-4 max-w-7xl mx-auto">
+<section class="py-16 px-4 max-w-7xl mx-auto">
     <h1 class="text-4xl font-bold text-center my-24 text-white">Fitur Unggulan Aplikasi Kasir Modern</h1>
     <p class="text-xl text-center text-gray-300 mb-16">Temukan fitur-fitur terbaik yang dirancang untuk membantu bisnis Anda tumbuh dan sukses di era digital.</p>
 
