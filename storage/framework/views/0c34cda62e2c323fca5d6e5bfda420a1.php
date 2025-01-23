@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/layouts/app.blade.php ENDPATH**/ ?>
