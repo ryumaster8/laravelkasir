@@ -1,6 +1,4 @@
-<?= $this->extend('layouts/main'); ?>
-
-<?= $this->section('content'); ?>
+<?php $__env->startSection('content'); ?>
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
@@ -64,25 +62,25 @@
         <p class="text-light">Dari Free hingga Platinum, kami hadir untuk mendukung kesuksesan bisnis Anda. Pilih paket yang sesuai dan nikmati fitur-fitur unggulan kami.</p>
     </div>
     <div class="row justify-content-center text-center">
-        <?php foreach ($memberships as $membership): ?>
+        <?php $__currentLoopData = $memberships; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membership): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
                 <div class="card membership-card border-warning bg-dark text-light">
                     <div class="card-body">
-                        <h3 class="card-title"><?= esc($membership['membership_name']); ?></h3>
-                        <p class="card-text text-muted">Rp<?= number_format($membership['biaya_bulanan'], 0, ',', '.'); ?> / bulan</p>
-                        <h4 class="fw-bold">Limit Cabang: <?= esc($membership['branch_limit']); ?></h4>
+                        <h3 class="card-title"><?php echo e($membership->membership_name); ?></h3>
+                        <p class="card-text text-muted">Rp<?php echo e(number_format($membership->biaya_bulanan, 0, ',', '.')); ?> / bulan</p>
+                        <h4 class="fw-bold">Limit Cabang: <?php echo e($membership->branch_limit); ?></h4>
                         <ul class="feature-list text-start">
-                            <li>Limit Transaksi Harian: <?= esc($membership['daily_transaction_limit']); ?></li>
-                            <li>Limit Penambahan Produk Harian: <?= esc($membership['daily_product_addition_limit']); ?></li>
-                            <li>Limit Pengguna: <?= esc($membership['user_limit']); ?></li>
-                            <li>Fitur Grosir: <?= $membership['wholesale_feature'] ? 'Ya' : 'Tidak'; ?></li>
-                            <li>Fitur Chat: <?= $membership['chat_feature'] ? 'Ya' : 'Tidak'; ?></li>
+                            <li>Limit Transaksi Harian: <?php echo e($membership->daily_transaction_limit); ?></li>
+                            <li>Limit Penambahan Produk Harian: <?php echo e($membership->daily_product_addition_limit); ?></li>
+                            <li>Limit Pengguna: <?php echo e($membership->user_limit); ?></li>
+                            <li>Fitur Grosir: <?php echo e($membership->wholesale_feature ? 'Ya' : 'Tidak'); ?></li>
+                            <li>Fitur Chat: <?php echo e($membership->chat_feature ? 'Ya' : 'Tidak'); ?></li>
                         </ul>
-                        <a href="<?= base_url('membership/details'); ?>" class="btn btn-outline-warning">Detail</a>
+                        <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-warning">Daftar Sekarang</a>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
 </section>
 
@@ -121,4 +119,5 @@
         </div>
     </div>
 </section>
-<?= $this->endSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/front/home.blade.php ENDPATH**/ ?>

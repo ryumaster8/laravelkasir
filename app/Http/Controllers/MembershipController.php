@@ -13,6 +13,17 @@ use App\Models\ModelMembershipHistory;
 
 class MembershipController extends Controller
 {
+    public function details()
+    {
+        $memberships = ModelMembership::where('is_active', true)
+            ->orderBy('rank', 'asc')
+            ->get();
+            
+        return view('membership.details', [
+            'memberships' => $memberships
+        ]);
+    }
+    
     // ...existing code...
 
     public function upgradeRequests()

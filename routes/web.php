@@ -31,6 +31,15 @@ use App\Http\Controllers\UserPermissionsController;
 use App\Http\Controllers\WholesaleCustomersController;
 use App\Http\Controllers\PaymentConfirmationController;
 use App\Http\Controllers\MembershipChangeRequestController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FrontController;
+
+// Front Pages Routes
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/features', [FrontController::class, 'features'])->name('features');
+Route::get('/membership/details', [FrontController::class, 'membershipDetails'])->name('membership.details');
+Route::get('/testimonials', [FrontController::class, 'testimonials'])->name('testimonials');
+Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 
 // Autentikasi
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -485,6 +494,10 @@ Route::delete('/owner/membership/delete-request/{id}', [MembershipChangeRequestC
 
 Route::get('/dashboard/saran/create', [SaranController::class, 'create'])->name('saran.create');
 Route::post('/dashboard/saran', [SaranController::class, 'store'])->name('saran.store');
+
+// ...existing code...
+
+Route::get('/membership/details', [MembershipController::class, 'details'])->name('membership.details');
 
 // ...existing code...
 

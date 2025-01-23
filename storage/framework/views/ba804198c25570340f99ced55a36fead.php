@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Aplikasi Kasir Modern' }}</title>
+    <title><?php echo e($title ?? 'Aplikasi Kasir Modern'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Global Styles for Dark Theme */
@@ -61,7 +61,7 @@
 
         /* Hero Section */
         .hero {
-            background: url('{{ asset('uploads/intro.jpg') }}') no-repeat center center;
+            background: url('<?php echo e(asset('uploads/intro.jpg')); ?>') no-repeat center center;
             background-size: cover;
             height: 600px;
             color: #ffffff;
@@ -174,19 +174,19 @@
             <nav>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="{{ url('/') }}" class="nav-link">Home</a>
+                        <a href="<?php echo e(url('/')); ?>" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/features') }}" class="nav-link">Fitur</a>
+                        <a href="<?php echo e(url('/features')); ?>" class="nav-link">Fitur</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/membership/details') }}" class="nav-link">Paket</a>
+                        <a href="<?php echo e(url('/membership/details')); ?>" class="nav-link">Paket</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/testimonials') }}" class="nav-link">Testimoni</a>
+                        <a href="<?php echo e(url('/testimonials')); ?>" class="nav-link">Testimoni</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/contact') }}" class="nav-link">Hubungi Kami</a>
+                        <a href="<?php echo e(url('/contact')); ?>" class="nav-link">Hubungi Kami</a>
                     </li>
                 </ul>
             </nav>
@@ -196,7 +196,7 @@
 
     <!-- Content -->
     <main>
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <!-- Footer -->
@@ -213,4 +213,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
+</html><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/layouts/main.blade.php ENDPATH**/ ?>
