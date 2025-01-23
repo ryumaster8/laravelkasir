@@ -1,87 +1,131 @@
 @extends('layouts.main')
 
 @section('content')
-<section class="py-16 px-4 max-w-7xl mx-auto">
-    <h1 class="text-4xl font-bold text-center my-24 text-white">Fitur Unggulan Aplikasi Kasir Modern</h1>
-    <p class="text-xl text-center text-gray-300 mb-16">Temukan fitur-fitur terbaik yang dirancang untuk membantu bisnis Anda tumbuh dan sukses di era digital.</p>
+<div class="container">
+    <h2 class="mt-4 mb-4 text-center">Fitur Unggulan Aplikasi Kasir Modern</h2>
+     <div class="mb-4 text-center">
+        <p>
+        Temukan fitur-fitur terbaik yang dirancang untuk membantu bisnis Anda tumbuh dan sukses di era digital.
+        </p>
+    </div>
 
-    <div class="space-y-16">
-        <!-- Manajemen Stok -->
-        <div class="feature-block">
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">1. Manajemen Stok yang Efisien</h2>
-            <p class="text-gray-300">
-                Jangan biarkan stok Anda menjadi masalah besar. Dengan fitur <span class="font-semibold">Manajemen Stok</span>, 
-                Anda dapat melacak ketersediaan barang secara real-time, menghindari kekurangan stok, dan bahkan mendapatkan 
-                pengingat untuk barang-barang yang hampir habis. Sistem kami dirancang untuk mempermudah Anda mengelola stok 
-                dengan antarmuka yang sederhana dan ramah pengguna.
-            </p>
-        </div>
-
-        <!-- Laporan Penjualan -->
-        <div class="feature-block">
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">2. Laporan Penjualan yang Detail</h2>
-            <p class="text-gray-300">
-                Ketahui dengan pasti bagaimana performa penjualan Anda. Fitur <span class="font-semibold">Laporan Penjualan</span> 
-                memberikan Anda laporan harian, mingguan, hingga bulanan secara otomatis. Semua data ini dapat diakses dengan mudah, 
-                membantu Anda membuat keputusan yang lebih cerdas dan strategis untuk bisnis Anda.
-            </p>
-        </div>
-
-        <!-- Multi-Outlet -->
-        <div class="feature-block">
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">3. Dukungan Multi-Outlet</h2>
-            <p class="text-gray-300">
-                Apakah Anda memiliki lebih dari satu cabang? Tidak masalah! Aplikasi kami dirancang untuk mendukung 
-                <span class="font-semibold">Multi-Outlet</span>. Anda dapat memantau penjualan, stok, dan laporan dari 
-                semua cabang dalam satu platform terpusat.
-            </p>
-        </div>
-
-        <!-- More features... -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <div class="feature-card">
-                <h3 class="text-xl font-bold text-yellow-400 mb-3">Integrasi Pembayaran Digital</h3>
-                <p class="text-gray-300">Terima pembayaran melalui e-wallet, transfer bank, dan kartu kredit dengan mudah.</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3 class="text-xl font-bold text-yellow-400 mb-3">Pengingat Stok Habis</h3>
-                <p class="text-gray-300">Dapatkan notifikasi otomatis saat stok produk hampir habis.</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3 class="text-xl font-bold text-yellow-400 mb-3">Fitur Diskon</h3>
-                <p class="text-gray-300">Kelola berbagai jenis diskon dan promosi dengan mudah.</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3 class="text-xl font-bold text-yellow-400 mb-3">Kustomisasi Nota Kasir</h3>
-                <p class="text-gray-300">Sesuaikan nota kasir dengan branding bisnis Anda.</p>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">1. Manajemen Stok yang Efisien</h5>
+                    <p class="card-text">
+                    Jangan biarkan stok Anda menjadi masalah besar. Dengan fitur Manajemen Stok, Anda dapat melacak ketersediaan barang secara real-time, menghindari kekurangan stok, dan bahkan mendapatkan pengingat untuk barang-barang yang hampir habis. Sistem kami dirancang untuk mempermudah Anda mengelola stok dengan antarmuka yang sederhana dan ramah pengguna.
+                    </p>
+                </div>
             </div>
         </div>
-
-        <!-- CTA Section -->
-        <div class="text-center mt-16">
-            <h2 class="text-3xl font-bold text-white mb-6">Mulai Digitalisasi Bisnis Anda Sekarang!</h2>
-            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-                Jangan biarkan bisnis Anda tertinggal di era digital ini. Dengan aplikasi kasir modern kami, 
-                Anda bisa mengelola bisnis dengan lebih efisien.
-            </p>
-            <a href="{{ route('membership.details') }}" 
-               class="inline-block bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors">
-                Lihat Paket Membership
-            </a>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">2. Laporan Penjualan yang Detail</h5>
+                    <p class="card-text">
+                     Ketahui dengan pasti bagaimana performa penjualan Anda. Fitur Laporan Penjualan memberikan Anda laporan harian, mingguan, hingga bulanan secara otomatis. Semua data ini dapat diakses dengan mudah, membantu Anda membuat keputusan yang lebih cerdas dan strategis untuk bisnis Anda.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">3. Dukungan Multi-Outlet</h5>
+                    <p class="card-text">
+                     Apakah Anda memiliki lebih dari satu cabang? Tidak masalah! Aplikasi kami dirancang untuk mendukung Multi-Outlet. Anda dapat memantau penjualan, stok, dan laporan dari semua cabang dalam satu platform terpusat. Hal ini mempermudah pengelolaan bisnis besar tanpa kerepotan.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">4. Integrasi Pembayaran Digital</h5>
+                    <p class="card-text">
+                     Kami memahami bahwa pelanggan Anda menginginkan kemudahan dalam pembayaran. Oleh karena itu, fitur Integrasi Pembayaran Digital memungkinkan Anda menerima pembayaran melalui e-wallet, transfer bank, atau kartu kredit. Dengan ini, Anda tidak hanya memudahkan pelanggan, tetapi juga mempercepat proses transaksi.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">5. Pengingat Stok Habis</h5>
+                    <p class="card-text">
+                     Jangan sampai pelanggan kecewa karena produk favorit mereka habis. Fitur Pengingat Stok Habis membantu Anda untuk tetap siaga terhadap barang-barang yang stoknya menipis. Anda akan menerima notifikasi sebelum stok benar-benar kosong, sehingga Anda bisa segera mengisi ulang.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">6. Laporan Transaksi yang Akurat</h5>
+                    <p class="card-text">
+                      Tidak perlu repot mencatat transaksi secara manual. Aplikasi kami menyediakan fitur Laporan Transaksi yang mencatat setiap transaksi secara otomatis dan real-time. Dengan laporan ini, Anda dapat mengetahui arus keuangan bisnis Anda secara transparan dan mudah.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">7. Fitur Diskon</h5>
+                    <p class="card-text">
+                      Menarik pelanggan dengan diskon kini semakin mudah. Fitur Diskon memungkinkan Anda memberikan harga spesial kepada pelanggan dengan sistem yang terintegrasi langsung ke sistem kasir. Ini adalah cara terbaik untuk meningkatkan loyalitas pelanggan dan menarik lebih banyak pembeli.
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">8. Kustomisasi Nota Kasir</h5>
+                   <p class="card-text">
+                     Buat pengalaman pelanggan Anda lebih berkesan dengan nota kasir yang dikustomisasi. Fitur Kustomisasi Nota Kasir memungkinkan Anda menambahkan logo, informasi toko, hingga pesan khusus untuk pelanggan. Dengan ini, Anda bisa meningkatkan citra profesional bisnis Anda.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">9. Fitur Grosir</h5>
+                   <p class="card-text">
+                    Untuk Anda yang menjalankan bisnis grosir, fitur Grosir memberikan solusi mudah untuk mengelola penjualan dalam jumlah besar. Dengan fitur ini, Anda dapat menentukan harga khusus untuk pembelian dalam jumlah tertentu, membantu Anda melayani pelanggan grosir dengan lebih efisien.
+                   </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">10. Fitur Chat dan Log Aktivitas</h5>
+                    <p class="card-text">
+                    Tingkatkan komunikasi tim Anda dengan fitur Chat. Selain itu, fitur Log Aktivitas memungkinkan Anda memantau setiap aktivitas pengguna di sistem, memberikan transparansi dan keamanan yang lebih baik untuk bisnis Anda.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-</section>
-
-<style>
-    .feature-block {
-        @apply bg-gray-800 rounded-lg p-8 shadow-lg hover:bg-gray-700 transition-colors duration-300;
-    }
-    
-    .feature-card {
-        @apply bg-gray-800 rounded-lg p-6 shadow-lg hover:bg-gray-700 transition-colors duration-300;
-    }
-</style>
+    <div class="mt-4 text-center">
+        <h3>Kenapa Harus Memilih Aplikasi Kasir Kami?</h3>
+            <p>
+            Kami tidak hanya memberikan fitur-fitur hebat, tetapi juga pengalaman yang mudah digunakan. Dengan antarmuka yang ramah pengguna, Anda tidak perlu khawatir tentang pelatihan yang rumit. Selain itu, tim dukungan kami siap membantu Anda kapan saja, memastikan bisnis Anda berjalan lancar tanpa hambatan.
+            </p>
+            <p>
+            Aplikasi kasir kami telah digunakan oleh ribuan bisnis di berbagai sektor, mulai dari toko kelontong, minimarket, hingga supermarket besar. Setiap fitur dirancang untuk memenuhi kebutuhan bisnis Anda, baik yang sedang berkembang maupun yang sudah mapan.
+            </p>
+    </div>
+        <div class="mt-4 mb-4 text-center">
+        <p class="font-weight-bold">Mulai Digitalisasi Bisnis Anda Sekarang!</p>
+            <p>
+            Jangan biarkan bisnis Anda tertinggal di era digital ini. Dengan aplikasi kasir modern kami, Anda bisa mengelola bisnis dengan lebih efisien, menarik lebih banyak pelanggan, dan meningkatkan keuntungan. Daftar sekarang dan rasakan manfaatnya langsung di bisnis Anda!
+           </p>
+        <a href="{{ route('membership.details') }}" class="btn btn-primary">Lihat Paket Membership</a>
+        </div>
+</div>
 @endsection

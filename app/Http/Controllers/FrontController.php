@@ -14,13 +14,8 @@ class FrontController extends Controller
 
     public function membershipDetails()
     {
-        $memberships = ModelMembership::where('is_active', true)
-            ->orderBy('rank', 'asc')
-            ->get();
-            
-        return view('front.membership-details', [
-            'memberships' => $memberships
-        ]);
+        $memberships = ModelMembership::all();
+        return view('front.membership-details', ['memberships' => $memberships]); // Tambahkan prefix `front.`
     }
 
     public function testimonials()

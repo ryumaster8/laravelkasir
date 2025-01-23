@@ -33,13 +33,15 @@ use App\Http\Controllers\PaymentConfirmationController;
 use App\Http\Controllers\MembershipChangeRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ContactController; // Tambahkan import ContactController
 
 // Front Pages Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/features', [FrontController::class, 'features'])->name('features');
 Route::get('/membership/details', [FrontController::class, 'membershipDetails'])->name('membership.details');
 Route::get('/testimonials', [FrontController::class, 'testimonials'])->name('testimonials');
-Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact'); // Gunakan ContactController@show
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store'); // Gunakan ContactController@store
 
 // Autentikasi
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -493,16 +495,12 @@ Route::delete('/owner/membership/delete-request/{id}', [MembershipChangeRequestC
 // ...existing code...
 
 Route::get('/dashboard/saran/create', [SaranController::class, 'create'])->name('saran.create');
-Route::post('/dashboard/saran', [SaranController::class, 'store'])->name('saran.store');
+// Route::post('/dashboard/saran', [SaranController::class, 'store'])->name('saran.store'); //hapus rute ini karena sudah kita ganti
 
 // ...existing code...
 
-Route::get('/membership/details', [MembershipController::class, 'details'])->name('membership.details');
-
-// ...existing code...
-
-
-
+// Route::get('/membership/details', [MembershipController::class, 'details'])->name('membership.details'); // hapus rute ini
+Route::get('/membership/details', [FrontController::class, 'membershipDetails'])->name('membership.details');
 
 // ...existing code...
 
@@ -512,3 +510,6 @@ Route::get('/membership/details', [MembershipController::class, 'details'])->nam
 // ...existing code...
 
 
+
+
+// ...existing code...

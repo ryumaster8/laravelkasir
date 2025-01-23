@@ -15,13 +15,8 @@ class MembershipController extends Controller
 {
     public function details()
     {
-        $memberships = ModelMembership::where('is_active', true)
-            ->orderBy('rank', 'asc')
-            ->get();
-            
-        return view('membership.details', [
-            'memberships' => $memberships
-        ]);
+        $memberships = ModelMembership::orderBy('rank', 'asc')->get();
+        return view('front.membership-details', compact('memberships'));
     }
     
     // ...existing code...

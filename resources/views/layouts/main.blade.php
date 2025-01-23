@@ -202,7 +202,7 @@
     <!-- Footer -->
     <footer>
         <div>
-            <p>© 2024 Aplikasi Kasir Modern. All Rights Reserved.</p>
+            <p>© 2025 Aplikasi Kasir Modern. All Rights Reserved.</p>
             <ul class="nav justify-content-center">
                 <li class="nav-item"><a href="#" class="nav-link">Facebook</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Twitter</a></li>

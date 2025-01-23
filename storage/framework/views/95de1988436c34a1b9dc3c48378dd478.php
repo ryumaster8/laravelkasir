@@ -1,102 +1,110 @@
-<?= $this->extend('layouts/main'); ?>
-
-<?= $this->section('content'); ?>
-
-<section class="py-5 bg-dark text-white">
-    <div class="text-center mb-5">
-        <h1 class="display-4">Testimoni Pengguna</h1>
-        <p class="lead">Apa kata pelanggan kami tentang aplikasi kasir modern yang kami tawarkan?</p>
+<?php $__env->startSection('content'); ?>
+<div class="container">
+    <h2 class="mt-4 mb-4 text-center">Testimoni Pengguna</h2>
+    <div class="mb-4 text-center">
+        <p>
+            Apa kata pelanggan kami tentang aplikasi kasir modern yang kami tawarkan?
+        </p>
     </div>
-    <div class="row px-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
                     <p class="card-text">
                         "Aplikasi ini sangat membantu bisnis saya. Dengan fitur laporan yang lengkap, saya dapat memantau penjualan dengan mudah!"
                     </p>
-                    <h5 class="card-title">Budi Santoso</h5>
-                    <p class="card-subtitle text-muted">Pemilik Minimarket</p>
+                    <p class="card-text text-end">
+                        <strong>Budi Santoso</strong><br>
+                        <small>Pemilik Minimarket</small>
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
                     <p class="card-text">
                         "Integrasi pembayaran digital benar-benar mempermudah pelanggan saya. Selain itu, manajemen stoknya sangat praktis!"
                     </p>
-                    <h5 class="card-title">Maria</h5>
-                    <p class="card-subtitle text-muted">Pemilik Toko Kelontong</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
-                <div class="card-body">
-                    <p class="card-text">
-                        "Aplikasi kasir modern ini sangat mudah digunakan. Dukungan timnya juga luar biasa cepat dan membantu!"
+                    <p class="card-text text-end">
+                        <strong>Maria</strong><br>
+                        <small>Pemilik Toko Kelontong</small>
                     </p>
-                    <h5 class="card-title">Rizky</h5>
-                    <p class="card-subtitle text-muted">Pemilik Konter HP</p>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row px-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
                     <p class="card-text">
+                         "Aplikasi kasir modern ini sangat mudah digunakan. Dukungan timnya juga luar biasa cepat dan membantu!"
+                    </p>
+                    <p class="card-text text-end">
+                         <strong>Rizky</strong><br>
+                         <small>Pemilik Konter HP</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                   <p class="card-text">
                         "Fitur grosirnya luar biasa! Saya bisa mengatur harga khusus untuk pelanggan yang membeli dalam jumlah banyak."
-                    </p>
-                    <h5 class="card-title">Andi</h5>
-                    <p class="card-subtitle text-muted">Pemilik Grosir</p>
+                   </p>
+                    <p class="card-text text-end">
+                        <strong>Andi</strong><br>
+                        <small>Pemilik Grosir</small>
+                   </p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
-                    <p class="card-text">
-                        "Manajemen stoknya sangat membantu bisnis saya. Saya tidak pernah lagi kehabisan barang yang populer."
+                   <p class="card-text">
+                       "Manajemen stoknya sangat membantu bisnis saya. Saya tidak pernah lagi kehabisan barang yang populer."
+                   </p>
+                    <p class="card-text text-end">
+                        <strong>Siti</strong><br>
+                       <small>Pemilik Minimarket</small>
                     </p>
-                    <h5 class="card-title">Siti</h5>
-                    <p class="card-subtitle text-muted">Pemilik Minimarket</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+         <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
-                    <p class="card-text">
-                        "Tampilan aplikasinya sangat ramah pengguna. Bahkan staf saya yang tidak paham teknologi pun bisa langsung menggunakannya."
+                   <p class="card-text">
+                      "Tampilan aplikasinya sangat ramah pengguna. Bahkan staf saya yang tidak paham teknologi pun bisa langsung menggunakannya."
+                   </p>
+                    <p class="card-text text-end">
+                        <strong>Lukman</strong><br>
+                        <small>Pemilik Supermarket</small>
                     </p>
-                    <h5 class="card-title">Lukman</h5>
-                    <p class="card-subtitle text-muted">Pemilik Supermarket</p>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- New Testimonial -->
-    <div class="row px-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-light mb-4 bg-secondary">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
                 <div class="card-body">
-                    <p class="card-text">
+                     <p class="card-text">
                         "Saya tidak perlu ribet install aplikasi pada komputer dan memanggil tim IT khusus untuk menjalankan aplikasi kasir ini, cukup buka browser dan langsung bisa transaksi online. Ini solusi sempurna untuk bisnis saya!"
                     </p>
-                    <h5 class="card-title">Agus Pratama</h5>
-                    <p class="card-subtitle text-muted">Pemilik Cafe & Restoran</p>
+                    <p class="card-text text-end">
+                        <strong>Agus Pratama</strong><br>
+                         <small>Pemilik Cafe & Restoran</small>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End of New Testimonial -->
-    <div class="text-center mt-5">
-        <h2 class="mb-4">Bagaimana dengan Anda?</h2>
+   <div class="mt-4 mb-4 text-center">
+        <h3>Bagaimana dengan Anda?</h3>
         <p>Rasakan manfaat aplikasi kasir modern kami dan jadilah bagian dari pelanggan yang puas.</p>
-        <a href="<?= base_url('/membership/details'); ?>" class="btn btn-primary btn-lg">Lihat Paket Membership</a>
+        <a href="<?php echo e(route('membership.details')); ?>" class="btn btn-primary">Lihat Paket Membership</a>
     </div>
-</section>
-
-<?= $this->endSection(); ?><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/front/testimonials.blade.php ENDPATH**/ ?>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/front/testimonials.blade.php ENDPATH**/ ?>
