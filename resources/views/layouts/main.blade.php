@@ -1,104 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Aplikasi Kasir Modern' }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles for Dark Theme */
+        body {
+            background-color: #121212;
+            /* Dark background for body */
+            color: #e0e0e0;
+            /* Light text color */
+        }
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" integrity="sha512-L4uW0l2vC/E2sWzU72iB1yD6g/I6Y0L9K/76F/7wL7z5I1s4u1/6Zq5S5G3bZ0L88L4wL6ZzE3y2z4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            background: #1f1f1f;
+            /* Dark background for header */
+            color: #ffffff;
+            /* Light text in header */
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        header .nav-link {
+            color: #e0e0e0;
+            /* Light color for navigation links */
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+            margin: 0 15px;
+        }
+
+        header .nav-link:hover {
+            color: #ffdd57;
+            /* Highlight color on hover */
+        }
+
+        header .nav-item {
+            position: relative;
+        }
+
+        /* Add underline effect on hover for navigation items */
+        header .nav-item:hover::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #ffdd57;
+            bottom: 0;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('{{ asset('uploads/intro.jpg') }}') no-repeat center center;
+            background-size: cover;
+            height: 600px;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
+            /* Darken the hero background */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero a {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            background-color: #ffdd57;
+            /* Yellow button */
+            color: #121212;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero a:hover {
+            background-color: #e0c123;
+            /* Darker yellow on hover */
+        }
+
+        /* Footer */
+        footer {
+            background: #1f1f1f;
+            /* Dark background for footer */
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        footer a {
+            color: #ffdd57;
+            /* Highlight links */
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dark Mode Form Elements */
+        .form-control {
+            background-color: #333333;
+            /* Dark input fields */
+            color: #e0e0e0;
+            /* Light text inside input */
+            border: 1px solid #444444;
+            /* Border color */
+        }
+
+        .btn-primary {
+            background-color: #ffdd57;
+            /* Primary button with yellow */
+            border: none;
+            color: #121212;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0c123;
+            /* Darker yellow on hover */
+        }
+
+        .table {
+            background-color: #1f1f1f;
+            /* Dark table background */
+            color: #e0e0e0;
+            /* Light text in table */
+        }
+
+        .table th,
+        .table td {
+            border-color: #333333;
+            /* Dark border for table */
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #333333;
+            /* Darker row on hover */
+        }
+    </style>
 </head>
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/" class="nav-link">Home</a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="/" class="brand-link">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="info">
-                        <a href="#" class="d-block">Admin</a>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    @include('layouts.sidebar')
-                </nav>
-                <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
-        </aside>
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">@yield('title')</h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">@yield('title')</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
-
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
-                    @yield('content')
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content -->
+<body>
+    <!-- Header -->
+    <header>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h3">DigiSoft</h1>
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="{{ url('/') }}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/features') }}" class="nav-link">Fitur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/membership/details') }}" class="nav-link">Paket</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/testimonials') }}" class="nav-link">Testimoni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/contact') }}" class="nav-link">Hubungi Kami</a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- <a href="#cta" class="btn btn-light">Coba Gratis</a> -->
         </div>
-        <!-- /.content-wrapper -->
+    </header>
 
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
-            <strong>Copyright © 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-        </footer>
-    </div>
-    <!-- ./wrapper -->
+    <!-- Content -->
+    <main>
+        @yield('content')
+    </main>
 
-    <!-- REQUIRED SCRIPTS -->
-
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js" integrity="sha512-u27E2q69hK/H27v86T30o8d66j8UfV9u7sB7KkH0zQy9t6vD0yP0T+qj7q76/mJjX3qL8tGf8t0j0q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <!-- Footer -->
+    <footer>
+        <div>
+            <p>© 2024 Aplikasi Kasir Modern. All Rights Reserved.</p>
+            <ul class="nav justify-content-center">
+                <li class="nav-item"><a href="#" class="nav-link">Facebook</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Twitter</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Instagram</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
