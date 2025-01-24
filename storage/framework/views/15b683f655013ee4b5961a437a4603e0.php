@@ -63,8 +63,8 @@
     </div>
     <div class="row justify-content-center text-center">
         <?php $__currentLoopData = $memberships; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membership): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-                <div class="card membership-card border-warning bg-dark text-light">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card membership-card border-warning bg-dark text-light" style="transform: scale(1.05);">
                     <div class="card-body">
                         <h3 class="card-title"><?php echo e($membership->membership_name); ?></h3>
                         <p class="card-text text-muted">Rp<?php echo e(number_format($membership->biaya_bulanan, 0, ',', '.')); ?> / bulan</p>
