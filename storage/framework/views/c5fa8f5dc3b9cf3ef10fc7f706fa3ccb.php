@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-md">
@@ -47,7 +45,7 @@
                     <select name="role_id" id="role_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         <option value="">Pilih Role</option>
                         <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($role->role_name !== 'owner'): ?>
+                            <?php if($role->role_name !== 'owner' && $role->role_name !== 'superadmin'): ?>
                                 <option value="<?php echo e($role->role_id); ?>" <?php echo e(old('role_id', isset($userPermission) ? $userPermission->role_id : '') == $role->role_id ? 'selected' : ''); ?>>
                                     <?php echo e($role->role_name); ?>
 

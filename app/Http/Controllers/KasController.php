@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ModelCashRegisters;
+use Carbon\Carbon;
 use App\Models\ModelUser;
 use App\Models\ModelOutlet;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\ModelActivityLog;
+use App\Models\ModelCashRegister;
+use App\Models\ModelCashRegisters;
+use Illuminate\Support\Facades\Auth;
 
 class KasController extends Controller
 {
@@ -316,5 +317,43 @@ class KasController extends Controller
         ]);
 
         return redirect()->route('penarikan')->with('success', 'Penarikan berhasil dihapus!');
+    }
+
+    public function dashboard()
+    {
+        $today = Carbon::today();
+        $outletId = session('outlet_id');
+
+        // Get kas awal for today using opening_balance
+        $kasAwal = ModelCashRegisters::where('outlet_id', $outletId)
+            ->whereDate('date', $today)
+            ->where('opening_balance', '>', 0)
+            ->first();
+
+        // Get cash additions for today using total_received
+        $penambahan = ModelCashRegisters::where('outlet_id', $outletId)
+            ->whereDate('date', $today)
+            ->where('total_received', '>', 0)
+            ->get();
+        
+        $totalPenambahan = $penambahan->sum('total_received');
+        $jumlahPenambahan = $penambahan->count();
+
+        // Get cash withdrawals for today
+        $penarikan = ModelCashRegisters::where('outlet_id', $outletId)
+            ->whereDate('date', $today)
+            ->where('total_paid_out', '>', 0)
+            ->get();
+        
+        $totalPenarikan = $penarikan->sum('total_paid_out');
+        $jumlahPenarikan = $penarikan->count();
+
+        return view('admin.kas.dashboard', compact(
+            'kasAwal',
+            'totalPenambahan',
+            'jumlahPenambahan',
+            'totalPenarikan',
+            'jumlahPenarikan'
+        ));
     }
 }

@@ -25,7 +25,7 @@
         </div>
 
         <!-- Search and Filter -->
-        <div class="bg-white rounded-lg shadow mb-6">
+        {{-- <div class="bg-white rounded-lg shadow mb-6">
             <div class="p-4 sm:p-6 border-b border-gray-200">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Products Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden">

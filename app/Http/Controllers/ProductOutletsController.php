@@ -23,6 +23,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ModelOutletGroup; // Tambahkan ModelOutletGroup
 use Illuminate\Support\Facades\Validator; // Import class Validator
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Supplier;
+use App\Models\ModelCategories; // Update this import
+use App\Models\ModelSuppliers; // Update this import
 
 class ProductOutletsController extends Controller
 {
@@ -121,5 +126,15 @@ class ProductOutletsController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan stok');
         }
+    }
+
+    public function edit($id)
+    {
+        $product = ModelProduct::findOrFail($id);
+        $categories = ModelCategories::all(); // Update model name
+        $suppliers = ModelSuppliers::all(); // Update model name
+        $user = Auth::user();
+
+        return view('admin.products.edit_self_product', compact('product', 'categories', 'suppliers', 'user'));
     }
 }

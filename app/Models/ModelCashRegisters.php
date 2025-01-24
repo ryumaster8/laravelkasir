@@ -15,13 +15,12 @@ class ModelCashRegisters extends Model
     protected $fillable = [
         'outlet_id',
         'user_id',
-        'opening_balance',
-        'closing_balance',
-        'total_received',
-        'description',
+        'initial_cash',
+        'total_paid_in',
         'total_paid_out',
-        'date',
-        'status',
+        'type',
+        'description',
+        'date'
     ];
 
     public function user()

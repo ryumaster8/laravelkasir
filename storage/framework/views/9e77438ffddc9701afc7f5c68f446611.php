@@ -1,7 +1,7 @@
 <!-- Sidebar -->
         <aside class="w-64 bg-gray-800 transition-transform duration-300">
             <div class="sidebar-header">
-                <h1 class="text-white text-2xl font-semibold">Dashboard</h1>
+                <a href="/dashboard" class="text-white text-2xl font-semibold">Dashboard</a>
                 <!-- Tambahkan form pencarian -->
                 <div class="mt-4 relative">
                     <input type="text" 
@@ -139,7 +139,10 @@
                                     <a href="<?php echo e(route('products.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tambah Produk</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(route('products-all-outlets')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Produk</a>
+                                    <a href="<?php echo e(route('self-products')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Produk</a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo e(route('products-all-outlets')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampil Produk All Outlet</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo e(route('products.transfer-requests-submission')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengajuan Pemindahan Stok</a>

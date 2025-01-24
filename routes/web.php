@@ -244,6 +244,9 @@ Route::get('dashboard/penarikan/{id}/edit', [KasController::class, 'editPenarika
 Route::put('dashboard/penarikan/{id}', [KasController::class, 'updatePenarikan'])->name('penarikan.update');
 Route::delete('dashboard/penarikan/{id}', [KasController::class, 'destroyPenarikan'])->name('penarikan.destroy');
 
+// Cash Register Dashboard
+Route::get('/dashboard/cashier', [KasController::class, 'dashboard'])->name('kas.dashboard');
+
 // Session
 Route::get('/tampilkan-semua-session', [SessionController::class, 'index'])->name('tampilkan-semua-session');
 

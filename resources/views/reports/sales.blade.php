@@ -64,13 +64,14 @@
                         Filter
                     </button>
                 </form>
-                <button onclick="exportToExcel()" 
+                {{-- <button onclick="exportToExcel()" 
                         class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 whitespace-nowrap">
                     Export Excel
-                </button>
+                </button> --}}
             </div>
         </div>
         
+        {{-- 
         <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <!-- Total Transaksi -->
@@ -96,7 +97,7 @@
                     <p class="text-sm font-medium opacity-75">Rata-rata Transaksi</p>
                     <p class="text-3xl font-bold mt-2">Rp {{ number_format($summary['average_transaction'], 0, ',', '.') }}</p>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="overflow-x-auto">
                 <table id="salesTable" class="min-w-full divide-y divide-gray-200">

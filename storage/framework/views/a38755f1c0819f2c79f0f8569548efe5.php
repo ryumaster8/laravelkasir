@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (isset($component)) { $__componentOriginalbb0843bd48625210e6e530f88101357e = $component; } ?>
@@ -91,38 +90,7 @@
         </div>
 
         <!-- Baris 2 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-cyan-600 text-white p-4">
-                Servis Dalam Proses
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Servis Saat Ini</h5>
-                <p class="mb-4">Ada <strong>8</strong> servis yang sedang diproses saat ini.</p>
-                <a href="/admin/services" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-red-600 text-white p-4">
-                Servis Selesai
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Total Servis Selesai</h5>
-                <p class="mb-4">Ada <strong></strong> servis yang telah selesai.</p>
-                <a href="/admin/services/completed" class="inline-block px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-600 text-white p-4">
-                Total Servis
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Servis Keseluruhan</h5>
-                <p class="mb-4"><strong></strong> layanan servis telah terdaftar.</p>
-                <a href="/admin/services" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
-            </div>
-        </div>
+        
 
         <!-- Baris 3 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -132,7 +100,7 @@
             <div class="p-4">
                 <h5 class="font-medium text-lg mb-2">Permintaan Persetujuan</h5>
                 <p class="mb-4">Ada <strong></strong> permintaan pemindahan stok yang menunggu persetujuan.</p>
-                <a href="/admin/products/transfer-requests" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
+                <a href="<?php echo e(route('products.transfer-requests')); ?>" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
             </div>
         </div>
 
@@ -143,7 +111,7 @@
             <div class="p-4">
                 <h5 class="font-medium text-lg mb-2">Pengajuan Terkini</h5>
                 <p class="mb-4">Ada <strong></strong> pengajuan pemindahan stok baru yang menunggu persetujuan.</p>
-                <a href="/admin/products/submission-transfer-requests" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
+                <a href="<?php echo e(route('products.transfer-requests-submission')); ?>" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
             </div>
         </div>
 
@@ -154,7 +122,7 @@
             <div class="p-4">
                 <h5 class="font-medium text-lg mb-2">Catatan Aktivitas</h5>
                 <p class="mb-4">Lihat log aktivitas terbaru sistem.</p>
-                <a href="/admin/activity-log" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
+                <a href="/dashboard/activity-logs" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
             </div>
         </div>
     </div>
