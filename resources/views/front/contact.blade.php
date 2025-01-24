@@ -16,7 +16,7 @@
                 Jika Anda memiliki pertanyaan, butuh bantuan, atau ingin berbicara dengan tim kami, berikut informasi kontak kami:
             </p>
             <ul class="list-unstyled">
-                <li><strong>Alamat:</strong> Komplek Pondok Indah Jl. Metro Duta Kav. 17, Pondok Indah, Kebayoran Lama, Jakarta Selatan, DKI Jakarta 12310.</li>
+                <li><strong>Alamat:</strong> Komplek Elit Bukit Indah Residence, Jl. Merapi View No. 23, Bukit Indah, Kecamatan Sleman, Yogyakarta 55281, Indonesia.</li>
                 <li><strong>Email:</strong> <a href="mailto:info@digisoftstudio.com">info@digisoftstudio.com</a></li>
                 <li><strong>Jam Operasional:</strong> Senin - Jumat, 08:00 - 17:00</li>
             </ul>

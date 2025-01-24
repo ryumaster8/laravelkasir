@@ -48,6 +48,7 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/auth/doLogin', [AuthController::class, 'doLogin']);
 Route::get('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/auth/register', [AuthController::class, 'register'])->name('register');
+Route::post('/auth/register', [AuthController::class, 'processRegister'])->name('process-register'); // Add this line
 Route::get('/confirm-payment/{user_id}', [PaymentConfirmationController::class, 'confirmPayment'])->name('confirm.payment');
 Route::post('/confirm-payment/{user_id}', [PaymentConfirmationController::class, 'processConfirmPayment'])->name('process.confirm.payment');
 Route::get('/confirm-payment-success', [PaymentConfirmationController::class, 'confirmPaymentSuccess'])->name('confirm.payment.success');

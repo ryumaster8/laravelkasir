@@ -179,9 +179,7 @@
                     <li class="nav-item">
                         <a href="<?php echo e(url('/features')); ?>" class="nav-link">Fitur</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?php echo e(url('/membership/details')); ?>" class="nav-link">Paket</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a href="<?php echo e(url('/testimonials')); ?>" class="nav-link">Testimoni</a>
                     </li>

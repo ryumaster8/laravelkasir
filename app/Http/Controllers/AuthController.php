@@ -450,4 +450,20 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function processRegister(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'outlet_name' => 'required|string|max:255',
+            'outlet_address' => 'required|string',
+            'outlet_phone' => 'required|string|max:20',
+            'membership_id' => 'required|exists:memberships,membership_id'
+        ]);
+
+        return $this->doRegister($request);
+    }
 }
