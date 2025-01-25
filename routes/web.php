@@ -162,6 +162,7 @@ Route::get('/dashboard/products/history-transfer-requests', [ProductsController:
 Route::get('/dashboard/products/approve-transfer/{transit}', [ProductsController::class, 'approveTransfer'])->name('products.approve-transfer');
 Route::get('/dashboard/products/reject-transfer/{transit}', [ProductsController::class, 'rejectTransfer'])->name('products.reject-transfer');
 Route::get('/dashboard/products/submission-transfer-requests', [ProductsController::class, 'transferRequestsSubmission'])->name('products.transfer-requests-submission');
+Route::get('/self-products/transfer-serial/{product}', [SelfProductController::class, 'transferSerial'])->name('self-products.transfer-serial');
 
 //Manajemen Pelanggan Grosir
 Route::get('/dashboard/wholesale-customer', [WholesaleCustomersController::class, 'index'])->name('wholesale-customer.index');

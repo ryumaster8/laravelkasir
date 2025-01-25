@@ -30,15 +30,27 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $key + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->product_id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->product->product_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->product->barcode }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->operatorSender->name }}</td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    {{ $transit->product->product_name }}
+                                      <br>
+                                    <span class="badge bg-{{ $transit->has_serial_number ? 'info' : 'secondary' }}">
+                                      {{ $transit->has_serial_number ? 'Serial' : 'Non-Serial' }}
+                                    </span>
+                                 </td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                       @if($transit->has_serial_number)
+                                            {{ $transit->serial?->serial_number ?? '-' }}
+                                       @else
+                                         {{ $transit->product->product_code ?? '-' }}
+                                       @endif
+                                 </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->operatorSender->username }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->toOutlet->outlet_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->operatorReceiver->name ?? '-' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->operatorReceiver->username ?? '-' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $transit->quantity }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $transit->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                                    {{ $transit->status === 'transit' ? 'bg-yellow-100 text-yellow-800' : 
                                        ($transit->status === 'approved' ? 'bg-green-100 text-green-800' : 
                                        'bg-red-100 text-red-800') }}">
                                     {{ ucfirst($transit->status) }}

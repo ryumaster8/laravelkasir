@@ -55,6 +55,24 @@ class ModelProductSerials extends Model
         'user_id',
         'outlet_id'
     ];
+
+    /**
+     * Status constants
+     */
+    const STATUS_TERSEDIA = 'tersedia';
+    const STATUS_TERJUAL = 'terjual';
+    const STATUS_DALAM_KERANJANG = 'dalam_keranjang';
+    const STATUS_TRANSIT = 'transit';
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'status' => self::STATUS_TERSEDIA  // Default status when creating new serial
+    ];
+
     /**
      * Get the product that owns the category.
      */

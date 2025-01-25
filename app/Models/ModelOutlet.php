@@ -265,4 +265,19 @@ class ModelOutlet extends Model
     {
         return $this->hasMany(MembershipChangeRequest::class, 'outlet_id', 'outlet_id');
     }
+
+    /**
+     * Get all outlets from same group except current one
+     */
+    public function getSameGroupOutlets()
+    {
+        // Get current outlet's group ID
+        $groupId = $this->outlet_group_id;
+        
+        // Get all outlets from same group except self
+        return ModelOutlet::where('outlet_group_id', $groupId)
+            ->where('outlet_id', '!=', $this->outlet_id)
+            ->where('status', 'active')
+            ->get();
+    }
 }

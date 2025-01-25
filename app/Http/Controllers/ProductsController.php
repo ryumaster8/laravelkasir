@@ -173,49 +173,60 @@ class ProductsController extends Controller
         // Mengambil data serial produk yang available di outlet yang login
         $serials = $product->serials()
             ->where('outlet_id', $outletId)
-            ->where('status', 'available')
+            ->where('status', 'tersedia')
             ->get();
-
+        
 
         return view('admin.products.transfer_unit', compact('product', 'user', 'outlets', 'serials'));
     }
+
     public function storeTransferUnit(Request $request, ModelProduct $product)
     {
-        // Validasi data
+         // Validasi Data
         $request->validate([
-            'to_outlet_id' => ['required', 'exists:outlets,outlet_id'],
-            'selected_serials' => 'required|array|min:1'
-        ]);
-        $selectedSerials = $request->input('selected_serials');
-
-        // ambil user yang login
+          'to_outlet_id' => ['required', 'exists:outlets,outlet_id'],
+          'selected_serials' => ['required', 'array', 'min:1'],
+             'selected_serials.*' => ['exists:product_serials,serial_id'] // Validasi setiap serial yang dipilih
+         ]);
+         // Ambil user yang login
         $user = Auth::user();
         $fromOutletId = $user->outlet_id;
 
+         // Validate target outlet is in same group
+        $target_outlet = ModelOutlet::where('outlet_id', $request->to_outlet_id)
+            ->where('outlet_group_id', $user->outlet->outlet_group_id)
+            ->first();
+
+        if (!$target_outlet) {
+            return redirect()->back()->with('error', 'Outlet tujuan tidak valid atau tidak dalam satu grup');
+        }
 
         $transits = [];
         // simpan data pindah unit untuk setiap serial yang dipilih
-        foreach ($selectedSerials as $serialId) {
-            $serial =  ModelProductSerials::find($serialId);
-            // Simpan data pada tabel product_transits
-            $transit = ModelProductTransit::create([
-                'product_id' => $product->product_id,
-                'serial_id' => $serial->serial_id,
-                'from_outlet_id' => $fromOutletId,
-                'to_outlet_id' => $request->input('to_outlet_id'),
-                'user_id' => Auth::user()->user_id,
-                'operator_sender' => Auth::user()->user_id,
-                'has_serial_number' => 1,
-                'status' => 'transit'
-            ]);
-            //update status serial number menjadi transit
-            $serial->status = 'transit';
-            $serial->save();
-            $transits[] = $transit;
-        }
-        return view('admin.products.transfer_confirmation', compact('transits', 'user', 'product'));
-    }
+        foreach ($request->input('selected_serials') as $serialId) {
+           $serial = ModelProductSerials::find($serialId);
+            if($serial){
+                  // Simpan data pada tabel product_transits
+                 $transit = ModelProductTransit::create([
+                     'product_id' => $product->product_id,
+                      'serial_id' => $serialId,
+                       'from_outlet_id' => $fromOutletId,
+                      'to_outlet_id' => $request->input('to_outlet_id'),
+                      'user_id' => $user->user_id,
+                     'operator_sender' => $user->user_id,
+                      'has_serial_number' => 1,
+                     'status' => 'transit',
+                ]);
+                 //update status serial number menjadi transit
+                 $serial->status = 'transit';
+                 $serial->save();
+                 $transits[] = $transit;
+          }
 
+       }
+
+        return redirect()->route('products.transfer-requests-submission')->with('success', 'Permintaan pemindahan produk berhasil diajukan');
+    }
 
     public function addStock(ModelProduct $product)
     {
@@ -591,73 +602,75 @@ class ProductsController extends Controller
                 $productStockReceiver->product_id = $transit->product_id;
                 $productStockReceiver->outlet_id = $transit->to_outlet_id;
                 $productStockReceiver->stock = $transit->quantity;
-                $productStockReceiver->save();
+                $productStockReceiver->save();            } else {
+                    $productStockReceiver->stock += $transit->quantity;
+                    $productStockReceiver->save();
+                }
+    
+                Log::debug('Product Stock :' .  $productStockReceiver->stock);
+                Log::debug('Product Outlet :' .  $productStockReceiver->outlet_id);
+            }
+            return redirect()->back()->with('success', 'Permintaan pemindahan produk disetujui');
+        }
+    
+        public function rejectTransfer(ModelProductTransit $transit)
+        {
+            //ubah status menjadi rejected
+            $transit->status = 'rejected';
+            $transit->save();
+    
+    
+            if ($transit->has_serial_number) {
+                $serial = $transit->serial;
+                $serial->status = 'available';
+                $serial->outlet_id = $transit->from_outlet_id;
+                $serial->save();
+                Log::debug('Serial Status :' .  $serial->status);
+                Log::debug('Serial Outlet :' .  $serial->outlet_id);
             } else {
-                $productStockReceiver->stock += $transit->quantity;
-                $productStockReceiver->save();
+                // Mendapatkan product stock penerima
+                $productStockReceiver = ModelProductStock::where('product_id', $transit->product_id)
+                    ->where('outlet_id', $transit->to_outlet_id)
+                    ->first();
+    
+    
+                //Mendapatkan product stock pengirim
+                $productStockSender = ModelProductStock::where('product_id', $transit->product_id)
+                    ->where('outlet_id', $transit->from_outlet_id)
+                    ->first();
+    
+    
+                if ($productStockReceiver) {
+                    $productStockReceiver->stock -= $transit->quantity;
+                    $productStockReceiver->save();
+                }
+                if ($productStockSender) {
+                    $productStockSender->stock += $transit->quantity;
+                    $productStockSender->save();
+                }
+    
+                Log::debug('Product Stock Receiver :' .  $productStockReceiver->stock);
+                Log::debug('Product Stock Sender :' .  $productStockSender->stock);
             }
-
-            Log::debug('Product Stock :' .  $productStockReceiver->stock);
-            Log::debug('Product Outlet :' .  $productStockReceiver->outlet_id);
+    
+            return redirect()->back()->with('success', 'Permintaan pemindahan produk ditolak dan stok dikembalikan ke outlet pengirim.');
         }
-        return redirect()->back()->with('success', 'Permintaan pemindahan produk disetujui');
-    }
-
-    public function rejectTransfer(ModelProductTransit $transit)
-    {
-        //ubah status menjadi rejected
-        $transit->status = 'rejected';
-        $transit->save();
-
-
-        if ($transit->has_serial_number) {
-            $serial = $transit->serial;
-            $serial->status = 'available';
-            $serial->outlet_id = $transit->from_outlet_id;
-            $serial->save();
-            Log::debug('Serial Status :' .  $serial->status);
-            Log::debug('Serial Outlet :' .  $serial->outlet_id);
-        } else {
-            // Mendapatkan product stock penerima
-            $productStockReceiver = ModelProductStock::where('product_id', $transit->product_id)
-                ->where('outlet_id', $transit->to_outlet_id)
-                ->first();
-
-
-            //Mendapatkan product stock pengirim
-            $productStockSender = ModelProductStock::where('product_id', $transit->product_id)
-                ->where('outlet_id', $transit->from_outlet_id)
-                ->first();
-
-
-            if ($productStockReceiver) {
-                $productStockReceiver->stock -= $transit->quantity;
-                $productStockReceiver->save();
-            }
-            if ($productStockSender) {
-                $productStockSender->stock += $transit->quantity;
-                $productStockSender->save();
-            }
-
-            Log::debug('Product Stock Receiver :' .  $productStockReceiver->stock);
-            Log::debug('Product Stock Sender :' .  $productStockSender->stock);
+            public function transferRequestsSubmission()
+        {
+            // Ambil user yang login
+            $user = Auth::user();
+            $outletId = $user->outlet_id;
+            
+            // Ambil semua pengajuan transfer yang dibuat oleh outlet yang login
+            $transits = ModelProductTransit::with(['product','toOutlet', 'operatorSender', 'operatorReceiver','serial'])
+                ->where('from_outlet_id', $outletId)
+                ->orderBy('created_at', 'desc')
+                ->get();
+    
+    
+            return view('admin.products.transfer_requests_submission', compact('transits', 'user'));
         }
-
-        return redirect()->back()->with('success', 'Permintaan pemindahan produk ditolak dan stok dikembalikan ke outlet pengirim.');
+    
+    
+        // ... (other methods) ...
     }
-    public function transferRequestsSubmission()
-    {
-        // Ambil user yang login
-        $user = Auth::user();
-        $outletId = $user->outlet_id;
-
-        // Ambil semua pengajuan transfer yang dibuat oleh outlet yang login
-        $transits = ModelProductTransit::with(['product', 'toOutlet', 'operatorSender', 'operatorReceiver', 'serial'])
-            ->where('from_outlet_id', $outletId)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-
-        return view('admin.products.transfer_requests_submission', compact('transits', 'user'));
-    }
-}

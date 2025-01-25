@@ -4,7 +4,7 @@
 <div class="min-h-screen bg-gray-100 py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header Section -->
-        <div class="mb-6">
+        {{-- <div class="mb-6">
             <h1 class="text-2xl font-semibold text-gray-900">Daftar Pengguna</h1>
             <div class="mt-2 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <p class="text-sm text-gray-600">Jumlah pengguna saat ini: <span class="font-medium">{{ $totalUsers }}</span></p>
@@ -14,7 +14,7 @@
                     @endforeach
                 @endif
             </div>
-        </div>
+        </div> --}}
 
         <x-flash-message />
 

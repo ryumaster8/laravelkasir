@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jan 2025 pada 01.18
+-- Waktu pembuatan: 24 Jan 2025 pada 16.53
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -524,7 +524,8 @@ INSERT INTO `outlets` (`outlet_id`, `admin_user_id`, `outlet_name`, `email`, `ad
 (53, NULL, 'Almera 5 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:05:29', '2025-01-02 02:05:29', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
 (54, NULL, 'Almera 20 Cell', 'ryumaster8@gmail.com', 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', 'outlet-logos/TJcIDRYAwx9c4H9S50AM2cf6w3Z9Vu0EH1sQc7sg.png', NULL, 'Konter Handphone', 5, 2, NULL, 39, 'pending_downgrade', 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:05:36', '2025-01-15 16:20:47', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
 (55, NULL, 'Almera 8 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:05:43', '2025-01-02 02:05:43', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
-(56, NULL, 'Almera 3 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:07:28', '2025-01-02 02:07:28', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active');
+(56, NULL, 'Almera 3 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:07:28', '2025-01-02 02:07:28', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
+(57, 63, 'supaijo12', 'supaijo12@gmail.com', 'BREBES', '019216891208', NULL, 'baru', 'Konter Handphone', 2, NULL, NULL, 40, NULL, 0.00, '2025-01-24', NULL, '2025-02-24', 250000.00, 100000.00, NULL, '2025-01-24 02:45:50', '2025-01-24 02:45:50', 1, 'induk', NULL, NULL, 0, 'active');
 
 -- --------------------------------------------------------
 
@@ -546,7 +547,8 @@ CREATE TABLE `outlet_groups` (
 --
 
 INSERT INTO `outlet_groups` (`outlet_group_id`, `outlet_group_name`, `description`, `user_id`, `created_at`, `updated_at`) VALUES
-(39, 'Melvian Cell', 'Group for Melviano Cell', 58, '2025-01-02 02:00:43', '2025-01-13 04:21:15');
+(39, 'Melvian Cell', 'Group for Melviano Cell', 58, '2025-01-02 02:00:43', '2025-01-13 04:21:15'),
+(40, 'supaijo12', 'Group for supaijo12', 63, '2025-01-24 02:45:50', '2025-01-24 02:45:50');
 
 -- --------------------------------------------------------
 
@@ -1170,7 +1172,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('DXD8ZQToBLlxHkNnw0Ajr3ZD7P6MPfXE7ZAFqogt', 59, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0', '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MTY6IktvbnRlciBIYW5kcGhvbmUiO3M6ODoiYWRtaW5faWQiO047czoxMjoiYnJhbmNoX2xpbWl0IjtpOjEwMDtzOjIzOiJkYWlseV90cmFuc2FjdGlvbl9saW1pdCI7aToxMDAwO3M6Mjg6ImRhaWx5X3Byb2R1Y3RfYWRkaXRpb25fbGltaXQiO2k6MTAwMDtzOjEwOiJ1c2VyX2xpbWl0IjtpOjUwMDtzOjExOiJwZXJtaXNzaW9ucyI7YToyNzp7czoxNjoiY2FuX2FkZF9zdXBwbGllciI7aToxO3M6MTc6ImNhbl9lZGl0X3N1cHBsaWVyIjtpOjE7czoxOToiY2FuX2RlbGV0ZV9zdXBwbGllciI7aToxO3M6MTc6ImNhbl9lZGl0X2NhdGVnb3J5IjtpOjE7czoxOToiY2FuX2RlbGV0ZV9jYXRlZ29yeSI7aToxO3M6MTY6ImNhbl9hZGRfY2F0ZWdvcnkiO2k6MTtzOjE2OiJjYW5fZWRpdF9wcm9kdWN0IjtpOjE7czoxODoiY2FuX2RlbGV0ZV9wcm9kdWN0IjtpOjE7czoxNToiY2FuX2FkZF9wcm9kdWN0IjtpOjE7czoxMjoiY2FuX2FkZF91c2VyIjtpOjE7czoxMzoiY2FuX2VkaXRfdXNlciI7aToxO3M6MTU6ImNhbl9kZWxldGVfdXNlciI7aToxO3M6MjQ6ImNhbl9hZGRfcHJvZHVjdF9sb2NhdGlvbiI7aToxO3M6MjU6ImNhbl9lZGl0X3Byb2R1Y3RfbG9jYXRpb24iO2k6MTtzOjI3OiJjYW5fZGVsZXRlX3Byb2R1Y3RfbG9jYXRpb24iO2k6MTtzOjE4OiJjYW5fc2VlX2Nvc3RfcHJpY2UiO2k6MTtzOjE4OiJjYW5fc2VlX3NhbGVfcHJpY2UiO2k6MTtzOjE2OiJjYW5fc2VlX3N1cHBsaWVyIjtpOjE7czoxNjoiY2FuX3NlZV9jYXRlZ29yeSI7aToxO3M6MTY6ImNhbl9zZWVfb3BlcmF0b3IiO2k6MTtzOjE0OiJjYW5fc2VlX291dGxldCI7aToxO3M6MTM6ImNhbl9zZWVfc3RvY2siO2k6MTtzOjEzOiJjYW5fc2VlX2JyYW5kIjtpOjE7czoyNDoiY2FuX3NlZV9wcm9kdWN0X2xvY2F0aW9uIjtpOjE7czoxNToiY2FuX3NlZV9iYXJjb2RlIjtpOjE7czoyMDoiY2FuX3NlZV91bml0X2JhcmNvZGUiO2k6MTtzOjE4OiJjYW5fc2VlX3Byb2R1Y3RfaWQiO2k6MTt9fQ==', 1737416050);
+('BPND5UnGQT5sKpi72aJUNZXt8n3QAHkeImnT2oSF', 59, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0', 'YToyOTp7czo2OiJfdG9rZW4iO3M6NDA6Ikc0YXgyaVNKcnhpZ0tjM2hSRnE2dWlUanhtTmRwa2NtUDNEZm5ZbHUiO3M6NjoiX2ZsYXNoIjthOjI6e3M6MzoibmV3IjthOjA6e31zOjM6Im9sZCI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjY5OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvZGFzaGJvYXJkL3Byb2R1Y3RzL3N1Ym1pc3Npb24tdHJhbnNmZXItcmVxdWVzdHMiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1OTtzOjIwOiJfX2NpX2xhc3RfcmVnZW5lcmF0ZSI7aToxNzM3NzI5NTE4O3M6MTY6Il9jaV9wcmV2aW91c191cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7czo3OiJ1c2VyX2lkIjtpOjU5O3M6OToib3V0bGV0X2lkIjtpOjU0O3M6ODoidXNlcm5hbWUiO3M6ODoiYWxtZXJhMTIiO3M6NDoicm9sZSI7TzoyMToiQXBwXE1vZGVsc1xNb2RlbFJvbGVzIjozMDp7czoxMzoiACoAY29ubmVjdGlvbiI7czo1OiJteXNxbCI7czo4OiIAKgB0YWJsZSI7czo1OiJyb2xlcyI7czoxMzoiACoAcHJpbWFyeUtleSI7czo3OiJyb2xlX2lkIjtzOjEwOiIAKgBrZXlUeXBlIjtzOjM6ImludCI7czoxMjoiaW5jcmVtZW50aW5nIjtiOjE7czo3OiIAKgB3aXRoIjthOjA6e31zOjEyOiIAKgB3aXRoQ291bnQiO2E6MDp7fXM6MTk6InByZXZlbnRzTGF6eUxvYWRpbmciO2I6MDtzOjEwOiIAKgBwZXJQYWdlIjtpOjE1O3M6NjoiZXhpc3RzIjtiOjE7czoxODoid2FzUmVjZW50bHlDcmVhdGVkIjtiOjA7czoyODoiACoAZXNjYXBlV2hlbkNhc3RpbmdUb1N0cmluZyI7YjowO3M6MTM6IgAqAGF0dHJpYnV0ZXMiO2E6Mjp7czo3OiJyb2xlX2lkIjtpOjM7czo5OiJyb2xlX25hbWUiO3M6NDoidXNlciI7fXM6MTE6IgAqAG9yaWdpbmFsIjthOjI6e3M6Nzoicm9sZV9pZCI7aTozO3M6OToicm9sZV9uYW1lIjtzOjQ6InVzZXIiO31zOjEwOiIAKgBjaGFuZ2VzIjthOjA6e31zOjg6IgAqAGNhc3RzIjthOjA6e31zOjE3OiIAKgBjbGFzc0Nhc3RDYWNoZSI7YTowOnt9czoyMToiACoAYXR0cmlidXRlQ2FzdENhY2hlIjthOjA6e31zOjEzOiIAKgBkYXRlRm9ybWF0IjtOO3M6MTA6IgAqAGFwcGVuZHMiO2E6MDp7fXM6MTk6IgAqAGRpc3BhdGNoZXNFdmVudHMiO2E6MDp7fXM6MTQ6IgAqAG9ic2VydmFibGVzIjthOjA6e31zOjEyOiIAKgByZWxhdGlvbnMiO2E6MDp7fXM6MTA6IgAqAHRvdWNoZXMiO2E6MDp7fXM6MTA6InRpbWVzdGFtcHMiO2I6MDtzOjEzOiJ1c2VzVW5pcXVlSWRzIjtiOjA7czo5OiIAKgBoaWRkZW4iO2E6MDp7fXM6MTA6IgAqAHZpc2libGUiO2E6MDp7fXM6MTE6IgAqAGZpbGxhYmxlIjthOjE6e2k6MDtzOjk6InJvbGVfbmFtZSI7fXM6MTA6IgAqAGd1YXJkZWQiO2E6MTp7aTowO3M6MToiKiI7fX1zOjg6ImlzX293bmVyIjtpOjA7czoyMjoib3duZXJfZGFzaGJvYXJkX2FjY2VzcyI7aTowO3M6OToibG9nZ2VkX2luIjtpOjE7czoxMDoiaXNMb2dnZWRJbiI7YjoxO3M6OToiaXNfcGFyZW50IjtpOjA7czoxMToib3V0bGV0X25hbWUiO3M6MTQ6IkFsbWVyYSAyMCBDZWxsIjtzOjEzOiJvdXRsZXRfc3RhdHVzIjtzOjY6ImNhYmFuZyI7czo4OiJncm91cF9pZCI7aTozOTtzOjE2OiJwYXJlbnRfb3V0bGV0X2lkIjtpOjQ5O3M6MTM6Im1lbWJlcnNoaXBfaWQiO2k6NTtzOjE1OiJtZW1iZXJzaGlwX25hbWUiO3M6ODoiUGxhdGludW0iO3M6MTI6ImplbmlzX291dGxldCI7czoxNjoiS29udGVyIEhhbmRwaG9uZSI7czo4OiJhZG1pbl9pZCI7TjtzOjEyOiJicmFuY2hfbGltaXQiO2k6MTAwO3M6MjM6ImRhaWx5X3RyYW5zYWN0aW9uX2xpbWl0IjtpOjEwMDA7czoyODoiZGFpbHlfcHJvZHVjdF9hZGRpdGlvbl9saW1pdCI7aToxMDAwO3M6MTA6InVzZXJfbGltaXQiO2k6NTAwO3M6MTE6InBlcm1pc3Npb25zIjthOjI3OntzOjE2OiJjYW5fYWRkX3N1cHBsaWVyIjtpOjE7czoxNzoiY2FuX2VkaXRfc3VwcGxpZXIiO2k6MTtzOjE5OiJjYW5fZGVsZXRlX3N1cHBsaWVyIjtpOjE7czoxNzoiY2FuX2VkaXRfY2F0ZWdvcnkiO2k6MTtzOjE5OiJjYW5fZGVsZXRlX2NhdGVnb3J5IjtpOjE7czoxNjoiY2FuX2FkZF9jYXRlZ29yeSI7aToxO3M6MTY6ImNhbl9lZGl0X3Byb2R1Y3QiO2k6MTtzOjE4OiJjYW5fZGVsZXRlX3Byb2R1Y3QiO2k6MTtzOjE1OiJjYW5fYWRkX3Byb2R1Y3QiO2k6MTtzOjEyOiJjYW5fYWRkX3VzZXIiO2k6MTtzOjEzOiJjYW5fZWRpdF91c2VyIjtpOjE7czoxNToiY2FuX2RlbGV0ZV91c2VyIjtpOjE7czoyNDoiY2FuX2FkZF9wcm9kdWN0X2xvY2F0aW9uIjtpOjE7czoyNToiY2FuX2VkaXRfcHJvZHVjdF9sb2NhdGlvbiI7aToxO3M6Mjc6ImNhbl9kZWxldGVfcHJvZHVjdF9sb2NhdGlvbiI7aToxO3M6MTg6ImNhbl9zZWVfY29zdF9wcmljZSI7aToxO3M6MTg6ImNhbl9zZWVfc2FsZV9wcmljZSI7aToxO3M6MTY6ImNhbl9zZWVfc3VwcGxpZXIiO2k6MTtzOjE2OiJjYW5fc2VlX2NhdGVnb3J5IjtpOjE7czoxNjoiY2FuX3NlZV9vcGVyYXRvciI7aToxO3M6MTQ6ImNhbl9zZWVfb3V0bGV0IjtpOjE7czoxMzoiY2FuX3NlZV9zdG9jayI7aToxO3M6MTM6ImNhbl9zZWVfYnJhbmQiO2k6MTtzOjI0OiJjYW5fc2VlX3Byb2R1Y3RfbG9jYXRpb24iO2k6MTtzOjE1OiJjYW5fc2VlX2JhcmNvZGUiO2k6MTtzOjIwOiJjYW5fc2VlX3VuaXRfYmFyY29kZSI7aToxO3M6MTg6ImNhbl9zZWVfcHJvZHVjdF9pZCI7aToxO31zOjQ6InR5cGUiO3M6NjoiZ3Jvc2lyIjt9', 1737732525);
 
 -- --------------------------------------------------------
 
@@ -1219,8 +1221,7 @@ INSERT INTO `suppliers` (`supplier_id`, `outlet_id`, `user_id`, `supplier_name`,
 (36, 54, 59, 'PT Software House', '081234567896', 'Jl. Software No. 147, Malang', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
 (37, 54, 59, 'CV Security System', '081234567897', 'Jl. Security No. 258, Palembang', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
 (38, 54, 59, 'UD Smart Home', '081234567898', 'Jl. Smart Home No. 369, Makassar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
-(39, 54, 59, 'PT Audio Visual', '081234567899', 'Jl. Audio Visual No. 741, Denpasar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
-(40, 54, 59, 'cinta', '081248759456', '54:AF:97:FB:7F:A8', '2025-01-11 09:32:23', '2025-01-11 09:32:23', 0);
+(39, 54, 59, 'PT Audio Visual', '081234567899', 'Jl. Audio Visual No. 741, Denpasar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0);
 
 -- --------------------------------------------------------
 
@@ -1360,7 +1361,8 @@ INSERT INTO `users` (`user_id`, `username`, `first_name`, `last_name`, `email`, 
 (58, 'melviano12', NULL, NULL, 'melviano12@gmail.com', '019216891205', NULL, 1, NULL, 'active', 1, 0, NULL, 0, '$2y$12$IiJhjjzixYiwtbTFno5Ivuq2E/hPK2KWtffLF7LL2mjTAIjSsns8G', 1, 49, '2025-01-02 02:00:43', '2025-01-02 02:00:43'),
 (59, 'almera12', NULL, NULL, 'almera12@gmail.com', '085789959385', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$vjixQDlyELhG6kYFAUPBk.6SNHLoptz8YhJsghxhq52sclAK6UDgK', 3, 54, '2025-01-02 02:08:45', '2025-01-02 02:08:45'),
 (60, 'indah12', NULL, NULL, 'indah12@gmail.com', 'indah12', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$cUMoXCKKjvsxpkhL5OGDaOSxJwbxZMd2viu1ncG.EN3Nw5m.rFLpq', 2, 52, '2025-01-02 02:21:18', '2025-01-02 02:21:18'),
-(62, 'almera127', NULL, NULL, 'almera126@gmail.com', '019216891208', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$NNXNPyPTlLNzjQlB.S7TSu.HPe08eVTlyZ0tBduUqNOGBalx2I8GK', 3, 49, '2025-01-18 06:31:30', '2025-01-18 06:33:27');
+(62, 'almera127', NULL, NULL, 'almera126@gmail.com', '019216891208', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$NNXNPyPTlLNzjQlB.S7TSu.HPe08eVTlyZ0tBduUqNOGBalx2I8GK', 3, 49, '2025-01-18 06:31:30', '2025-01-18 06:33:27'),
+(63, 'supaijo12', NULL, NULL, 'supaijo12@gmail.com', '019216891208', NULL, 0, NULL, 'active', 1, 0, NULL, 0, '$2y$12$/PnXZGqEGIrdGdiQqsonHuIn4Hp8NYQhEwMTyLJ4sQZI42dQ0OCX2', 1, 57, '2025-01-24 02:45:50', '2025-01-24 02:45:50');
 
 -- --------------------------------------------------------
 
@@ -1875,13 +1877,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `outlets`
 --
 ALTER TABLE `outlets`
-  MODIFY `outlet_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `outlet_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT untuk tabel `outlet_groups`
 --
 ALTER TABLE `outlet_groups`
-  MODIFY `outlet_group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `outlet_group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT untuk tabel `payment_confirmations`
@@ -1989,7 +1991,7 @@ ALTER TABLE `transaction_items`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_permissions`

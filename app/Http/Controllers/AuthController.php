@@ -154,6 +154,12 @@ class AuthController extends Controller
                 'permissions' => $permissionsArray,
             ]);
 
+            // After successful authentication, set outlet_group_id in session
+            $outlet = ModelOutlet::find($user->outlet_id);
+            if ($outlet) {
+                session(['outlet_group_id' => $outlet->outlet_group_id]);
+            }
+
             // Ambil URL yang disimpan
             $intendedUrl = session('intended_url');
 

@@ -47,15 +47,31 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($key + 1); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->product_id); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->product->product_name); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->product->barcode); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->operatorSender->name); ?></td>
+                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <?php echo e($transit->product->product_name); ?>
+
+                                      <br>
+                                    <span class="badge bg-<?php echo e($transit->has_serial_number ? 'info' : 'secondary'); ?>">
+                                      <?php echo e($transit->has_serial_number ? 'Serial' : 'Non-Serial'); ?>
+
+                                    </span>
+                                 </td>
+                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                       <?php if($transit->has_serial_number): ?>
+                                            <?php echo e($transit->serial?->serial_number ?? '-'); ?>
+
+                                       <?php else: ?>
+                                         <?php echo e($transit->product->product_code ?? '-'); ?>
+
+                                       <?php endif; ?>
+                                 </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->operatorSender->username); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->toOutlet->outlet_name); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->operatorReceiver->name ?? '-'); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->operatorReceiver->username ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo e($transit->quantity); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    <?php echo e($transit->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                                    <?php echo e($transit->status === 'transit' ? 'bg-yellow-100 text-yellow-800' : 
                                        ($transit->status === 'approved' ? 'bg-green-100 text-green-800' : 
                                        'bg-red-100 text-red-800')); ?>">
                                     <?php echo e(ucfirst($transit->status)); ?>

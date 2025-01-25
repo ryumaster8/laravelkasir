@@ -12,6 +12,7 @@ use App\Models\ModelSuppliers;
 use App\Models\ModelUser;
 use App\Models\ModelProductSerials; // Add missing import
 use App\Models\ModelProductStock; // Add missing import
+use Illuminate\Support\Facades\Log; // Add missing import
 
 
 class ModelProduct extends Model
@@ -120,6 +121,9 @@ class ModelProduct extends Model
      */
     public function serials(): HasMany
     {
+        Log::debug('Product serials relation called', [
+            'product_id' => $this->product_id
+        ]);
         return $this->hasMany(ModelProductSerials::class, 'product_id', 'product_id');
     }
 

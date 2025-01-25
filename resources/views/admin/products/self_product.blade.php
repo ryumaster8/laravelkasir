@@ -67,10 +67,10 @@
                                                class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                                 <i class="fas fa-plus mr-1"></i> Seri
                                             </a>
-                                            <button type="button" onclick="showStockModal('{{ $product->product_id }}')"
-                                                    class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                            <a href="{{ route('self-products.transfer-unit', $product->product_id) }}"
+                                               class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                                 <i class="fas fa-exchange-alt mr-1"></i> Transfer
-                                            </button>
+                                            </a>
                                         </div>
                                     @else
                                         <div class="flex space-x-1">
