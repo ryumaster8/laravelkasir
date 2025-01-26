@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Log Aktivitas'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -19,50 +17,47 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Outlet</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hapus</th>
+                            <?php if(auth()->user()->is_admin): ?>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <?php $__empty_1 = true; $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <?php echo e($log->formatted_time); ?>
+                                <?php echo e($log['timestamp']); ?>
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <?php echo e($log->operator->username ?? '-'); ?>
+                                <?php echo e($log['operator']['username'] ?? '-'); ?>
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <?php echo e($log->outlet->outlet_name ?? '-'); ?>
+                                <?php echo e($log['outlet']['name'] ?? '-'); ?>
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                    <?php if($log->action == 'CREATE'): ?> bg-green-100 text-green-800
-                                    <?php elseif($log->action == 'UPDATE'): ?> bg-yellow-100 text-yellow-800
-                                    <?php elseif($log->action == 'DELETE'): ?> bg-red-100 text-red-800
+                                    <?php if($log['action'] == 'CREATE'): ?> bg-green-100 text-green-800
+                                    <?php elseif($log['action'] == 'UPDATE'): ?> bg-yellow-100 text-yellow-800
+                                    <?php elseif($log['action'] == 'DELETE'): ?> bg-red-100 text-red-800
+                                    <?php else: ?> bg-gray-100 text-gray-800
                                     <?php endif; ?>">
-                                    <?php echo e($log->action); ?>
+                                    <?php echo e($log['action']); ?>
 
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                <?php echo e($log->description); ?>
+                                <?php echo e($log['description']); ?>
 
                             </td>
+                            <?php if(auth()->user()->is_admin): ?>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <form action="<?php echo e(route('activity-logs.destroy', $log->activity_log_id)); ?>" 
+                                <form action="<?php echo e(route('activity-logs.destroy', $log['id'])); ?>" 
                                       method="POST" 
                                       class="inline-block"
-                                      onsubmit="return confirm('Detail Log Aktivitas yang akan dihapus:\n\nID: ' + 
-                                      '<?php echo e($log->activity_log_id); ?>\n' +
-                                      'Waktu: <?php echo e($log->formatted_time); ?>\n' +
-                                      'Outlet: <?php echo e($log->outlet->outlet_name); ?>\n' +
-                                      'Operator: <?php echo e($log->operator->username); ?>\n' +
-                                      'Aksi: <?php echo e($log->action); ?>\n' +
-                                      'Deskripsi: <?php echo e($log->description); ?>\n\n' +
-                                      'Apakah Anda yakin ingin menghapus log aktivitas ini?')">
+                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus log ini?')">
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('DELETE'); ?>
                                     <button type="submit" 
@@ -73,10 +68,11 @@
                                     </button>
                                 </form>
                             </td>
+                            <?php endif; ?>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
                                 Tidak ada data aktivitas
                             </td>
                         </tr>

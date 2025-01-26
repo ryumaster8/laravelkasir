@@ -157,7 +157,7 @@ class ProductsController extends Controller
     {
         // ambil user yang login
         $user = Auth::user();
-        $availableSerials = $product->serials()->where('status', 'available')->count();
+        $availableSerials = $product->serials()->where('status', 'tersedia')->count();
 
         return view('admin.products.reduce_unit', compact('product', 'user', 'availableSerials'));
     }
@@ -495,32 +495,19 @@ class ProductsController extends Controller
     }
     public function selfProducts()
     {
-        // Ambil user yang sedang login
         $user = Auth::user();
-        // dd($user);
-
-        // Pastikan user sudah login
         if (!$user) {
             Log::debug('Tidak ada user yang login');
-            // Tambahkan kode untuk redirect atau return error message
             return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
         }
 
-        // Ambil outlet ID dari user
         $outletId = $user->outlet_id;
-
         if (!$outletId) {
             Log::debug('User tidak memiliki outlet_id');
-            // Tambahkan kode untuk redirect atau return error message
             return redirect('/dashboard')->with('error', 'User tidak memiliki outlet!');
         }
 
-        Log::debug('User ID: ' . $user->id);
-        Log::debug('Outlet ID: ' . $outletId);
-
-
-        // Ambil semua produk dari outlet yang sedang login
-        $products = ModelProduct::with(['category', 'supplier', 'serials'])
+        $products = ModelProduct::with(['category', 'supplier', 'serials', 'productStock'])
             ->where('outlet_id', $outletId)
             ->get();
 

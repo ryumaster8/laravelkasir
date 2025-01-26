@@ -81,7 +81,7 @@
                                     <a href="/dashboard/cashier" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas</a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/bukakasir" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas Awal</a>
+                                    <a href="/dashboard/kas-awal" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas Awal</a>
                                 </li>
                                 <li>
                                     <a href="/dashboard/penambahan" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Penambahan Uang Kas</a>
@@ -90,7 +90,7 @@
                                     <a href="/dashboard/penarikan" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Penarikan Uang Kas</a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/showKasAkhir" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas Akhir</a>
+                                    <a href="/dashboard/kas-akhir" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas Akhir</a>
                                 </li>
                                 <li>
                                     <a href="/dashboard/serviceFunds" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Uang Servis</a>

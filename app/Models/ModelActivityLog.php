@@ -25,6 +25,42 @@ class ModelActivityLog extends Model
         'description',
         'timestamp'
     ];
+
+    /**
+     * Create detailed activity log
+     */
+    public static function createLog($userId, $outletId, $action, $details)
+    {
+        $user = ModelUser::find($userId);
+        $outlet = ModelOutlet::find($outletId);
+
+        $description = sprintf(
+            "[%s] Operator: %s (ID: %d) | Outlet: %s (ID: %d) | %s",
+            strtoupper($action),
+            $user ? $user->username : 'Unknown',
+            $userId,
+            $outlet ? $outlet->outlet_name : 'Unknown',
+            $outletId,
+            $details
+        );
+
+        return self::create([
+            'activity_log_operator_id' => $userId,
+            'activity_log_outlet_id' => $outletId,
+            'action' => $action,
+            'description' => $description,
+            'timestamp' => now()
+        ]);
+    }
+
+    /**
+     * Format currency for logging
+     */
+    public static function formatCurrency($amount)
+    {
+        return 'Rp ' . number_format($amount, 0, ',', '.');
+    }
+
     /**
      * Get the user that owns the activity.
      */

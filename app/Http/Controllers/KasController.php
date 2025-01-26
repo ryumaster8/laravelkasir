@@ -5,29 +5,37 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\ModelUser;
 use App\Models\ModelOutlet;
+use App\Models\ModelKasAwal;
 use Illuminate\Http\Request;
+use App\Models\ModelKasAkhir;
 use App\Models\ModelActivityLog;
 use App\Models\ModelCashRegister;
+use App\Models\ModelPenarikanKas;
 use App\Models\ModelCashRegisters;
+use App\Models\ModelPenambahanKas;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ModelTransaction; // Add this import
 
 class KasController extends Controller
 {
-    public function bukaKasir()
+    public function kasAwal()
     {
         if (!session('outlet_id') || !session('user_id')) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Ambil nama outlet dan operator
         $outletName = ModelOutlet::where('outlet_id', session('outlet_id'))->value('outlet_name');
         $operatorName = ModelUser::where('user_id', session('user_id'))->value('username');
 
-        // Ambil data cash register berdasarkan outlet
-        $cashRegisters = ModelCashRegisters::where('outlet_id', session('outlet_id'))->get();
+        // Get kas_awal records instead of cash_registers
+        $kasAwalRecords = ModelKasAwal::with(['creator', 'outlet'])
+            ->where('outlet_id', session('outlet_id'))
+            ->orderBy('date', 'desc')
+            ->get();
 
-        return view('admin.kas.buka_kasir', compact('outletName', 'operatorName', 'cashRegisters'));
+        return view('admin.kas.kas_awal', compact('outletName', 'operatorName', 'kasAwalRecords'));
     }
+
     public function edit($id)
     {
         $register = ModelCashRegisters::where('cash_register_id', $id)->firstOrFail();
@@ -68,43 +76,44 @@ class KasController extends Controller
     public function storePenambahan(Request $request)
     {
         $request->validate([
-            'outlet_id' => 'required|integer',
-            'total_received' => 'required|numeric|min:1',
+            'nominal' => 'required|numeric|min:1',
             'keterangan' => 'nullable|string|max:255'
         ]);
 
-        $dataTambah = [
-            'outlet_id' => session('outlet_id'),
-            'user_id' => session('user_id'),
-            'total_received' => $request->total_received,
-            'description' => $request->keterangan,
-            'opening_balance' => 0,
-            'date' => now(),
-        ];
+        try {
+            // Perbaikan: menggunakan created_by bukan user_id
+            $penambahan = ModelPenambahanKas::create([
+                'outlet_id' => session('outlet_id'),
+                'created_by' => session('user_id'),
+                'nominal' => $request->nominal,
+                'date' => now()->toDateString(), // Tambah toDateString()
+                'waktu' => now(), // Tambah waktu
+                'keterangan' => $request->keterangan
+            ]);
 
-        $penambahan = ModelCashRegisters::create($dataTambah);
+            // Log aktivitas dengan format baru
+            ActivityLogController::logKasActivity(
+                'penambahan',
+                session('user_id'),
+                session('outlet_id'),
+                $request->nominal,
+                $request->keterangan
+            );
 
-        // Log aktivitas dengan detail outlet dan operator
-        ModelActivityLog::create([
-            'activity_log_operator_id' => session('user_id'),
-            'activity_log_outlet_id' => session('outlet_id'),
-            'action' => 'CREATE',
-            'description' => sprintf(
-                "Operator %s di outlet %s menambahkan kas sebesar Rp %s",
-                session('username'),
-                session('outlet_name'),
-                number_format($request->total_received, 0, ',', '.')
-            ),
-            'timestamp' => now()
-        ]);
-
-        return redirect()->route('penambahan')->with('success', 'Penambahan berhasil disimpan!');
+            return redirect()->route('penambahan')->with('success', 'Penambahan kas berhasil disimpan!');
+        } catch (\Exception $e) {
+            \Log::error('Error in storePenambahan: ' . $e->getMessage()); // Tambah logging
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan penambahan: ' . $e->getMessage());
+        }
     }
+
     public function editPenambahan($id)
     {
-        $penambahan = ModelCashRegisters::findOrFail($id);
+        $penambahan = ModelPenambahanKas::findOrFail($id);
         $outletName = ModelOutlet::where('outlet_id', $penambahan->outlet_id)->value('outlet_name');
-        $operatorName = ModelUser::where('user_id', $penambahan->user_id)->value('username');
+        $operatorName = ModelUser::where('user_id', $penambahan->created_by)->value('username');
 
         return view('admin.kas.edit_penambahan', compact('penambahan', 'outletName', 'operatorName'));
     }
@@ -112,18 +121,19 @@ class KasController extends Controller
     public function updatePenambahan(Request $request, $id)
     {
         $request->validate([
-            'total_received' => 'required|numeric|min:1',
+            'nominal' => 'required|numeric|min:1',
             'keterangan' => 'nullable|string|max:255'
         ]);
 
-        $penambahan = ModelCashRegisters::findOrFail($id);
-        $oldAmount = $penambahan->total_received;
+        $penambahan = ModelPenambahanKas::findOrFail($id);
+        $oldAmount = $penambahan->nominal;
         
         $penambahan->update([
-            'total_received' => $request->total_received,
-            'description' => $request->keterangan
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan
         ]);
 
+        // Log activity
         ModelActivityLog::create([
             'activity_log_operator_id' => session('user_id'),
             'activity_log_outlet_id' => session('outlet_id'),
@@ -133,7 +143,7 @@ class KasController extends Controller
                 session('username'),
                 session('outlet_name'),
                 number_format($oldAmount, 0, ',', '.'),
-                number_format($request->total_received, 0, ',', '.')
+                number_format($request->nominal, 0, ',', '.')
             ),
             'timestamp' => now()
         ]);
@@ -147,10 +157,9 @@ class KasController extends Controller
         $outletId = session('outlet_id');
         $today = now()->format('Y-m-d');
 
-        // Ambil data penambahan hari ini berdasarkan outlet dan tanggal
-        $penambahan = ModelCashRegisters::where('outlet_id', $outletId)
+        $penambahan = ModelPenambahanKas::with(['creator', 'outlet'])
+            ->where('outlet_id', $outletId)
             ->whereDate('date', $today)
-            ->with(['user', 'outlet'])
             ->get();
 
         return view('admin.kas.penambahan', compact('penambahan'));
@@ -190,20 +199,39 @@ class KasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'outlet_id' => 'required|integer',
-            'user_id' => 'required|integer',
-            'opening_balance' => 'required|numeric|min:0',
+            'outlet_id' => 'required',
+            'created_by' => 'required',
+            'nominal' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string'
         ]);
 
-        // Simpan data ke database
-        ModelCashRegisters::create([
-            'outlet_id' => $request->outlet_id,
-            'user_id' => $request->user_id,
-            'opening_balance' => $request->opening_balance,
-            'date' => now(),
-        ]);
+        try {
+            $kasAwal = ModelKasAwal::create([
+                'outlet_id' => $request->outlet_id,
+                'created_by' => $request->created_by,
+                'nominal' => $request->nominal,
+                'date' => now()->toDateString(),
+                'waktu' => now(),  // Add this line
+                'keterangan' => $request->keterangan
+            ]);
 
-        return redirect()->route('bukakasir')->with('success', 'Kas berhasil disimpan!');
+            // Log aktivitas dengan format baru
+            ActivityLogController::logKasActivity(
+                'kas_awal',
+                session('user_id'),
+                session('outlet_id'),
+                $request->nominal,
+                $request->keterangan
+            );
+
+            return redirect()->route('kas-awal')
+                ->with('success', 'Kas awal berhasil dibuka dengan nominal Rp. ' . number_format($request->nominal, 2));
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Gagal membuka kas: ' . $e->getMessage());
+        }
     }
 
     public function penarikan()
@@ -211,11 +239,10 @@ class KasController extends Controller
         $outletId = session('outlet_id');
         $today = now()->format('Y-m-d');
 
-        // Fetch today's withdrawals based on outlet and date
-        $penarikan = ModelCashRegisters::where('outlet_id', $outletId)
+        $penarikan = ModelPenarikanKas::with(['user', 'outlet'])  // Changed from 'creator' to 'user'
+            ->where('outlet_id', $outletId)
             ->whereDate('date', $today)
-            ->where('total_paid_out', '>', 0)
-            ->with(['user', 'outlet'])
+            ->orderBy('waktu', 'desc') // Sort by waktu descending
             ->get();
 
         return view('admin.kas.penarikan', compact('penarikan'));
@@ -224,40 +251,42 @@ class KasController extends Controller
     public function storePenarikan(Request $request)
     {
         $request->validate([
-            'total_paid_out' => 'required|numeric|min:1',
+            'nominal' => 'required|numeric|min:1',
             'keterangan' => 'nullable|string|max:255'
         ]);
 
-        $penarikan = ModelCashRegisters::create([
-            'outlet_id' => session('outlet_id'),
-            'user_id' => session('user_id'),
-            'total_paid_out' => $request->total_paid_out,
-            'opening_balance' => 0,
-            'description' => $request->keterangan,
-            'date' => now(),
-        ]);
+        try {
+            $penarikan = ModelPenarikanKas::create([
+                'outlet_id' => session('outlet_id'),
+                'created_by' => session('user_id'),
+                'nominal' => $request->nominal,
+                'date' => now()->toDateString(),
+                'waktu' => now(), // Add current datetime
+                'keterangan' => $request->keterangan
+            ]);
 
-        ModelActivityLog::create([
-            'activity_log_operator_id' => session('user_id'),
-            'activity_log_outlet_id' => session('outlet_id'),
-            'action' => 'CREATE',
-            'description' => sprintf(
-                "Operator %s di outlet %s melakukan penarikan kas sebesar Rp %s",
-                session('username'),
-                session('outlet_name'),
-                number_format($request->total_paid_out, 0, ',', '.')
-            ),
-            'timestamp' => now()
-        ]);
+            // Log aktivitas dengan format baru
+            ActivityLogController::logKasActivity(
+                'penarikan',
+                session('user_id'),
+                session('outlet_id'),
+                $request->nominal,
+                $request->keterangan
+            );
 
-        return redirect()->route('penarikan')->with('success', 'Penarikan kas berhasil disimpan!');
+            return redirect()->route('penarikan')->with('success', 'Penarikan kas berhasil disimpan!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan penarikan: ' . $e->getMessage());
+        }
     }
 
     public function editPenarikan($id)
     {
-        $penarikan = ModelCashRegisters::findOrFail($id);
+        $penarikan = ModelPenarikanKas::findOrFail($id);
         $outletName = ModelOutlet::where('outlet_id', $penarikan->outlet_id)->value('outlet_name');
-        $operatorName = ModelUser::where('user_id', $penarikan->user_id)->value('username');
+        $operatorName = ModelUser::where('user_id', $penarikan->created_by)->value('username');
 
         return view('admin.kas.edit_penarikan', compact('penarikan', 'outletName', 'operatorName'));
     }
@@ -265,16 +294,17 @@ class KasController extends Controller
     public function updatePenarikan(Request $request, $id)
     {
         $request->validate([
-            'total_paid_out' => 'required|numeric|min:1',
+            'nominal' => 'required|numeric|min:1',
             'keterangan' => 'nullable|string|max:255'
         ]);
 
-        $penarikan = ModelCashRegisters::findOrFail($id);
-        $oldAmount = $penarikan->total_paid_out;
+        $penarikan = ModelPenarikanKas::findOrFail($id);
+        $oldAmount = $penarikan->nominal;
 
         $penarikan->update([
-            'total_paid_out' => $request->total_paid_out,
-            'description' => $request->keterangan
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan,
+            'waktu' => now() // Update waktu when modified
         ]);
 
         ModelActivityLog::create([
@@ -286,7 +316,7 @@ class KasController extends Controller
                 session('username'),
                 session('outlet_name'),
                 number_format($oldAmount, 0, ',', '.'),
-                number_format($request->total_paid_out, 0, ',', '.')
+                number_format($request->nominal, 0, ',', '.')
             ),
             'timestamp' => now()
         ]);
@@ -296,11 +326,8 @@ class KasController extends Controller
 
     public function destroyPenarikan($id)
     {
-        $penarikan = ModelCashRegisters::where('cash_register_id', $id)
-            ->where('total_paid_out', '>', 0)
-            ->firstOrFail();
-            
-        $amount = $penarikan->total_paid_out;
+        $penarikan = ModelPenarikanKas::findOrFail($id);
+        $amount = $penarikan->nominal;
         $penarikan->delete();
 
         ModelActivityLog::create([
@@ -324,36 +351,152 @@ class KasController extends Controller
         $today = Carbon::today();
         $outletId = session('outlet_id');
 
-        // Get kas awal for today using opening_balance
-        $kasAwal = ModelCashRegisters::where('outlet_id', $outletId)
+        // Get kas awal for today
+        $kasAwal = ModelKasAwal::where('outlet_id', $outletId)
             ->whereDate('date', $today)
-            ->where('opening_balance', '>', 0)
             ->first();
 
-        // Get cash additions for today using total_received
-        $penambahan = ModelCashRegisters::where('outlet_id', $outletId)
+        // Get penambahan kas for today
+        $penambahan = ModelPenambahanKas::where('outlet_id', $outletId)
             ->whereDate('date', $today)
-            ->where('total_received', '>', 0)
             ->get();
         
-        $totalPenambahan = $penambahan->sum('total_received');
+        $totalPenambahan = $penambahan->sum('nominal');
         $jumlahPenambahan = $penambahan->count();
 
-        // Get cash withdrawals for today
-        $penarikan = ModelCashRegisters::where('outlet_id', $outletId)
+        // Get penarikan kas for today from penarikan_kas table
+        $penarikan = ModelPenarikanKas::where('outlet_id', $outletId)
             ->whereDate('date', $today)
-            ->where('total_paid_out', '>', 0)
             ->get();
         
-        $totalPenarikan = $penarikan->sum('total_paid_out');
+        $totalPenarikan = $penarikan->sum('nominal');
         $jumlahPenarikan = $penarikan->count();
+
+        // Get retail sales data
+        $penjualanEcer = ModelTransaction::where('outlet_id', $outletId)
+            ->where('sale_type', 'ecer') // Use string directly since we're using ModelTransaction
+            ->whereDate('created_at', $today)
+            ->get();
+        
+        $totalPenjualanEcer = $penjualanEcer->sum('total_amount');
+        $jumlahTransaksiEcer = $penjualanEcer->count();
+
+        // Get wholesale sales data
+        $penjualanGrosir = ModelTransaction::where('outlet_id', $outletId)
+            ->where('sale_type', 'grosir') // Use string directly since we're using ModelTransaction
+            ->whereDate('created_at', $today)
+            ->get();
+        
+        $totalPenjualanGrosir = $penjualanGrosir->sum('total_amount');
+        $jumlahTransaksiGrosir = $penjualanGrosir->count();
 
         return view('admin.kas.dashboard', compact(
             'kasAwal',
             'totalPenambahan',
             'jumlahPenambahan',
             'totalPenarikan',
-            'jumlahPenarikan'
+            'jumlahPenarikan',
+            'totalPenjualanEcer',
+            'jumlahTransaksiEcer',
+            'totalPenjualanGrosir',
+            'jumlahTransaksiGrosir'
         ));
+    }
+
+    public function editKasAwal($id)
+    {
+        $kasAwal = ModelKasAwal::findOrFail($id);
+        $outletName = ModelOutlet::where('outlet_id', $kasAwal->outlet_id)->value('outlet_name');
+        $operatorName = ModelUser::where('user_id', $kasAwal->created_by)->value('username');
+
+        return view('admin.kas.edit_kas_awal', compact('kasAwal', 'outletName', 'operatorName'));
+    }
+
+    public function updateKasAwal(Request $request, $id)
+    {
+        $request->validate([
+            'nominal' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string'
+        ]);
+
+        $kasAwal = ModelKasAwal::findOrFail($id);
+        $kasAwal->update([
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan
+        ]);
+
+        return redirect()->route('kas-awal')->with('success', 'Kas awal berhasil diperbarui!');
+    }
+
+    public function destroyKasAwal($id)
+    {
+        $kasAwal = ModelKasAwal::findOrFail($id);
+        $kasAwal->delete();
+
+        return redirect()->route('kas-awal')->with('success', 'Kas awal berhasil dihapus!');
+    }
+
+    public function kasAkhir()
+    {
+        $user = Auth::user();
+        $outletId = session('outlet_id');
+        $outletName = ModelOutlet::where('outlet_id', $outletId)->value('outlet_name');
+        $operatorName = $user->username;
+        
+        $kasAkhirRecords = ModelKasAkhir::with('creator')
+            ->where('outlet_id', $outletId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.kas.kas_akhir', compact('outletName', 'operatorName', 'kasAkhirRecords'));
+    }
+
+    public function storeKasAkhir(Request $request)
+    {
+        $request->validate([
+            'nominal' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string|max:255',
+        ]);
+
+        ModelKasAkhir::create([
+            'outlet_id' => $request->outlet_id,
+            'created_by' => $request->created_by,
+            'nominal' => $request->nominal,
+            'date' => now()->toDateString(),
+            'waktu' => now(),
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->back()->with('success', 'Data kas akhir berhasil disimpan');
+    }
+
+    public function editKasAkhir($id)
+    {
+        $kasAkhir = ModelKasAkhir::findOrFail($id);
+        return view('admin.kas.edit_kas_akhir', compact('kasAkhir'));
+    }
+
+    public function updateKasAkhir(Request $request, $id)
+    {
+        $request->validate([
+            'nominal' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|string|max:255',
+        ]);
+
+        $kasAkhir = ModelKasAkhir::findOrFail($id);
+        $kasAkhir->update([
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('kas-akhir')->with('success', 'Data kas akhir berhasil diupdate');
+    }
+
+    public function destroyKasAkhir($id)
+    {
+        $kasAkhir = ModelKasAkhir::findOrFail($id);
+        $kasAkhir->delete();
+
+        return redirect()->route('kas-akhir')->with('success', 'Data kas akhir berhasil dihapus');
     }
 }

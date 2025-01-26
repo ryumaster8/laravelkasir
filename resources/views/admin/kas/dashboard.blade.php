@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
 @section('content')
-
 <x-flash-message />
 
 <div class="p-8">
@@ -24,11 +23,16 @@
                     </span>
                 </div>
                 <div class="text-3xl font-bold text-gray-900 mb-2">
-                    Rp {{ number_format($kasAwal?->opening_balance ?? 0, 0, ',', '.') }}
+                    Rp {{ number_format($kasAwal?->nominal ?? 0, 0, ',', '.') }}
                 </div>
                 <div class="text-sm text-gray-500">
                     {{ $kasAwal ? 'Dibuka pada ' . \Carbon\Carbon::parse($kasAwal->created_at)->format('H:i') : 'Belum ada kas awal' }}
                 </div>
+                @if($kasAwal?->keterangan)
+                    <div class="mt-2 text-sm text-gray-600">
+                        Keterangan: {{ $kasAwal->keterangan }}
+                    </div>
+                @endif
             </div>
 
             <!-- Penambahan Kas Card -->
@@ -44,8 +48,14 @@
                 <div class="text-3xl font-bold text-gray-900 mb-2">
                     Rp {{ number_format($totalPenambahan ?? 0, 0, ',', '.') }}
                 </div>
-                <div class="text-sm text-gray-500">
-                    Total {{ $jumlahPenambahan ?? 0 }} transaksi penambahan
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        Total {{ $jumlahPenambahan ?? 0 }} transaksi penambahan
+                    </div>
+                    <a href="{{ route('penambahan') }}" 
+                       class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                        Lihat Detail
+                    </a>
                 </div>
             </div>
 
@@ -62,8 +72,14 @@
                 <div class="text-3xl font-bold text-gray-900 mb-2">
                     Rp {{ number_format($totalPenarikan ?? 0, 0, ',', '.') }}
                 </div>
-                <div class="text-sm text-gray-500">
-                    Total {{ $jumlahPenarikan ?? 0 }} transaksi penarikan
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        Total {{ $jumlahPenarikan ?? 0 }} transaksi penarikan
+                    </div>
+                    <a href="{{ route('penarikan') }}" 
+                       class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                        Lihat Detail
+                    </a>
                 </div>
             </div>
         </div>
@@ -79,79 +95,70 @@
                 </span>
             </div>
             <div class="text-4xl font-bold text-gray-900">
-                Rp {{ number_format(($kasAwal?->opening_balance ?? 0) + ($totalPenambahan ?? 0) - ($totalPenarikan ?? 0), 0, ',', '.') }}
+                @php
+                    $totalKas = ($kasAwal?->nominal ?? 0) + 
+                               ($totalPenambahan ?? 0) + 
+                               ($totalPenjualanEcer ?? 0) + 
+                               ($totalPenjualanGrosir ?? 0) - 
+                               ($totalPenarikan ?? 0);
+                @endphp
+                Rp {{ number_format($totalKas, 0, ',', '.') }}
             </div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Baris 1 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-blue-600 text-white p-4">
-                Ringkasan Transaksi
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Total Transaksi Hari Ini</h5>
-                <p class="mb-4">Anda memiliki <strong>15</strong> transaksi baru hari ini.</p>
-                <a href="#" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
+            <div class="mt-2 text-sm text-gray-500">
+                Termasuk {{ $jumlahPenambahan }} penambahan, {{ $jumlahPenarikan }} penarikan, 
+                {{ $jumlahTransaksiEcer }} transaksi ecer, dan {{ $jumlahTransaksiGrosir }} transaksi grosir hari ini
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-green-600 text-white p-4">
-                Aktivitas Pengguna
+        <!-- Transaksi Cards -->
+        
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Penjualan Ecer Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">Penjualan Ecer Hari Ini</h3>
+                    <span class="text-indigo-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">
+                    Rp {{ number_format($totalPenjualanEcer ?? 0, 0, ',', '.') }}
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        Total {{ $jumlahTransaksiEcer ?? 0 }} transaksi ecer
+                    </div>
+                    <a href="{{ route('transactions.index', ['type' => 'ecer']) }}" 
+                       class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                        Lihat Detail
+                    </a>
+                </div>
             </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Pengguna Baru</h5>
-                <p class="mb-4">Ada <strong>5</strong> pengguna baru mendaftar dalam 24 jam terakhir.</p>
-                <a href="#" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Lihat Detail</a>
-            </div>
-        </div>
 
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-yellow-500 text-white p-4">
-                Statistik Penjualan
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Total Pendapatan Bulan Ini</h5>
-                <p class="mb-4"><strong>Rp 10.000.000,-</strong></p>
-                <a href="#" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Lihat Detail</a>
-            </div>
-        </div>
-
-        {{-- Service related cards removed --}}
-
-        <!-- Baris 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-600 text-white p-4">
-                Permintaan Pemindahan Stok
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Permintaan Persetujuan</h5>
-                <p class="mb-4">Ada <strong></strong> permintaan pemindahan stok yang menunggu persetujuan.</p>
-                <a href="/admin/products/transfer-requests" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-blue-600 text-white p-4">
-                Pengajuan Pemindahan Stok
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Pengajuan Terkini</h5>
-                <p class="mb-4">Ada <strong></strong> pengajuan pemindahan stok baru yang menunggu persetujuan.</p>
-                <a href="/admin/products/submission-transfer-requests" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-cyan-600 text-white p-4">
-                Log Aktivitas
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Catatan Aktivitas</h5>
-                <p class="mb-4">Lihat log aktivitas terbaru sistem.</p>
-                <a href="/admin/activity-log" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
+            <!-- Penjualan Grosir Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">Penjualan Grosir Hari Ini</h3>
+                    <span class="text-orange-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                        </svg>
+                    </span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900 mb-2">
+                    Rp {{ number_format($totalPenjualanGrosir ?? 0, 0, ',', '.') }}
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        Total {{ $jumlahTransaksiGrosir ?? 0 }} transaksi grosir
+                    </div>
+                    <a href="{{ route('transactions.index', ['type' => 'grosir']) }}" 
+                       class="text-sm text-blue-600 hover:text-blue-800 hover:underline">
+                        Lihat Detail
+                    </a>
+                </div>
             </div>
         </div>
     </div>

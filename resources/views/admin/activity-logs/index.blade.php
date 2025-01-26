@@ -19,45 +19,42 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Outlet</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hapus</th>
+                            @if(auth()->user()->is_admin)
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse($logs as $log)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $log->formatted_time }}
+                                {{ $log['timestamp'] }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $log->operator->username ?? '-' }}
+                                {{ $log['operator']['username'] ?? '-' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $log->outlet->outlet_name ?? '-' }}
+                                {{ $log['outlet']['name'] ?? '-' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                    @if($log->action == 'CREATE') bg-green-100 text-green-800
-                                    @elseif($log->action == 'UPDATE') bg-yellow-100 text-yellow-800
-                                    @elseif($log->action == 'DELETE') bg-red-100 text-red-800
+                                    @if($log['action'] == 'CREATE') bg-green-100 text-green-800
+                                    @elseif($log['action'] == 'UPDATE') bg-yellow-100 text-yellow-800
+                                    @elseif($log['action'] == 'DELETE') bg-red-100 text-red-800
+                                    @else bg-gray-100 text-gray-800
                                     @endif">
-                                    {{ $log->action }}
+                                    {{ $log['action'] }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                {{ $log->description }}
+                                {{ $log['description'] }}
                             </td>
+                            @if(auth()->user()->is_admin)
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <form action="{{ route('activity-logs.destroy', $log->activity_log_id) }}" 
+                                <form action="{{ route('activity-logs.destroy', $log['id']) }}" 
                                       method="POST" 
                                       class="inline-block"
-                                      onsubmit="return confirm('Detail Log Aktivitas yang akan dihapus:\n\nID: ' + 
-                                      '{{ $log->activity_log_id }}\n' +
-                                      'Waktu: {{ $log->formatted_time }}\n' +
-                                      'Outlet: {{ $log->outlet->outlet_name }}\n' +
-                                      'Operator: {{ $log->operator->username }}\n' +
-                                      'Aksi: {{ $log->action }}\n' +
-                                      'Deskripsi: {{ $log->description }}\n\n' +
-                                      'Apakah Anda yakin ingin menghapus log aktivitas ini?')">
+                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus log ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
@@ -68,10 +65,11 @@
                                     </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
                                 Tidak ada data aktivitas
                             </td>
                         </tr>

@@ -162,7 +162,6 @@ Route::get('/dashboard/products/history-transfer-requests', [ProductsController:
 Route::get('/dashboard/products/approve-transfer/{transit}', [ProductsController::class, 'approveTransfer'])->name('products.approve-transfer');
 Route::get('/dashboard/products/reject-transfer/{transit}', [ProductsController::class, 'rejectTransfer'])->name('products.reject-transfer');
 Route::get('/dashboard/products/submission-transfer-requests', [ProductsController::class, 'transferRequestsSubmission'])->name('products.transfer-requests-submission');
-Route::get('/self-products/transfer-serial/{product}', [SelfProductController::class, 'transferSerial'])->name('self-products.transfer-serial');
 
 //Manajemen Pelanggan Grosir
 Route::get('/dashboard/wholesale-customer', [WholesaleCustomersController::class, 'index'])->name('wholesale-customer.index');
@@ -227,16 +226,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware([\App\Http\Middleware\CheckLogin::class]);
 
 // Kasir
-Route::get('/bukakasir', [KasController::class, 'bukaKasir'])->name('bukakasir');
-Route::post('/store-kas-awal', [KasController::class, 'store'])->name('store.kas_awal');
-Route::get('/cash-register/{id}/edit', [KasController::class, 'edit'])->name('edit.cash_register');
-Route::delete('/cash-register/{id}', [KasController::class, 'destroy'])->name('delete.cash_register');
-Route::put('/cash-register/{id}', [KasController::class, 'update'])->name('update.cash_register');
-Route::get('dashboard/penambahan', [KasController::class, 'penambahan'])->name('penambahan');
-Route::post('dashboard/penambahan/store', [KasController::class, 'storePenambahan'])->name('penambahan.store');
-Route::delete('dashboard/penambahan/{id}', [KasController::class, 'destroyPenambahan'])->name('penambahan.destroy');
-Route::get('dashboard/penambahan/{id}/edit', [KasController::class, 'editPenambahan'])->name('penambahan.edit');
-Route::put('dashboard/penambahan/{id}', [KasController::class, 'updatePenambahan'])->name('penambahan.update');
+Route::get('/dashboard/kas-awal', [KasController::class, 'kasAwal'])->name('bukakasir');
+Route::post('/dashboard/store-kas-awal', [KasController::class, 'store'])->name('store.kas_awal');
+Route::get('/dashboard/cash-register/{id}/edit', [KasController::class, 'edit'])->name('edit.cash_register');
+Route::delete('/dashboard/cash-register/{id}', [KasController::class, 'destroy'])->name('delete.cash_register');
+Route::put('/dashboard/cash-register/{id}', [KasController::class, 'update'])->name('update.cash_register');
+Route::get('/dashboard/penambahan', [KasController::class, 'penambahan'])->name('penambahan');
+Route::post('/dashboard/penambahan/store', [KasController::class, 'storePenambahan'])->name('penambahan.store');
+Route::delete('/dashboard/penambahan/{id}', [KasController::class, 'destroyPenambahan'])->name('penambahan.destroy');
+Route::get('/dashboard/penambahan/{id}/edit', [KasController::class, 'editPenambahan'])->name('penambahan.edit');
+Route::put('/dashboard/penambahan/{id}', [KasController::class, 'updatePenambahan'])->name('penambahan.update');
 
 // Add these routes before the final closing brace
 Route::get('dashboard/penarikan', [KasController::class, 'penarikan'])->name('penarikan');
@@ -516,5 +515,32 @@ Route::get('/membership/details', [FrontController::class, 'membershipDetails'])
 
 
 
+
+// ...existing code...
+
+// Kas Awal Routes
+Route::get('/dashboard/kas-awal', [KasController::class, 'kasAwal'])->name('kas-awal');
+Route::post('/dashboard/kas-awal/store', [KasController::class, 'store'])->name('store.kas_awal');
+Route::get('/dashboard/kas-awal/{id}/edit', [KasController::class, 'editKasAwal'])->name('edit.kas_awal');
+Route::put('/dashboard/kas-awal/{id}', [KasController::class, 'updateKasAwal'])->name('update.kas_awal');
+Route::delete('/dashboard/kas-awal/{id}', [KasController::class, 'destroyKasAwal'])->name('delete.kas_awal');
+
+// ...existing code...
+
+// Penambahan Kas Routes
+Route::get('dashboard/penambahan', [KasController::class, 'penambahan'])->name('penambahan');
+Route::post('dashboard/penambahan/store', [KasController::class, 'storePenambahan'])->name('penambahan.store');
+Route::get('dashboard/penambahan/{id}/edit', [KasController::class, 'editPenambahan'])->name('penambahan.edit');
+Route::put('dashboard/penambahan/{id}', [KasController::class, 'updatePenambahan'])->name('penambahan.update');
+Route::delete('dashboard/penambahan/{id}', [KasController::class, 'destroyPenambahan'])->name('penambahan.destroy');
+
+// ...existing code...
+
+// Kas Akhir Routes
+Route::get('/dashboard/kas-akhir', [KasController::class, 'kasAkhir'])->name('kas-akhir');
+Route::post('/dashboard/kas-akhir/store', [KasController::class, 'storeKasAkhir'])->name('store.kas_akhir');
+Route::get('/dashboard/kas-akhir/{id}/edit', [KasController::class, 'editKasAkhir'])->name('edit.kas_akhir');
+Route::put('/dashboard/kas-akhir/{id}', [KasController::class, 'updateKasAkhir'])->name('update.kas_akhir');
+Route::delete('/dashboard/kas-akhir/{id}', [KasController::class, 'destroyKasAkhir'])->name('delete.kas_akhir');
 
 // ...existing code...
