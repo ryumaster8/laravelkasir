@@ -9,7 +9,10 @@ class WholesaleCustomersController extends Controller
 {
     public function index()
     {
-        $wholesaleCustomers = ModelWholesaleCustomer::with(['outlet', 'operator'])->get();
+        // Filter data by outlet_id in the query
+        $wholesaleCustomers = ModelWholesaleCustomer::with(['outlet', 'operator'])
+            ->where('customer_outlet_id', session('outlet_id'))  // Changed from outlet_id to customer_outlet_id
+            ->get();
 
         return view('admin.wholesale_customer.index', compact('wholesaleCustomers'), ['title' => 'Data Pelanggan Grosir']);
     }
@@ -22,17 +25,29 @@ class WholesaleCustomersController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'customer_name' => 'nullable|string|max:255',
+            'customer_name' => 'required|string|max:255',
             'email' => 'required|email|max:100|unique:wholesale_customers,email',
-            'contact_info' => 'nullable|string|max:15',
-            'address' => 'nullable|string',
-            'customer_outlet_id' => 'nullable|exists:outlets,outlet_id',
-            'operator_id' => 'nullable|exists:users,user_id',
+            'contact_info' => 'required|string|max:15',
+            'address' => 'required|string',
         ]);
 
-        ModelWholesaleCustomer::create($validatedData);
+        try {
+            ModelWholesaleCustomer::create([
+                'customer_name' => $validatedData['customer_name'],
+                'email' => $validatedData['email'],
+                'contact_info' => $validatedData['contact_info'],
+                'address' => $validatedData['address'],
+                'customer_outlet_id' => session('outlet_id'),
+                'operator_id' => session('user_id')
+            ]);
 
-        return redirect('/wholesale-customer')->with('success', 'Data Pelanggan Grosir Berhasil Ditambahkan!');
+            return redirect()->route('wholesale-customer.index')
+                ->with('success', 'Data Pelanggan Grosir Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
+        }
     }
 
     public function edit($id)

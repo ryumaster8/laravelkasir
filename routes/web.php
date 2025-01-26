@@ -544,3 +544,21 @@ Route::put('/dashboard/kas-akhir/{id}', [KasController::class, 'updateKasAkhir']
 Route::delete('/dashboard/kas-akhir/{id}', [KasController::class, 'destroyKasAkhir'])->name('delete.kas_akhir');
 
 // ...existing code...
+
+// Kas Adjustment Routes
+Route::get('/dashboard/kas/adjustments', [KasController::class, 'showAdjustments'])->name('kas.adjustments');
+Route::post('/dashboard/kas/adjustments', [KasController::class, 'storeAdjustment'])->name('kas.adjustments.store');
+
+// ...existing code...
+
+// ...existing code...
+
+Route::get('/dashboard/kas/tutup', [KasController::class, 'tutupKas'])->name('kas.tutup');
+Route::post('/dashboard/kas/tutup', [KasController::class, 'storeTutupKas'])->name('kas.tutup.store');
+
+// ...existing code...
+
+// Add this route in your web.php file
+Route::get('/dashboard/kas/akurasi', [KasController::class, 'showAkurasi'])->name('kas.akurasi');
+
+// ...existing code...
