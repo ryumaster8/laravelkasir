@@ -54,78 +54,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Baris 1 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-blue-600 text-white p-4">
-                Ringkasan Transaksi
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Total Transaksi Hari Ini</h5>
-                <p class="mb-4">Anda memiliki <strong>15</strong> transaksi baru hari ini.</p>
-                <a href="#" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-green-600 text-white p-4">
-                Aktivitas Pengguna
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Pengguna Baru</h5>
-                <p class="mb-4">Ada <strong>5</strong> pengguna baru mendaftar dalam 24 jam terakhir.</p>
-                <a href="#" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-yellow-500 text-white p-4">
-                Statistik Penjualan
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Total Pendapatan Bulan Ini</h5>
-                <p class="mb-4"><strong>Rp 10.000.000,-</strong></p>
-                <a href="#" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Lihat Detail</a>
-            </div>
-        </div>
-
-        <!-- Baris 2 -->
-        
-
-        <!-- Baris 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-gray-600 text-white p-4">
-                Permintaan Pemindahan Stok
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Permintaan Persetujuan</h5>
-                <p class="mb-4">Ada <strong></strong> permintaan pemindahan stok yang menunggu persetujuan.</p>
-                <a href="<?php echo e(route('products.transfer-requests')); ?>" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-blue-600 text-white p-4">
-                Pengajuan Pemindahan Stok
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Pengajuan Terkini</h5>
-                <p class="mb-4">Ada <strong></strong> pengajuan pemindahan stok baru yang menunggu persetujuan.</p>
-                <a href="<?php echo e(route('products.transfer-requests-submission')); ?>" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-cyan-600 text-white p-4">
-                Log Aktivitas
-            </div>
-            <div class="p-4">
-                <h5 class="font-medium text-lg mb-2">Catatan Aktivitas</h5>
-                <p class="mb-4">Lihat log aktivitas terbaru sistem.</p>
-                <a href="/dashboard/activity-logs" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <?php $__env->startPush('scripts'); ?>

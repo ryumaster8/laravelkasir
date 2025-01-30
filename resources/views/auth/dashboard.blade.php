@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {{-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Baris 1 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="bg-blue-600 text-white p-4">
@@ -104,7 +104,7 @@
                 <p class="mb-4"><strong></strong> layanan servis telah terdaftar.</p>
                 <a href="/admin/services" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
             </div>
-        </div> --}}
+        </div>
 
         <!-- Baris 3 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -139,7 +139,7 @@
                 <a href="/dashboard/activity-logs" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 @push('scripts')
