@@ -81,4 +81,60 @@ class ModelMembership extends Model
     {
         return $this->hasMany(MembershipUpgradeRequest::class, 'current_membership_id', 'membership_id');
     }
+
+    /**
+     * Check if membership allows branch creation
+     */
+    public function canCreateBranch()
+    {
+        return $this->branch_limit > 0;
+    }
+
+    /**
+     * Check if outlet has reached branch limit
+     */
+    public function hasReachedBranchLimit($currentBranchCount)
+    {
+        if (!$this->canCreateBranch()) {
+            return true;
+        }
+        return $currentBranchCount >= $this->branch_limit;
+    }
+
+    /**
+     * Get remaining branch slots
+     */
+    public function getRemainingBranchSlots($currentBranchCount)
+    {
+        if (!$this->canCreateBranch()) {
+            return 0;
+        }
+        return max(0, $this->branch_limit - $currentBranchCount);
+    }
+
+    /**
+     * Get branch limit validation message
+     */
+    public function getBranchLimitMessage($currentBranchCount)
+    {
+        if (!$this->canCreateBranch()) {
+            return 'Paket membership Anda tidak memiliki fitur penambahan cabang. Silakan upgrade membership Anda untuk menambah cabang.';
+        }
+
+        if ($this->hasReachedBranchLimit($currentBranchCount)) {
+            return sprintf(
+                'Anda telah mencapai batas maksimal cabang (%d dari %d). Silakan upgrade membership Anda untuk menambah cabang.',
+                $currentBranchCount,
+                $this->branch_limit
+            );
+        }
+
+        return null;
+    }
+
+    // Add this scope after other methods
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }

@@ -179,9 +179,9 @@
                     <li class="nav-item">
                         <a href="{{ url('/features') }}" class="nav-link">Fitur</a>
                     </li>
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ url('/membership/details') }}" class="nav-link">Paket</a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ url('/testimonials') }}" class="nav-link">Testimoni</a>
                     </li>

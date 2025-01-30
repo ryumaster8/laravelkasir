@@ -100,6 +100,25 @@
                                 </div>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        <!-- New Wholesale Customer Permission Group -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium text-gray-900 mb-4">Kelompok Pelanggan Grosir</h5>
+                            <div class="space-y-3">
+                                <?php $__currentLoopData = ['add' => 'Tambah', 'edit' => 'Edit', 'delete' => 'Hapus']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $action => $title): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="flex items-center">
+                                        <label class="flex items-center space-x-3">
+                                            <span class="text-sm text-gray-700">Bisa <?php echo e($title); ?> Pelanggan Grosir?</span>
+                                            <select name="can_<?php echo e($action); ?>_wholesale_customer" class="permission-select ml-2 px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                <option value="0" <?php echo e(old("can_{$action}_wholesale_customer", isset($userPermission) ? $userPermission->{"can_{$action}_wholesale_customer"} : '') == 0 ? 'selected' : ''); ?>>Tidak</option>
+                                                <option value="1" <?php echo e(old("can_{$action}_wholesale_customer", isset($userPermission) ? $userPermission->{"can_{$action}_wholesale_customer"} : '') == 1 ? 'selected' : ''); ?>>Ya</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Continue with other permission groups similarly -->

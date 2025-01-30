@@ -8,6 +8,7 @@ use App\Models\ModelMembership;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
+use App\Models\ModelActivityLog;
 
 class BranchController extends Controller
 {
@@ -25,24 +26,37 @@ class BranchController extends Controller
         $parentOutlet = Auth::user()->outlet;
 
         if ($parentOutlet->status !== 'induk') {
-            return redirect()->route('branches.index')->with('error', 'Anda tidak memiliki hak akses untuk menambah cabang.');
+            return redirect()->route('branches.index')
+                ->with('error', 'Anda tidak memiliki hak akses untuk menambah cabang.');
         }
 
         try {
-            $branchLimit = null;
-            if ($parentOutlet->membership_id) {
-                $membership = ModelMembership::find($parentOutlet->membership_id);
-                if ($membership) {
-                    $branchLimit = $membership->branch_limit;
-                }
-            }
-            $currentBranchCount = ModelOutlet::where('parent_outlet_id', $parentOutlet->outlet_id)->count();
-            if ($branchLimit !== null && $currentBranchCount >= $branchLimit) {
-                return redirect()->back()->with('error', 'Jumlah cabang saat ini sudah mencapai batas maksimal cabang.')->withInput();
+            // Get membership and validate branch limits
+            $membership = $parentOutlet->membership;
+            if (!$membership) {
+                return redirect()->back()
+                    ->with('error', 'Outlet tidak memiliki paket membership aktif.')
+                    ->withInput();
             }
 
+            $currentBranchCount = $parentOutlet->branchOutlets()->count();
 
-            $request->validate([
+            // Check if membership allows branch creation
+            if (!$membership->canCreateBranch()) {
+                return redirect()->back()
+                    ->with('error', $membership->getBranchLimitMessage($currentBranchCount))
+                    ->withInput();
+            }
+
+            // Check branch limit
+            if ($membership->hasReachedBranchLimit($currentBranchCount)) {
+                return redirect()->back()
+                    ->with('error', $membership->getBranchLimitMessage($currentBranchCount))
+                    ->withInput();
+            }
+
+            // Regular validation
+            $validated = $request->validate([
                 'outlet_name' => [
                     'required',
                     'string',
@@ -61,26 +75,62 @@ class BranchController extends Controller
                 'contact_info' => 'required|string|max:255',
             ]);
 
-            $outlet = ModelOutlet::create([
-                'outlet_name' => $request->outlet_name,
-                'address' => $request->address,
-                'contact_info' => $request->contact_info,
-                'parent_outlet_id' => $parentOutlet->outlet_id,
-                'user_id' => Auth::user()->user_id,
-                'status' => 'cabang',
-                'jenis_outlet' => $parentOutlet->jenis_outlet,
-                'membership_id' => $parentOutlet->membership_id,
-                'registration_date' => Carbon::now()->toDateString(),
-                'outlet_group_id' => $parentOutlet->outlet_group_id,
-            ]);
+            \DB::beginTransaction();
 
-            return redirect()->route('branches.index')->with('success', 'Cabang <b>' . $outlet->outlet_name . '</b> berhasil ditambahkan.');
+            try {
+                // Create new branch outlet
+                $outlet = ModelOutlet::create([
+                    'outlet_name' => $validated['outlet_name'],
+                    'address' => $validated['address'],
+                    'contact_info' => $validated['contact_info'],
+                    'parent_outlet_id' => $parentOutlet->outlet_id,
+                    'user_id' => Auth::user()->user_id,
+                    'status' => 'cabang',
+                    'jenis_outlet' => $parentOutlet->jenis_outlet,
+                    'membership_id' => $parentOutlet->membership_id,
+                    'registration_date' => Carbon::now()->toDateString(),
+                    'outlet_group_id' => $parentOutlet->outlet_group_id,
+                ]);
+
+                // Log the activity with only existing columns
+                ModelActivityLog::createLog(
+                    Auth::user()->user_id,
+                    $parentOutlet->outlet_id,
+                    'create_branch',
+                    sprintf(
+                        'Menambahkan cabang baru "%s" dengan alamat "%s" dan kontak "%s"',
+                        $outlet->outlet_name,
+                        $outlet->address,
+                        $outlet->contact_info
+                    )
+                );
+
+                \DB::commit();
+
+                return redirect()->route('branches.index')
+                    ->with('success', 'Cabang <b>' . $outlet->outlet_name . '</b> berhasil ditambahkan.');
+
+            } catch (\Exception $e) {
+                \DB::rollback();
+                \Log::error('Branch creation failed: ' . $e->getMessage());
+                throw $e;
+            }
+
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
+            \Log::error('Validation failed: ' . json_encode($e->errors()));
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
         } catch (QueryException $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.')->withInput();
+            \Log::error('Database error: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan database: ' . $e->getMessage())
+                ->withInput();
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan yang tidak terduga.')->withInput();
+            \Log::error('Unexpected error: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+                ->withInput();
         }
     }
 

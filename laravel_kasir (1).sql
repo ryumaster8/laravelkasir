@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Jan 2025 pada 16.53
+-- Waktu pembuatan: 28 Jan 2025 pada 21.41
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -45,7 +45,77 @@ INSERT INTO `activity_logs` (`activity_log_id`, `activity_log_operator_id`, `act
 (19, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus log aktivitas ID #14', '2025-01-17 03:13:54'),
 (20, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus log aktivitas ID #15', '2025-01-17 03:13:58'),
 (21, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus log aktivitas ID #16', '2025-01-17 03:14:01'),
-(22, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus log aktivitas ID #17', '2025-01-17 03:14:04');
+(22, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus log aktivitas ID #17', '2025-01-17 03:14:04'),
+(23, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus penambahan kas sebesar Rp 0', '2025-01-25 07:47:41'),
+(24, 59, 54, 'DELETE', 'Operator almera12 di outlet Almera 20 Cell menghapus penambahan kas sebesar Rp 0', '2025-01-25 07:47:45'),
+(25, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell menambahkan kas sebesar Rp 1.750.000', '2025-01-25 07:50:04'),
+(26, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell menambahkan kas sebesar Rp 250.000', '2025-01-25 08:09:45'),
+(27, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell melakukan penarikan kas sebesar Rp 125.000', '2025-01-25 08:28:38'),
+(28, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell melakukan penarikan kas sebesar Rp 50.000', '2025-01-25 08:37:27'),
+(29, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell melakukan penarikan kas sebesar Rp 25.000', '2025-01-25 08:40:28'),
+(30, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell menambahkan kas sebesar Rp 12.000', '2025-01-25 16:18:08'),
+(31, 59, 54, 'CREATE', 'Operator almera12 di outlet Almera 20 Cell menambahkan kas sebesar Rp 250.000', '2025-01-25 16:18:51'),
+(32, 59, 54, 'TAMBAH KAS', '[TAMBAH KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan tambah kas sejumlah Rp 350.000 | Keterangan: uang tambah', '2025-01-25 16:26:30'),
+(33, 59, 54, 'TARIK KAS', '[TARIK KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan tarik kas sejumlah Rp 75.000 | Keterangan: tarik', '2025-01-25 16:28:39'),
+(34, 59, 54, 'BUKA KAS', '[BUKA KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan buka kas sejumlah Rp 250.000 | Keterangan: awal', '2025-01-25 16:28:57'),
+(35, 59, 54, 'BUKA KAS', '[BUKA KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan buka kas sejumlah Rp 250.000 | Keterangan: -', '2025-01-25 18:09:21'),
+(36, 59, 54, 'TAMBAH KAS', '[TAMBAH KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan tambah kas sejumlah Rp 150.000 | Keterangan: -', '2025-01-25 18:11:09'),
+(37, 59, 54, 'TARIK KAS', '[TARIK KAS] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Melakukan tarik kas sejumlah Rp 25.000 | Keterangan: -', '2025-01-25 18:11:17'),
+(38, 63, 57, 'BUKA KAS', '[BUKA KAS] Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Melakukan buka kas sejumlah Rp 265.000 | Keterangan: -', '2025-01-25 20:56:16'),
+(39, 63, 57, 'TAMBAH KAS', '[TAMBAH KAS] Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Melakukan tambah kas sejumlah Rp 75.000 | Keterangan: -', '2025-01-25 20:56:21'),
+(40, 63, 57, 'TARIK KAS', '[TARIK KAS] Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Melakukan tarik kas sejumlah Rp 650.000 | Keterangan: -', '2025-01-25 20:56:28'),
+(41, 63, 57, 'BUKA KAS', '[BUKA KAS] Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Melakukan buka kas sejumlah Rp 250.000 | Keterangan: -', '2025-01-26 18:44:52'),
+(42, 63, 57, 'TAMBAH KAS', '[TAMBAH KAS] Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Melakukan tambah kas sejumlah Rp 25.000 | Keterangan: -', '2025-01-26 18:54:04'),
+(43, 59, 54, 'CANCEL_TRANSFER', '[CANCEL_TRANSFER] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Pembatalan transfer stok | Produk: Power Bank 80000 mah | Jumlah: 5 | Dari: Almera 20 Cell | Ke: Almera 4 Cell | Non-Serial', '2025-01-27 04:46:11'),
+(44, 59, 54, 'TRANSFER_STOCK', '[TRANSFER_STOCK] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Transfer stok | Produk: Power Bank 80000 mah | Jumlah: 5 pcs | Dari: Almera 20 Cell | Ke: Almera 4 Cell | Sisa Stok: 45', '2025-01-27 04:56:33'),
+(45, 59, 54, 'REDUCE_STOCK', '[REDUCE_STOCK] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Pengurangan stok | Produk: Power Bank 80000 mah | Jumlah: -5 pcs | Stok Sebelum: 45 | Stok Setelah: 40 | Operator: almera12 | Outlet: Almera 20 Cell', '2025-01-27 05:17:56'),
+(46, 59, 54, 'ADD_STOCK', '[ADD_STOCK] Operator: almera12 (ID: 59) | Outlet: Almera 20 Cell (ID: 54) | Penambahan stok | Produk: Power Bank 80000 mah | Jumlah: +2 pcs | Stok Sebelum: 40 | Stok Setelah: 42 | Operator: almera12 | Outlet: Almera 20 Cell', '2025-01-27 05:25:05'),
+(47, 63, 57, 'CREATE_BRANCH', 'Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Menambahkan cabang baru \"cabang paijo 8\" dengan alamat \"JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT\" dan kontak \"08154815141\"', '2025-01-27 06:46:45'),
+(48, 63, 66, 'UPDATE_USER', 'Operator: supaijo12 (ID: 63) | Outlet: cabang paijo 8 (ID: 66) | Mengubah data pengguna: Role_id: 2 → 3', '2025-01-27 07:37:44'),
+(49, 63, 66, 'UPDATE_USER', 'Operator: supaijo12 (ID: 63) | Outlet: cabang paijo 8 (ID: 66) | Mengubah data pengguna: Role: User → Admin', '2025-01-27 07:55:46'),
+(50, 63, 57, 'TOGGLE_USER_STATUS', 'Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Mengubah status pengguna supaijo12 dari active menjadi inactive', '2025-01-27 15:56:06'),
+(51, 63, 57, 'TOGGLE_USER_STATUS', 'Operator: supaijo12 (ID: 63) | Outlet: supaijo12 (ID: 57) | Mengubah status pengguna supaijo12 dari inactive menjadi active', '2025-01-27 15:56:11');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `akurasi`
+--
+
+CREATE TABLE `akurasi` (
+  `akurasi_id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `outlet_id` int(10) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `waktu` datetime NOT NULL,
+  `kas_awal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `penjualan_ecer` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `penarikan_kas` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `penambahan_kas` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `penjualan_grosir` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `kas_akhir` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `selisih` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `akurasi`
+--
+
+INSERT INTO `akurasi` (`akurasi_id`, `created_by`, `outlet_id`, `date`, `waktu`, `kas_awal`, `penjualan_ecer`, `penarikan_kas`, `penambahan_kas`, `penjualan_grosir`, `kas_akhir`, `selisih`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 59, 54, '2025-01-26', '2025-01-26 02:01:22', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 574000.00, 199000.00, NULL, '2025-01-25 19:01:22', '2025-01-25 19:01:22'),
+(2, 59, 54, '2025-01-26', '2025-01-26 02:12:27', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 574000.00, 199000.00, NULL, '2025-01-25 19:12:27', '2025-01-25 19:12:27'),
+(3, 59, 54, '2025-01-26', '2025-01-26 02:13:58', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 125000.00, -250000.00, NULL, '2025-01-25 19:13:58', '2025-01-25 19:13:58'),
+(4, 59, 54, '2025-01-26', '2025-01-26 02:17:21', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 450000.00, 75000.00, NULL, '2025-01-25 19:17:21', '2025-01-25 19:17:21'),
+(5, 59, 54, '2025-01-26', '2025-01-26 02:23:15', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 165000.00, -210000.00, NULL, '2025-01-25 19:23:15', '2025-01-25 19:23:15'),
+(6, 59, 54, '2025-01-26', '2025-01-26 02:25:09', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 125000.00, -250000.00, NULL, '2025-01-25 19:25:09', '2025-01-25 19:25:09'),
+(7, 59, 54, '2025-01-26', '2025-01-26 02:25:20', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 200000.00, -175000.00, NULL, '2025-01-25 19:25:20', '2025-01-25 19:25:20'),
+(8, 59, 54, '2025-01-26', '2025-01-26 02:26:04', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 150000.00, -225000.00, NULL, '2025-01-25 19:26:04', '2025-01-25 19:26:04'),
+(9, 59, 54, '2025-01-26', '2025-01-26 02:26:14', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 150000.00, -225000.00, NULL, '2025-01-25 19:26:14', '2025-01-25 19:26:14'),
+(10, 59, 54, '2025-01-26', '2025-01-26 02:39:06', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 200000.00, -175000.00, NULL, '2025-01-25 19:39:06', '2025-01-25 19:39:06'),
+(11, 59, 54, '2025-01-26', '2025-01-26 02:40:55', 250000.00, 0.00, 25000.00, 150000.00, 0.00, 165000.00, -210000.00, NULL, '2025-01-25 19:40:55', '2025-01-25 19:40:55');
 
 -- --------------------------------------------------------
 
@@ -114,16 +184,6 @@ CREATE TABLE `cash_registers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `cash_registers`
---
-
-INSERT INTO `cash_registers` (`cash_register_id`, `outlet_id`, `user_id`, `opening_balance`, `closing_balance`, `total_received`, `total_paid_out`, `date`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(7, 54, 59, 0.00, 0.00, 250000.00, 0.00, '2025-01-15', NULL, 'open', '2025-01-15 16:25:19', '2025-01-15 16:25:19'),
-(8, 54, 59, 0.00, 0.00, 0.00, 250000.00, '2025-01-15', NULL, 'open', '2025-01-15 16:58:52', '2025-01-15 16:59:04'),
-(9, 54, 59, 0.00, 0.00, 0.00, 158000.00, '2025-01-16', NULL, 'open', '2025-01-15 17:02:21', '2025-01-15 17:02:21'),
-(18, 54, 59, 0.00, 0.00, 250000.00, 0.00, '2025-01-17', 'tambahan uang', 'open', '2025-01-16 18:42:26', '2025-01-16 18:42:26');
-
 -- --------------------------------------------------------
 
 --
@@ -166,7 +226,8 @@ INSERT INTO `categories` (`category_id`, `category_name`, `outlet_id`, `user_id`
 (31, 'Smart Home', 54, 59, 0, '2025-01-05 10:21:01', '2025-01-05 10:21:01', NULL),
 (32, 'Audio & Speaker', 54, 59, 0, '2025-01-05 10:21:01', '2025-01-05 10:21:01', NULL),
 (33, 'Kamera & CCTV', 54, 59, 0, '2025-01-05 10:21:01', '2025-01-05 10:21:01', NULL),
-(34, 'Software & Lisensi', 54, 59, 0, '2025-01-05 10:21:01', '2025-01-05 10:21:01', NULL);
+(34, 'Software & Lisensi', 54, 59, 0, '2025-01-05 10:21:01', '2025-01-05 10:21:01', NULL),
+(35, 'Handset', 57, 63, 0, '2025-01-25 21:00:28', '2025-01-25 21:00:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -286,6 +347,81 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `kas_adjustments`
+--
+
+CREATE TABLE `kas_adjustments` (
+  `kas_adjustment_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `outlet_id` int(10) UNSIGNED DEFAULT NULL,
+  `date` date NOT NULL,
+  `waktu` datetime NOT NULL,
+  `selisih` decimal(10,2) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `kas_adjustments`
+--
+
+INSERT INTO `kas_adjustments` (`kas_adjustment_id`, `created_by`, `outlet_id`, `date`, `waktu`, `selisih`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 59, 54, '2025-01-26', '2025-01-26 01:13:23', -373000.00, 'fgfgf', '2025-01-25 18:13:23', '2025-01-25 18:13:23'),
+(2, 59, 54, '2025-01-26', '2025-01-26 01:27:14', -348000.00, 'sdsds', '2025-01-25 18:27:14', '2025-01-25 18:27:14'),
+(3, 59, 54, '2025-01-26', '2025-01-26 01:27:49', 4625000.00, 'sdsds', '2025-01-25 18:27:49', '2025-01-25 18:27:49');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kas_akhir`
+--
+
+CREATE TABLE `kas_akhir` (
+  `kas_akhir_id` int(10) NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `outlet_id` int(10) UNSIGNED NOT NULL,
+  `nominal` decimal(10,2) NOT NULL,
+  `date` date NOT NULL,
+  `waktu` datetime NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kas_awal`
+--
+
+CREATE TABLE `kas_awal` (
+  `kas_awal_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `outlet_id` int(10) UNSIGNED NOT NULL,
+  `nominal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `date` date NOT NULL,
+  `waktu` datetime DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `kas_awal`
+--
+
+INSERT INTO `kas_awal` (`kas_awal_id`, `created_by`, `outlet_id`, `nominal`, `date`, `waktu`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 59, 54, 750000.00, '2025-01-25', NULL, NULL, '2025-01-25 07:58:29', '2025-01-25 07:58:29'),
+(2, 59, 54, 2000000.00, '2025-01-25', '2025-01-25 23:14:47', 'awal', '2025-01-25 16:14:47', '2025-01-25 16:14:47'),
+(3, 59, 54, 250000.00, '2025-01-25', '2025-01-25 23:28:57', 'awal', '2025-01-25 16:28:57', '2025-01-25 16:28:57'),
+(4, 59, 54, 250000.00, '2025-01-26', '2025-01-26 01:09:21', NULL, '2025-01-25 18:09:21', '2025-01-25 18:09:21'),
+(5, 63, 57, 265000.00, '2025-01-26', '2025-01-26 03:56:16', NULL, '2025-01-25 20:56:16', '2025-01-25 20:56:16'),
+(6, 63, 57, 250000.00, '2025-01-27', '2025-01-27 01:44:52', NULL, '2025-01-26 18:44:52', '2025-01-26 18:44:52');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `memberships`
 --
 
@@ -384,7 +520,8 @@ INSERT INTO `membership_change_requests` (`request_id`, `outlet_id`, `current_me
 (19, 54, 5, 2, 'downgrade', 50000.00, 100000.00, 'approved', NULL, '2025-01-13 05:34:37', '2025-01-13 05:35:00', 58, NULL, 'unpaid', NULL, NULL),
 (20, 54, 2, 4, 'upgrade', 400000.00, 500000.00, 'approved', NULL, '2025-01-13 05:35:42', '2025-01-13 05:36:05', 58, NULL, 'unpaid', NULL, NULL),
 (21, 54, 4, 3, 'downgrade', 100000.00, 200000.00, 'approved', NULL, '2025-01-13 05:38:47', '2025-01-13 05:40:52', 58, NULL, 'unpaid', NULL, NULL),
-(22, 54, 3, 5, 'upgrade', 0.00, 1000000.00, 'approved', NULL, '2025-01-13 05:46:40', '2025-01-13 05:47:11', 58, NULL, 'unpaid', NULL, NULL);
+(22, 54, 3, 5, 'upgrade', 0.00, 1000000.00, 'approved', NULL, '2025-01-13 05:46:40', '2025-01-13 05:47:11', 58, NULL, 'unpaid', NULL, NULL),
+(23, 57, 2, 4, 'upgrade', 400000.00, 500000.00, 'approved', NULL, '2025-01-27 06:30:56', '2025-01-27 06:31:18', 58, NULL, 'unpaid', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -525,7 +662,9 @@ INSERT INTO `outlets` (`outlet_id`, `admin_user_id`, `outlet_name`, `email`, `ad
 (54, NULL, 'Almera 20 Cell', 'ryumaster8@gmail.com', 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', 'outlet-logos/TJcIDRYAwx9c4H9S50AM2cf6w3Z9Vu0EH1sQc7sg.png', NULL, 'Konter Handphone', 5, 2, NULL, 39, 'pending_downgrade', 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:05:36', '2025-01-15 16:20:47', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
 (55, NULL, 'Almera 8 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:05:43', '2025-01-02 02:05:43', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
 (56, NULL, 'Almera 3 Cell', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '019216891205', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 39, NULL, 0.00, '2025-01-02', NULL, NULL, 0.00, 0.00, 49, '2025-01-02 02:07:28', '2025-01-02 02:07:28', 1, 'cabang', '2025-01-13', '2025-02-13', 0, 'active'),
-(57, 63, 'supaijo12', 'supaijo12@gmail.com', 'BREBES', '019216891208', NULL, 'baru', 'Konter Handphone', 2, NULL, NULL, 40, NULL, 0.00, '2025-01-24', NULL, '2025-02-24', 250000.00, 100000.00, NULL, '2025-01-24 02:45:50', '2025-01-24 02:45:50', 1, 'induk', NULL, NULL, 0, 'active');
+(57, 63, 'supaijo12', 'supaijo12@gmail.com', 'BREBES', '019216891208', NULL, 'baru', 'Konter Handphone', 4, NULL, NULL, 40, NULL, 0.00, '2025-01-24', NULL, '2025-02-24', 250000.00, 100000.00, NULL, '2025-01-24 02:45:50', '2025-01-27 06:31:18', 1, 'induk', NULL, NULL, 0, 'active'),
+(58, NULL, 'cabang paijo 1', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '08154815141', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 40, NULL, 0.00, '2025-01-27', NULL, NULL, 0.00, 0.00, 57, '2025-01-27 06:31:43', '2025-01-27 06:31:43', 1, 'cabang', NULL, NULL, 0, 'active'),
+(66, NULL, 'cabang paijo 8', NULL, 'JL.PANGERAN DIPONEGORO TASIKMALAYA JAWA BARAT', '08154815141', NULL, NULL, 'Konter Handphone', 4, NULL, NULL, 40, NULL, 0.00, '2025-01-27', NULL, NULL, 0.00, 0.00, 57, '2025-01-27 06:46:45', '2025-01-27 06:46:45', 1, 'cabang', NULL, NULL, 0, 'active');
 
 -- --------------------------------------------------------
 
@@ -577,6 +716,67 @@ INSERT INTO `payment_confirmations` (`payment_confirmation_id`, `user_id`, `paym
 (2, 59, 54, 'MANDIRI', 'mobile_banking', 'asasasa', 'asasa', 'oZDYnkejAgtGoSrA3OKtIy6hr2OsZakBbCodkJ3F.jpg', '2025-01-12 22:54:31', '2025-01-12 22:54:31'),
 (3, 59, 54, 'MANDIRI', 'counter', 'asasasa', 'asasa', 'GkjZWDDshnOio4828OJKfWUYXVhjWs0LaWs2hIhq.jpg', '2025-01-12 22:58:30', '2025-01-12 22:58:30'),
 (4, 59, 54, 'MANDIRI', 'internet_banking', 'asasasa', 'asasa', 'Caasi10iB3CKIZfomFMRAM6WHdPhRjbOtCDN21XX.png', '2025-01-12 23:45:49', '2025-01-12 23:45:49');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `penambahan_kas`
+--
+
+CREATE TABLE `penambahan_kas` (
+  `penambahan_kas_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `outlet_id` int(10) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `waktu` datetime DEFAULT NULL,
+  `nominal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `penambahan_kas`
+--
+
+INSERT INTO `penambahan_kas` (`penambahan_kas_id`, `created_by`, `outlet_id`, `date`, `waktu`, `nominal`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 59, 54, '2025-01-25', NULL, 250000.00, 'uang receh', '2025-01-25 08:09:45', '2025-01-25 08:09:45'),
+(2, 59, 54, '2025-01-25', NULL, 12000.00, 'tambah', '2025-01-25 16:18:08', '2025-01-25 16:18:08'),
+(3, 59, 54, '2025-01-25', NULL, 250000.00, 'uang', '2025-01-25 16:18:51', '2025-01-25 16:18:51'),
+(4, 59, 54, '2025-01-25', '2025-01-25 23:26:30', 350000.00, 'uang tambah', '2025-01-25 16:26:30', '2025-01-25 16:26:30'),
+(5, 59, 54, '2025-01-26', '2025-01-26 01:11:09', 150000.00, NULL, '2025-01-25 18:11:09', '2025-01-25 18:11:09'),
+(6, 63, 57, '2025-01-26', '2025-01-26 03:56:21', 75000.00, NULL, '2025-01-25 20:56:21', '2025-01-25 20:56:21'),
+(7, 63, 57, '2025-01-27', '2025-01-27 01:54:04', 25000.00, NULL, '2025-01-26 18:54:04', '2025-01-26 18:54:04');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `penarikan_kas`
+--
+
+CREATE TABLE `penarikan_kas` (
+  `penarikan_kas_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `outlet_id` int(10) UNSIGNED NOT NULL,
+  `nominal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `date` date NOT NULL,
+  `waktu` datetime DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `penarikan_kas`
+--
+
+INSERT INTO `penarikan_kas` (`penarikan_kas_id`, `created_by`, `outlet_id`, `nominal`, `date`, `waktu`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 59, 54, 125000.00, '2025-01-25', NULL, 'sdsdsds', '2025-01-25 08:28:38', '2025-01-25 08:28:38'),
+(2, 59, 54, 50000.00, '2025-01-25', '2025-01-25 15:37:27', 'sdsds', '2025-01-25 08:37:27', '2025-01-25 08:37:27'),
+(3, 59, 54, 25000.00, '2025-01-25', '2025-01-25 15:40:28', NULL, '2025-01-25 08:40:28', '2025-01-25 08:40:28'),
+(4, 59, 54, 75000.00, '2025-01-25', '2025-01-25 23:28:39', 'tarik', '2025-01-25 16:28:39', '2025-01-25 16:28:39'),
+(5, 59, 54, 25000.00, '2025-01-26', '2025-01-26 01:11:17', NULL, '2025-01-25 18:11:17', '2025-01-25 18:11:17'),
+(6, 63, 57, 650000.00, '2025-01-26', '2025-01-26 03:56:28', NULL, '2025-01-25 20:56:28', '2025-01-25 20:56:28');
 
 -- --------------------------------------------------------
 
@@ -655,7 +855,11 @@ INSERT INTO `products` (`product_id`, `outlet_id`, `category_id`, `supplier_id`,
 (86, 54, 15, 20, 'Phone Case Samsung S23', 'Generic', 'ACC-CASE-S23', 'Premium Case for Samsung S23 Series', 75000.00, 100000.00, 150000.00, 'Pcs', 0, 60, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
 (87, 54, 16, 21, 'Laptop Cooling Pad', 'Generic', 'ACC-COOL-PAD', 'Laptop Cooling Pad with 5 Fans', 150000.00, 200000.00, 250000.00, 'Unit', 0, 60, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
 (88, 54, 17, 22, 'Mouse Pad Gaming XL', 'Generic', 'ACC-MP-XL', 'Extended Gaming Mouse Pad 90x40cm', 80000.00, 100000.00, 150000.00, 'Pcs', 0, 60, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
-(89, 54, 18, 23, 'Printer Paper A4', 'Generic', 'SUP-PPR-A4', 'A4 Printer Paper 80gsm (500 sheets)', 45000.00, 55000.00, 65000.00, 'Rim', 0, 60, '2025-01-05 10:35:58', '2025-01-05 10:35:58');
+(89, 54, 18, 23, 'Printer Paper A4', 'Generic', 'SUP-PPR-A4', 'A4 Printer Paper 80gsm (500 sheets)', 45000.00, 55000.00, 65000.00, 'Rim', 0, 60, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
+(90, 57, 35, 41, 'Power Bank 40000 mah', 'Vivan', 'BC084551', NULL, 250000.00, 260000.00, 350000.00, 'pcs', 0, 63, '2025-01-25 21:01:19', '2025-01-25 21:01:19'),
+(91, 57, 35, 41, 'Speaker Bluetooth Wireless Bisa Power Bank', 'Mtech', NULL, 'tidak ada deca', 150000.00, 155000.00, 200000.00, 'pcs', 0, 63, '2025-01-28 01:04:39', '2025-01-28 01:04:39'),
+(92, 57, 35, 41, 'Keyboard Mekanik NYK', 'NYK', 'BC63442914', 'deskripsi', 125000.00, 13000.00, 165000.00, 'pcs', 0, 63, '2025-01-28 09:48:29', '2025-01-28 09:48:29'),
+(93, 57, 35, 41, 'Keyboard Mekanik NYK12', 'NYK', NULL, 'sdsds', 125000.00, 13000.00, 165000.00, 'pcs', 1, 63, '2025-01-28 09:53:55', '2025-01-28 09:53:55');
 
 -- --------------------------------------------------------
 
@@ -715,15 +919,15 @@ CREATE TABLE `product_serials` (
 
 INSERT INTO `product_serials` (`serial_id`, `product_id`, `outlet_id`, `user_id`, `serial_number`, `status`, `created_at`, `updated_at`) VALUES
 (10, 14, 52, 60, '1515244512112', 'tersedia', '2025-01-02 04:07:28', '2025-01-02 16:49:48'),
-(11, 14, 54, 60, '5621324215151', 'tersedia', '2025-01-02 04:07:28', '2025-01-02 16:51:16'),
+(11, 14, 54, 60, '5621324215151', 'available', '2025-01-02 04:07:28', '2025-01-27 03:41:15'),
 (12, 14, 52, 60, '5661232345231', 'tersedia', '2025-01-02 04:07:28', '2025-01-02 16:49:53'),
 (13, 66, 54, 60, 'IPH-0066-0001', 'dalam_keranjang', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (14, 66, 54, 60, 'IPH-0066-0002', 'dalam_keranjang', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (15, 66, 54, 60, 'IPH-0066-0003', 'terjual', '2025-01-05 10:31:24', '2025-01-10 17:39:07'),
 (16, 66, 54, 60, 'IPH-0066-0004', 'terjual', '2025-01-05 10:31:24', '2025-01-10 07:41:25'),
 (17, 66, 54, 60, 'IPH-0066-0005', 'terjual', '2025-01-05 10:31:24', '2025-01-10 07:50:45'),
-(18, 66, 54, 60, 'IPH-0066-0006', 'tersedia', '2025-01-05 10:31:24', '2025-01-09 19:27:05'),
-(19, 66, 54, 60, 'IPH-0066-0007', 'tersedia', '2025-01-05 10:31:24', '2025-01-11 06:17:50'),
+(18, 66, 54, 60, 'IPH-0066-0006', 'available', '2025-01-05 10:31:24', '2025-01-27 03:42:43'),
+(19, 66, 54, 60, 'IPH-0066-0007', 'available', '2025-01-05 10:31:24', '2025-01-27 03:42:40'),
 (20, 66, 54, 60, 'IPH-0066-0008', 'tersedia', '2025-01-05 10:31:24', '2025-01-10 03:13:06'),
 (21, 66, 54, 60, 'IPH-0066-0009', 'terjual', '2025-01-05 10:31:24', '2025-01-11 06:18:32'),
 (22, 66, 54, 60, 'IPH-0066-0010', 'tersedia', '2025-01-05 10:31:24', '2025-01-10 05:34:55'),
@@ -767,7 +971,7 @@ INSERT INTO `product_serials` (`serial_id`, `product_id`, `outlet_id`, `user_id`
 (60, 69, 54, 60, 'ROG-0069-0004', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (61, 69, 54, 60, 'ROG-0069-0005', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (62, 70, 54, 60, 'LOG-0070-0001', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
-(63, 70, 54, 60, 'LOG-0070-0002', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
+(63, 70, 54, 60, 'LOG-0070-0002', 'terjual', '2025-01-05 10:31:24', '2025-01-25 08:49:29'),
 (64, 70, 54, 60, 'LOG-0070-0003', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (65, 70, 54, 60, 'LOG-0070-0004', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (66, 70, 54, 60, 'LOG-0070-0005', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
@@ -961,7 +1165,11 @@ INSERT INTO `product_serials` (`serial_id`, `product_id`, `outlet_id`, `user_id`
 (254, 84, 54, 60, 'ADO-0084-0006', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (255, 84, 54, 60, 'ADO-0084-0007', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
 (256, 84, 54, 60, 'ADO-0084-0008', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
-(257, 84, 54, 60, 'ADO-0084-0009', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24');
+(257, 84, 54, 60, 'ADO-0084-0009', 'tersedia', '2025-01-05 10:31:24', '2025-01-05 10:31:24'),
+(258, 93, 57, 63, '55455515515', 'tersedia', '2025-01-28 09:53:55', '2025-01-28 09:53:55'),
+(259, 93, 57, 63, '34343445455', 'tersedia', '2025-01-28 09:53:55', '2025-01-28 09:53:55'),
+(260, 93, 57, 63, '45565656565', 'terjual', '2025-01-28 09:53:55', '2025-01-28 09:57:32'),
+(261, 93, 57, 63, '34345656566', 'terjual', '2025-01-28 09:53:55', '2025-01-28 12:53:03');
 
 -- --------------------------------------------------------
 
@@ -983,13 +1191,16 @@ CREATE TABLE `product_stock` (
 --
 
 INSERT INTO `product_stock` (`product_stock_id`, `product_id`, `outlet_id`, `stock`, `created_at`, `updated_at`) VALUES
-(1, 26, 54, 56, '2025-01-02 08:21:05', '2025-01-02 09:32:41'),
+(1, 26, 54, 42, '2025-01-02 08:21:05', '2025-01-27 05:25:05'),
 (2, 26, 52, 3, '2025-01-02 09:32:54', '2025-01-02 15:55:51'),
-(22, 85, 54, 14, '2025-01-05 10:35:58', '2025-01-11 06:18:32'),
+(22, 85, 54, 12, '2025-01-05 10:35:58', '2025-01-25 08:41:37'),
 (23, 86, 54, 53, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
 (24, 87, 54, 61, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
 (25, 88, 54, 55, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
-(26, 89, 54, 64, '2025-01-05 10:35:58', '2025-01-05 10:35:58');
+(26, 89, 54, 64, '2025-01-05 10:35:58', '2025-01-05 10:35:58'),
+(27, 90, 57, 84, '2025-01-25 21:01:19', '2025-01-28 07:45:41'),
+(28, 91, 57, 541, '2025-01-28 01:04:39', '2025-01-28 07:45:41'),
+(29, 92, 57, 485, '2025-01-28 09:48:29', '2025-01-28 09:48:29');
 
 -- --------------------------------------------------------
 
@@ -1018,7 +1229,7 @@ CREATE TABLE `product_transits` (
 --
 
 INSERT INTO `product_transits` (`transit_id`, `product_id`, `serial_id`, `from_outlet_id`, `to_outlet_id`, `user_id`, `quantity`, `status`, `operator_sender`, `operator_receiver`, `has_serial_number`, `created_at`, `updated_at`) VALUES
-(1, 14, 11, 54, 52, 59, NULL, 'transit', 59, NULL, 1, '2025-01-02 16:51:16', '2025-01-02 16:51:16');
+(9, 26, NULL, 54, 52, 59, 5, 'transit', 59, NULL, 0, '2025-01-27 04:56:33', '2025-01-27 04:56:33');
 
 -- --------------------------------------------------------
 
@@ -1172,7 +1383,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('BPND5UnGQT5sKpi72aJUNZXt8n3QAHkeImnT2oSF', 59, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0', 'YToyOTp7czo2OiJfdG9rZW4iO3M6NDA6Ikc0YXgyaVNKcnhpZ0tjM2hSRnE2dWlUanhtTmRwa2NtUDNEZm5ZbHUiO3M6NjoiX2ZsYXNoIjthOjI6e3M6MzoibmV3IjthOjA6e31zOjM6Im9sZCI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjY5OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvZGFzaGJvYXJkL3Byb2R1Y3RzL3N1Ym1pc3Npb24tdHJhbnNmZXItcmVxdWVzdHMiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1OTtzOjIwOiJfX2NpX2xhc3RfcmVnZW5lcmF0ZSI7aToxNzM3NzI5NTE4O3M6MTY6Il9jaV9wcmV2aW91c191cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7czo3OiJ1c2VyX2lkIjtpOjU5O3M6OToib3V0bGV0X2lkIjtpOjU0O3M6ODoidXNlcm5hbWUiO3M6ODoiYWxtZXJhMTIiO3M6NDoicm9sZSI7TzoyMToiQXBwXE1vZGVsc1xNb2RlbFJvbGVzIjozMDp7czoxMzoiACoAY29ubmVjdGlvbiI7czo1OiJteXNxbCI7czo4OiIAKgB0YWJsZSI7czo1OiJyb2xlcyI7czoxMzoiACoAcHJpbWFyeUtleSI7czo3OiJyb2xlX2lkIjtzOjEwOiIAKgBrZXlUeXBlIjtzOjM6ImludCI7czoxMjoiaW5jcmVtZW50aW5nIjtiOjE7czo3OiIAKgB3aXRoIjthOjA6e31zOjEyOiIAKgB3aXRoQ291bnQiO2E6MDp7fXM6MTk6InByZXZlbnRzTGF6eUxvYWRpbmciO2I6MDtzOjEwOiIAKgBwZXJQYWdlIjtpOjE1O3M6NjoiZXhpc3RzIjtiOjE7czoxODoid2FzUmVjZW50bHlDcmVhdGVkIjtiOjA7czoyODoiACoAZXNjYXBlV2hlbkNhc3RpbmdUb1N0cmluZyI7YjowO3M6MTM6IgAqAGF0dHJpYnV0ZXMiO2E6Mjp7czo3OiJyb2xlX2lkIjtpOjM7czo5OiJyb2xlX25hbWUiO3M6NDoidXNlciI7fXM6MTE6IgAqAG9yaWdpbmFsIjthOjI6e3M6Nzoicm9sZV9pZCI7aTozO3M6OToicm9sZV9uYW1lIjtzOjQ6InVzZXIiO31zOjEwOiIAKgBjaGFuZ2VzIjthOjA6e31zOjg6IgAqAGNhc3RzIjthOjA6e31zOjE3OiIAKgBjbGFzc0Nhc3RDYWNoZSI7YTowOnt9czoyMToiACoAYXR0cmlidXRlQ2FzdENhY2hlIjthOjA6e31zOjEzOiIAKgBkYXRlRm9ybWF0IjtOO3M6MTA6IgAqAGFwcGVuZHMiO2E6MDp7fXM6MTk6IgAqAGRpc3BhdGNoZXNFdmVudHMiO2E6MDp7fXM6MTQ6IgAqAG9ic2VydmFibGVzIjthOjA6e31zOjEyOiIAKgByZWxhdGlvbnMiO2E6MDp7fXM6MTA6IgAqAHRvdWNoZXMiO2E6MDp7fXM6MTA6InRpbWVzdGFtcHMiO2I6MDtzOjEzOiJ1c2VzVW5pcXVlSWRzIjtiOjA7czo5OiIAKgBoaWRkZW4iO2E6MDp7fXM6MTA6IgAqAHZpc2libGUiO2E6MDp7fXM6MTE6IgAqAGZpbGxhYmxlIjthOjE6e2k6MDtzOjk6InJvbGVfbmFtZSI7fXM6MTA6IgAqAGd1YXJkZWQiO2E6MTp7aTowO3M6MToiKiI7fX1zOjg6ImlzX293bmVyIjtpOjA7czoyMjoib3duZXJfZGFzaGJvYXJkX2FjY2VzcyI7aTowO3M6OToibG9nZ2VkX2luIjtpOjE7czoxMDoiaXNMb2dnZWRJbiI7YjoxO3M6OToiaXNfcGFyZW50IjtpOjA7czoxMToib3V0bGV0X25hbWUiO3M6MTQ6IkFsbWVyYSAyMCBDZWxsIjtzOjEzOiJvdXRsZXRfc3RhdHVzIjtzOjY6ImNhYmFuZyI7czo4OiJncm91cF9pZCI7aTozOTtzOjE2OiJwYXJlbnRfb3V0bGV0X2lkIjtpOjQ5O3M6MTM6Im1lbWJlcnNoaXBfaWQiO2k6NTtzOjE1OiJtZW1iZXJzaGlwX25hbWUiO3M6ODoiUGxhdGludW0iO3M6MTI6ImplbmlzX291dGxldCI7czoxNjoiS29udGVyIEhhbmRwaG9uZSI7czo4OiJhZG1pbl9pZCI7TjtzOjEyOiJicmFuY2hfbGltaXQiO2k6MTAwO3M6MjM6ImRhaWx5X3RyYW5zYWN0aW9uX2xpbWl0IjtpOjEwMDA7czoyODoiZGFpbHlfcHJvZHVjdF9hZGRpdGlvbl9saW1pdCI7aToxMDAwO3M6MTA6InVzZXJfbGltaXQiO2k6NTAwO3M6MTE6InBlcm1pc3Npb25zIjthOjI3OntzOjE2OiJjYW5fYWRkX3N1cHBsaWVyIjtpOjE7czoxNzoiY2FuX2VkaXRfc3VwcGxpZXIiO2k6MTtzOjE5OiJjYW5fZGVsZXRlX3N1cHBsaWVyIjtpOjE7czoxNzoiY2FuX2VkaXRfY2F0ZWdvcnkiO2k6MTtzOjE5OiJjYW5fZGVsZXRlX2NhdGVnb3J5IjtpOjE7czoxNjoiY2FuX2FkZF9jYXRlZ29yeSI7aToxO3M6MTY6ImNhbl9lZGl0X3Byb2R1Y3QiO2k6MTtzOjE4OiJjYW5fZGVsZXRlX3Byb2R1Y3QiO2k6MTtzOjE1OiJjYW5fYWRkX3Byb2R1Y3QiO2k6MTtzOjEyOiJjYW5fYWRkX3VzZXIiO2k6MTtzOjEzOiJjYW5fZWRpdF91c2VyIjtpOjE7czoxNToiY2FuX2RlbGV0ZV91c2VyIjtpOjE7czoyNDoiY2FuX2FkZF9wcm9kdWN0X2xvY2F0aW9uIjtpOjE7czoyNToiY2FuX2VkaXRfcHJvZHVjdF9sb2NhdGlvbiI7aToxO3M6Mjc6ImNhbl9kZWxldGVfcHJvZHVjdF9sb2NhdGlvbiI7aToxO3M6MTg6ImNhbl9zZWVfY29zdF9wcmljZSI7aToxO3M6MTg6ImNhbl9zZWVfc2FsZV9wcmljZSI7aToxO3M6MTY6ImNhbl9zZWVfc3VwcGxpZXIiO2k6MTtzOjE2OiJjYW5fc2VlX2NhdGVnb3J5IjtpOjE7czoxNjoiY2FuX3NlZV9vcGVyYXRvciI7aToxO3M6MTQ6ImNhbl9zZWVfb3V0bGV0IjtpOjE7czoxMzoiY2FuX3NlZV9zdG9jayI7aToxO3M6MTM6ImNhbl9zZWVfYnJhbmQiO2k6MTtzOjI0OiJjYW5fc2VlX3Byb2R1Y3RfbG9jYXRpb24iO2k6MTtzOjE1OiJjYW5fc2VlX2JhcmNvZGUiO2k6MTtzOjIwOiJjYW5fc2VlX3VuaXRfYmFyY29kZSI7aToxO3M6MTg6ImNhbl9zZWVfcHJvZHVjdF9pZCI7aToxO31zOjQ6InR5cGUiO3M6NjoiZ3Jvc2lyIjt9', 1737732525);
+('1QnuUT9QXDP5OE4yey9FAKpVCWV0xYYc46S7zrzu', 58, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0', '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', 1738075060);
 
 -- --------------------------------------------------------
 
@@ -1221,7 +1432,8 @@ INSERT INTO `suppliers` (`supplier_id`, `outlet_id`, `user_id`, `supplier_name`,
 (36, 54, 59, 'PT Software House', '081234567896', 'Jl. Software No. 147, Malang', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
 (37, 54, 59, 'CV Security System', '081234567897', 'Jl. Security No. 258, Palembang', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
 (38, 54, 59, 'UD Smart Home', '081234567898', 'Jl. Smart Home No. 369, Makassar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
-(39, 54, 59, 'PT Audio Visual', '081234567899', 'Jl. Audio Visual No. 741, Denpasar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0);
+(39, 54, 59, 'PT Audio Visual', '081234567899', 'Jl. Audio Visual No. 741, Denpasar', '2025-01-05 10:24:16', '2025-01-05 10:24:16', 0),
+(41, 57, 63, 'Media Cell', '019216891205', 'Jl. Tanah Abang II No. 2, Petojo Selatan, Jakarta Pusat 10160', '2025-01-25 21:00:49', '2025-01-25 21:00:49', 0);
 
 -- --------------------------------------------------------
 
@@ -1284,7 +1496,20 @@ INSERT INTO `transactions` (`transaction_id`, `user_id`, `outlet_id`, `wholesale
 (7, 59, 54, 2, 66000, 66000, 66000, 0, 'mbanking', 'lunas', '2025-01-10 18:31:03', 'completed', 'grosir', '2025-01-10 18:31:03', '2025-01-10 18:31:03', 1, NULL),
 (8, 59, 54, 2, 100000, 100000, 100000, 0, 'mbanking', 'lunas', '2025-01-10 19:02:50', 'completed', 'ecer', '2025-01-10 19:02:50', '2025-01-10 19:02:50', 1, NULL),
 (9, 59, 54, 2, 0, 16100000, 20000000, 3900000, 'cash', 'lunas', '2025-01-11 06:17:50', 'completed', 'ecer', '2025-01-11 06:17:50', '2025-01-11 07:32:51', NULL, NULL),
-(10, 59, 54, 3, 15632000, 15632000, 16000000, 368000, 'cash', 'lunas', '2025-01-11 06:18:32', 'completed', 'grosir', '2025-01-11 06:18:32', '2025-01-11 06:18:32', NULL, NULL);
+(10, 59, 54, 3, 15632000, 15632000, 16000000, 368000, 'cash', 'lunas', '2025-01-11 06:18:32', 'completed', 'grosir', '2025-01-11 06:18:32', '2025-01-11 06:18:32', NULL, NULL),
+(11, 59, 54, NULL, 200000, 200000, 500000, 300000, 'cash', 'lunas', '2025-01-25 08:41:37', 'completed', 'ecer', '2025-01-25 08:41:37', '2025-01-25 08:41:37', NULL, NULL),
+(12, 59, 54, 3, 1300000, 1300000, 1500000, 200000, 'cash', 'lunas', '2025-01-25 08:49:29', 'completed', 'grosir', '2025-01-25 08:49:29', '2025-01-25 08:49:29', NULL, NULL),
+(13, 63, 57, NULL, 388500, 388500, 400000, 11500, 'cash', 'lunas', '2025-01-25 21:01:38', 'completed', 'ecer', '2025-01-25 21:01:38', '2025-01-25 21:01:38', NULL, NULL),
+(14, 63, 57, 4, 288600, 288600, 600000, 311400, 'cash', 'lunas', '2025-01-25 21:20:48', 'completed', 'grosir', '2025-01-25 21:20:48', '2025-01-25 21:20:48', NULL, NULL),
+(15, 63, 57, NULL, 388500, 388500, 400000, 11500, 'cash', 'lunas', '2025-01-26 18:44:03', 'completed', 'ecer', '2025-01-26 18:44:03', '2025-01-26 18:44:03', NULL, NULL),
+(16, 63, 57, 4, 288600, 288600, 450000, 161400, 'cash', 'lunas', '2025-01-26 18:45:30', 'completed', 'grosir', '2025-01-26 18:45:30', '2025-01-26 18:45:30', NULL, NULL),
+(17, 63, 57, NULL, 388500, 388500, 500000, 111500, 'cash', 'lunas', '2025-01-27 15:57:06', 'completed', 'ecer', '2025-01-27 15:57:06', '2025-01-27 15:57:06', NULL, NULL),
+(18, 63, 57, NULL, 388500, 388500, 400000, 11500, 'cash', 'lunas', '2025-01-28 00:32:17', 'completed', 'ecer', '2025-01-28 00:32:17', '2025-01-28 00:32:17', NULL, NULL),
+(19, 63, 57, 4, 577200, 577200, 600000, 22800, 'cash', 'lunas', '2025-01-28 00:54:34', 'completed', 'grosir', '2025-01-28 00:54:34', '2025-01-28 00:54:34', NULL, NULL),
+(20, 63, 57, 4, 460650, 460650, 500000, 39350, 'cash', 'lunas', '2025-01-28 01:05:09', 'completed', 'grosir', '2025-01-28 01:05:09', '2025-01-28 01:05:09', NULL, NULL),
+(21, 63, 57, 4, 1093350, 1093350, 1100000, 6650, 'cash', 'lunas', '2025-01-28 07:45:41', 'completed', 'grosir', '2025-01-28 07:45:41', '2025-01-28 07:45:41', NULL, NULL),
+(22, 63, 57, 4, 183150, 183150, 1852000, 1668850, 'cash', 'lunas', '2025-01-28 09:57:32', 'completed', 'ecer', '2025-01-28 09:57:32', '2025-01-28 09:57:32', NULL, NULL),
+(23, 63, 57, 4, 183150, 183150, 200000, 16850, 'cash', 'lunas', '2025-01-28 12:53:03', 'completed', 'ecer', '2025-01-28 12:53:03', '2025-01-28 12:53:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1323,7 +1548,22 @@ INSERT INTO `transaction_items` (`transaction_item_id`, `transaction_id`, `produ
 (4, 9, 85, 22, 59, 54, 1, 100000, 0.00, NULL, 100000, '2025-01-11 06:17:50', 'cancelled', NULL, 'Dibatalkan oleh operator', '2025-01-11 07:31:55', 59),
 (5, 9, 66, NULL, 59, 54, 1, 16000000, 0.00, NULL, 16000000, '2025-01-11 06:17:50', 'cancelled', 19, 'Dibatalkan oleh operator', '2025-01-11 07:32:51', 59),
 (6, 10, 85, 22, 59, 54, 2, 75000, 9000.00, 'percentage', 141000, '2025-01-11 06:18:32', 'finish', NULL, NULL, NULL, NULL),
-(7, 10, 66, NULL, 59, 54, 1, 15500000, 0.00, NULL, 15500000, '2025-01-11 06:18:32', 'finish', 21, NULL, NULL, NULL);
+(7, 10, 66, NULL, 59, 54, 1, 15500000, 0.00, NULL, 15500000, '2025-01-11 06:18:32', 'finish', 21, NULL, NULL, NULL),
+(8, 11, 85, 22, 59, 54, 2, 100000, 0.00, NULL, 200000, '2025-01-25 08:41:37', 'finish', NULL, NULL, NULL, NULL),
+(9, 12, 70, NULL, 59, 54, 1, 1300000, 0.00, NULL, 1300000, '2025-01-25 08:49:29', 'finish', 63, NULL, NULL, NULL),
+(10, 13, 90, 27, 63, 57, 1, 350000, 0.00, NULL, 350000, '2025-01-25 21:01:38', 'finish', NULL, NULL, NULL, NULL),
+(11, 14, 90, 27, 63, 57, 1, 260000, 0.00, NULL, 260000, '2025-01-25 21:20:48', 'finish', NULL, NULL, NULL, NULL),
+(12, 15, 90, 27, 63, 57, 1, 350000, 0.00, NULL, 350000, '2025-01-26 18:44:03', 'finish', NULL, NULL, NULL, NULL),
+(13, 16, 90, 27, 63, 57, 1, 260000, 0.00, NULL, 260000, '2025-01-26 18:45:30', 'finish', NULL, NULL, NULL, NULL),
+(14, 17, 90, 27, 63, 57, 1, 350000, 0.00, NULL, 350000, '2025-01-27 15:57:06', 'finish', NULL, NULL, NULL, NULL),
+(15, 18, 90, 27, 63, 57, 1, 350000, 0.00, NULL, 350000, '2025-01-28 00:32:17', 'finish', NULL, NULL, NULL, NULL),
+(16, 19, 90, 27, 63, 57, 2, 260000, 0.00, NULL, 520000, '2025-01-28 00:54:34', 'finish', NULL, NULL, NULL, NULL),
+(17, 20, 91, 28, 63, 57, 1, 155000, 0.00, NULL, 155000, '2025-01-28 01:05:10', 'finish', NULL, NULL, NULL, NULL),
+(18, 20, 90, 27, 63, 57, 1, 260000, 0.00, NULL, 260000, '2025-01-28 01:05:10', 'finish', NULL, NULL, NULL, NULL),
+(19, 21, 90, 27, 63, 57, 2, 260000, 0.00, NULL, 520000, '2025-01-28 07:45:41', 'finish', NULL, NULL, NULL, NULL),
+(20, 21, 91, 28, 63, 57, 3, 155000, 0.00, NULL, 465000, '2025-01-28 07:45:41', 'finish', NULL, NULL, NULL, NULL),
+(21, 22, 93, NULL, 63, 57, 1, 165000, 0.00, NULL, 165000, '2025-01-28 09:57:32', 'finish', 260, NULL, NULL, NULL),
+(22, 23, 93, NULL, 63, 57, 1, 165000, 0.00, NULL, 165000, '2025-01-28 12:53:03', 'finish', 261, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1362,7 +1602,10 @@ INSERT INTO `users` (`user_id`, `username`, `first_name`, `last_name`, `email`, 
 (59, 'almera12', NULL, NULL, 'almera12@gmail.com', '085789959385', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$vjixQDlyELhG6kYFAUPBk.6SNHLoptz8YhJsghxhq52sclAK6UDgK', 3, 54, '2025-01-02 02:08:45', '2025-01-02 02:08:45'),
 (60, 'indah12', NULL, NULL, 'indah12@gmail.com', 'indah12', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$cUMoXCKKjvsxpkhL5OGDaOSxJwbxZMd2viu1ncG.EN3Nw5m.rFLpq', 2, 52, '2025-01-02 02:21:18', '2025-01-02 02:21:18'),
 (62, 'almera127', NULL, NULL, 'almera126@gmail.com', '019216891208', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$NNXNPyPTlLNzjQlB.S7TSu.HPe08eVTlyZ0tBduUqNOGBalx2I8GK', 3, 49, '2025-01-18 06:31:30', '2025-01-18 06:33:27'),
-(63, 'supaijo12', NULL, NULL, 'supaijo12@gmail.com', '019216891208', NULL, 0, NULL, 'active', 1, 0, NULL, 0, '$2y$12$/PnXZGqEGIrdGdiQqsonHuIn4Hp8NYQhEwMTyLJ4sQZI42dQ0OCX2', 1, 57, '2025-01-24 02:45:50', '2025-01-24 02:45:50');
+(63, 'supaijo12', NULL, NULL, 'supaijo12@gmail.com', '019216891208', NULL, 0, NULL, 'active', 1, 0, NULL, 0, '$2y$12$/PnXZGqEGIrdGdiQqsonHuIn4Hp8NYQhEwMTyLJ4sQZI42dQ0OCX2', 1, 57, '2025-01-24 02:45:50', '2025-01-27 15:56:11'),
+(64, 'pairin12', NULL, NULL, 'pairin12@gmail.com', '0851455515178', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$V3EKE7nDT1QtzhCWMYdHReF7CKGcvyUM9h6eyuIIk00kgqaybH4ca', 3, 66, '2025-01-27 06:47:39', '2025-01-27 07:37:44'),
+(65, 'supinah12', NULL, NULL, 'supinah12@gmail.com', '085789959385', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$7NsgMAMTabULxTrstpNohO4DaqmoLikFJG7bGcejOQ996B2O7ZI6.', 2, 49, '2025-01-27 06:56:08', '2025-01-27 06:56:08'),
+(66, 'sarinah12', NULL, NULL, 'sarinah12@gmail.com', '019216891208', NULL, 0, NULL, 'active', 0, 0, NULL, 0, '$2y$12$AfwTToU0h9wk/jKv/Xv.8.xxJvGZlE.IAWKiNxOcSL4SXNVIlzknK', 2, 66, '2025-01-27 06:57:00', '2025-01-27 07:55:46');
 
 -- --------------------------------------------------------
 
@@ -1460,7 +1703,8 @@ CREATE TABLE `wholesale_customers` (
 
 INSERT INTO `wholesale_customers` (`wholesale_customer_id`, `customer_name`, `email`, `contact_info`, `address`, `customer_outlet_id`, `operator_id`, `created_at`, `updated_at`) VALUES
 (2, 'Asep', 'asep@gmail.com', '085789959385', 'Jl. Tanah Abang II No. 2, Petojo Selatan, Jakarta Pusat 10160', 54, 59, '2025-01-05 05:26:07', '2025-01-05 05:26:07'),
-(3, 'Hepi', 'hepi@gmail.com', '081545454845', 'Jl. Tanah Abang II No. 2, Petojo Selatan, Jakarta Pusat 10160', 54, 59, '2025-01-05 10:00:40', '2025-01-05 10:00:40');
+(3, 'Hepi', 'hepi@gmail.com', '081545454845', 'Jl. Tanah Abang II No. 2, Petojo Selatan, Jakarta Pusat 10160', 54, 59, '2025-01-05 10:00:40', '2025-01-05 10:00:40'),
+(4, 'Sugik', 'sugik@gmail.com', '085789959304', 'Jalan Sudirman No. 45, Kelurahan Karet, Kecamatan Setiabudi, Jakarta Selatan 12930', 57, 63, '2025-01-25 21:18:23', '2025-01-25 21:18:23');
 
 --
 -- Indexes for dumped tables
@@ -1473,6 +1717,14 @@ ALTER TABLE `activity_logs`
   ADD PRIMARY KEY (`activity_log_id`),
   ADD KEY `activity_log_operator_id` (`activity_log_operator_id`),
   ADD KEY `activity_log_outlet_id` (`activity_log_outlet_id`);
+
+--
+-- Indeks untuk tabel `akurasi`
+--
+ALTER TABLE `akurasi`
+  ADD PRIMARY KEY (`akurasi_id`),
+  ADD KEY `fk_akurasi_created_by` (`created_by`),
+  ADD KEY `fk_akurasi_outlet_id` (`outlet_id`);
 
 --
 -- Indeks untuk tabel `banks`
@@ -1549,6 +1801,30 @@ ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `kas_adjustments`
+--
+ALTER TABLE `kas_adjustments`
+  ADD PRIMARY KEY (`kas_adjustment_id`),
+  ADD KEY `fk_kas_adjustments_created_by` (`created_by`),
+  ADD KEY `fk_kas_adjustments_outlet_id` (`outlet_id`);
+
+--
+-- Indeks untuk tabel `kas_akhir`
+--
+ALTER TABLE `kas_akhir`
+  ADD PRIMARY KEY (`kas_akhir_id`),
+  ADD KEY `kas_akhir_created_by_foreign` (`created_by`),
+  ADD KEY `kas_akhir_outlet_id_foreign` (`outlet_id`);
+
+--
+-- Indeks untuk tabel `kas_awal`
+--
+ALTER TABLE `kas_awal`
+  ADD PRIMARY KEY (`kas_awal_id`),
+  ADD KEY `kas_awal_created_by_foreign` (`created_by`),
+  ADD KEY `kas_awal_outlet_id_foreign` (`outlet_id`);
+
+--
 -- Indeks untuk tabel `memberships`
 --
 ALTER TABLE `memberships`
@@ -1607,6 +1883,22 @@ ALTER TABLE `payment_confirmations`
   ADD PRIMARY KEY (`payment_confirmation_id`),
   ADD KEY `payment_confirmations_user_id_foreign` (`user_id`),
   ADD KEY `fk_payment_confirmations_outlets` (`payment_outlet_id`);
+
+--
+-- Indeks untuk tabel `penambahan_kas`
+--
+ALTER TABLE `penambahan_kas`
+  ADD PRIMARY KEY (`penambahan_kas_id`),
+  ADD KEY `penambahan_kas_created_by_foreign` (`created_by`),
+  ADD KEY `penambahan_kas_outlet_id_foreign` (`outlet_id`);
+
+--
+-- Indeks untuk tabel `penarikan_kas`
+--
+ALTER TABLE `penarikan_kas`
+  ADD PRIMARY KEY (`penarikan_kas_id`),
+  ADD KEY `penarikan_kas_created_by_foreign` (`created_by`),
+  ADD KEY `penarikan_kas_outlet_id_foreign` (`outlet_id`);
 
 --
 -- Indeks untuk tabel `perpajakan`
@@ -1805,7 +2097,13 @@ ALTER TABLE `wholesale_customers`
 -- AUTO_INCREMENT untuk tabel `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `activity_log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `activity_log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT untuk tabel `akurasi`
+--
+ALTER TABLE `akurasi`
+  MODIFY `akurasi_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `banks`
@@ -1817,13 +2115,13 @@ ALTER TABLE `banks`
 -- AUTO_INCREMENT untuk tabel `cash_registers`
 --
 ALTER TABLE `cash_registers`
-  MODIFY `cash_register_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `cash_register_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `category_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT untuk tabel `discounts`
@@ -1850,6 +2148,24 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `kas_adjustments`
+--
+ALTER TABLE `kas_adjustments`
+  MODIFY `kas_adjustment_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `kas_akhir`
+--
+ALTER TABLE `kas_akhir`
+  MODIFY `kas_akhir_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT untuk tabel `kas_awal`
+--
+ALTER TABLE `kas_awal`
+  MODIFY `kas_awal_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT untuk tabel `memberships`
 --
 ALTER TABLE `memberships`
@@ -1859,7 +2175,7 @@ ALTER TABLE `memberships`
 -- AUTO_INCREMENT untuk tabel `membership_change_requests`
 --
 ALTER TABLE `membership_change_requests`
-  MODIFY `request_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `request_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `membership_history`
@@ -1877,7 +2193,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `outlets`
 --
 ALTER TABLE `outlets`
-  MODIFY `outlet_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `outlet_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT untuk tabel `outlet_groups`
@@ -1892,6 +2208,18 @@ ALTER TABLE `payment_confirmations`
   MODIFY `payment_confirmation_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `penambahan_kas`
+--
+ALTER TABLE `penambahan_kas`
+  MODIFY `penambahan_kas_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `penarikan_kas`
+--
+ALTER TABLE `penarikan_kas`
+  MODIFY `penarikan_kas_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT untuk tabel `perpajakan`
 --
 ALTER TABLE `perpajakan`
@@ -1901,7 +2229,7 @@ ALTER TABLE `perpajakan`
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_adjustments`
@@ -1919,19 +2247,19 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT untuk tabel `product_serials`
 --
 ALTER TABLE `product_serials`
-  MODIFY `serial_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
+  MODIFY `serial_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_stock`
 --
 ALTER TABLE `product_stock`
-  MODIFY `product_stock_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `product_stock_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_transits`
 --
 ALTER TABLE `product_transits`
-  MODIFY `transit_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transit_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `product_types`
@@ -1967,7 +2295,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT untuk tabel `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `supplier_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `supplier_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT untuk tabel `teknisi`
@@ -1979,19 +2307,19 @@ ALTER TABLE `teknisi`
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `transaction_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaction_items`
 --
 ALTER TABLE `transaction_items`
-  MODIFY `transaction_item_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `transaction_item_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_permissions`
@@ -2009,7 +2337,7 @@ ALTER TABLE `warranties`
 -- AUTO_INCREMENT untuk tabel `wholesale_customers`
 --
 ALTER TABLE `wholesale_customers`
-  MODIFY `wholesale_customer_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `wholesale_customer_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -2021,6 +2349,13 @@ ALTER TABLE `wholesale_customers`
 ALTER TABLE `activity_logs`
   ADD CONSTRAINT `activity_logs_ibfk_1` FOREIGN KEY (`activity_log_operator_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `activity_logs_ibfk_2` FOREIGN KEY (`activity_log_outlet_id`) REFERENCES `outlets` (`outlet_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `akurasi`
+--
+ALTER TABLE `akurasi`
+  ADD CONSTRAINT `fk_akurasi_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_akurasi_outlet_id` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `cash_registers`
@@ -2053,6 +2388,27 @@ ALTER TABLE `held_transactions`
   ADD CONSTRAINT `held_transactions_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `held_transactions_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `wholesale_customers` (`wholesale_customer_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `held_transactions_outlet_id_foreign` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `kas_adjustments`
+--
+ALTER TABLE `kas_adjustments`
+  ADD CONSTRAINT `fk_kas_adjustments_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_kas_adjustments_outlet_id` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE SET NULL;
+
+--
+-- Ketidakleluasaan untuk tabel `kas_akhir`
+--
+ALTER TABLE `kas_akhir`
+  ADD CONSTRAINT `kas_akhir_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `kas_akhir_outlet_id_foreign` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `kas_awal`
+--
+ALTER TABLE `kas_awal`
+  ADD CONSTRAINT `kas_awal_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kas_awal_outlet_id_foreign` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `membership_change_requests`
@@ -2095,6 +2451,20 @@ ALTER TABLE `outlet_groups`
 ALTER TABLE `payment_confirmations`
   ADD CONSTRAINT `fk_payment_confirmations_outlets` FOREIGN KEY (`payment_outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `payment_confirmations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `penambahan_kas`
+--
+ALTER TABLE `penambahan_kas`
+  ADD CONSTRAINT `penambahan_kas_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `penambahan_kas_outlet_id_foreign` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `penarikan_kas`
+--
+ALTER TABLE `penarikan_kas`
+  ADD CONSTRAINT `penarikan_kas_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `penarikan_kas_outlet_id_foreign` FOREIGN KEY (`outlet_id`) REFERENCES `outlets` (`outlet_id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `perpajakan`

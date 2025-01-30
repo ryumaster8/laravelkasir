@@ -125,4 +125,34 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.getElementById('quantity').addEventListener('input', function(e) {
+        const max = parseInt(this.getAttribute('max'));
+        const value = parseInt(this.value);
+        if (value > max) {
+            this.value = max;
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const qty = document.getElementById('quantity').value;
+        
+        if(confirm(
+            `Apakah Anda yakin ingin mengurangi stok?\n\n` +
+            `Detail Pengurangan:\n` +
+            `- Produk: {{ $product->product_name }}\n` +
+            `- Jumlah: ${qty} {{ $product->unit ?? 'unit' }}\n` +
+            `- Operator: {{ $user->username }}\n` +
+            `- Outlet: {{ $user->outlet->outlet_name }}\n` +
+            `- Stok Saat Ini: {{ $productStock->stock ?? 0 }}\n\n` +
+            `Setelah pengurangan, stok akan berkurang sebanyak ${qty} unit.`
+        )) {
+            this.submit();
+        }
+    });
+</script>
+@endpush
 @endsection

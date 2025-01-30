@@ -9,12 +9,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $memberships = ModelMembership::where('is_active', true)
+        $memberships = ModelMembership::active()
             ->orderBy('rank', 'asc')
             ->get();
 
-        return view('front.home', [
-            'memberships' => $memberships
-        ]);
+        return view('front.home', compact('memberships'));
     }
 }

@@ -52,26 +52,52 @@ class WholesaleCustomersController extends Controller
 
     public function edit($id)
     {
-        $customer = ModelWholesaleCustomer::with(['outlet', 'operator'])->findOrFail($id);
-        return view('admin.wholesale_customer.edit', compact('customer'));
+        try {
+            // Tambahkan debug untuk melihat nilai yang dicari
+            \Log::info("Searching for customer with ID: " . $id);
+            \Log::info("Current outlet_id: " . session('outlet_id'));
+            
+            $customer = ModelWholesaleCustomer::with(['outlet', 'operator'])
+                ->where('wholesale_customer_id', $id)  // Ganti primary key yang benar
+                ->first();
+                
+            if (!$customer) {
+                throw new \Exception("Customer not found");
+            }
+
+            \Log::info("Customer found: " . json_encode($customer));
+            
+            return view('admin.wholesale_customer.edit', compact('customer'));
+        } catch (\Exception $e) {
+            \Log::error("Error in edit method: " . $e->getMessage());
+            return redirect()->route('wholesale-customer.index')
+                ->with('error', 'Pelanggan tidak ditemukan: ' . $e->getMessage());
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'customer_name' => 'nullable|string|max:255',
-            'email' => 'required|email|max:100|unique:wholesale_customers,email,' . $id . ',wholesale_customer_id',
-            'contact_info' => 'nullable|string|max:15',
-            'address' => 'nullable|string',
-            'customer_outlet_id' => 'nullable|exists:outlets,outlet_id',
-            'operator_id' => 'nullable|exists:users,user_id',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'customer_name' => 'required|string|max:255',
+                'email' => 'required|email|max:100|unique:wholesale_customers,email,' . $id . ',wholesale_customer_id',
+                'contact_info' => 'required|string|max:15',
+                'address' => 'required|string',
+                'customer_outlet_id' => 'required|exists:outlets,outlet_id',
+                'operator_id' => 'required|exists:users,user_id',
+            ]);
 
+            $customer = ModelWholesaleCustomer::where('customer_outlet_id', session('outlet_id'))
+                ->findOrFail($id);
+            $customer->update($validatedData);
 
-        $customer = ModelWholesaleCustomer::findOrFail($id);
-        $customer->update($validatedData);
-
-        return redirect('/wholesale-customer')->with('success', 'Data Pelanggan Grosir Berhasil Diubah!');
+            return redirect()->route('wholesale-customer.index')
+                ->with('success', 'Data Pelanggan Grosir Berhasil Diubah!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal mengubah data: ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)

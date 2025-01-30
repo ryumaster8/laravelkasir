@@ -133,7 +133,7 @@ class ModelOutlet extends Model
      */
     public function membership()
     {
-        return $this->belongsTo(ModelMembership::class, 'membership_id');
+        return $this->belongsTo(ModelMembership::class, 'membership_id', 'membership_id');
     }
     /**
      * Get the requested membership associated with the outlet.
@@ -274,10 +274,10 @@ class ModelOutlet extends Model
         // Get current outlet's group ID
         $groupId = $this->outlet_group_id;
         
-        // Get all outlets from same group except self
+        // Get all outlets from same group except self, sorted by name
         return ModelOutlet::where('outlet_group_id', $groupId)
             ->where('outlet_id', '!=', $this->outlet_id)
-            ->where('status', 'active')
+            ->orderBy('outlet_name', 'asc')
             ->get();
     }
 }

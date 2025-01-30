@@ -90,6 +90,10 @@ class AuthController extends Controller
                 $membership = \App\Models\ModelMembership::find($outlet->membership_id);
             }
 
+            // Get user's role name
+            $userRole = ModelRoles::find($user->role_id);
+            $roleName = $userRole ? $userRole->role_name : null;
+
             // Tangkap data permissions menggunakan ModelUserPermission
             $permissions = ModelUserPermission::where('role_id', $user->role_id)
                 ->where('outlet_id', $user->outlet_id)
@@ -133,7 +137,7 @@ class AuthController extends Controller
                 'user_id' => $user->user_id,
                 'outlet_id' => $user->outlet_id,
                 'username' => $user->username,
-                'role' => $user->role,
+                'role' => $roleName, // Changed from $user->role to $roleName
                 'is_owner' => $user->is_owner,
                 'owner_dashboard_access' => $user->is_owner ? 1 : 0,
                 'logged_in' => 1,

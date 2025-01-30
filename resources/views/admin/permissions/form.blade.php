@@ -82,6 +82,25 @@
                                 </div>
                             </div>
                         @endforeach
+
+                        <!-- New Wholesale Customer Permission Group -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h5 class="font-medium text-gray-900 mb-4">Kelompok Pelanggan Grosir</h5>
+                            <div class="space-y-3">
+                                @foreach(['add' => 'Tambah', 'edit' => 'Edit', 'delete' => 'Hapus'] as $action => $title)
+                                    <div class="flex items-center">
+                                        <label class="flex items-center space-x-3">
+                                            <span class="text-sm text-gray-700">Bisa {{ $title }} Pelanggan Grosir?</span>
+                                            <select name="can_{{ $action }}_wholesale_customer" class="permission-select ml-2 px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                <option value="0" {{ old("can_{$action}_wholesale_customer", isset($userPermission) ? $userPermission->{"can_{$action}_wholesale_customer"} : '') == 0 ? 'selected' : '' }}>Tidak</option>
+                                                <option value="1" {{ old("can_{$action}_wholesale_customer", isset($userPermission) ? $userPermission->{"can_{$action}_wholesale_customer"} : '') == 1 ? 'selected' : '' }}>Ya</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Continue with other permission groups similarly -->

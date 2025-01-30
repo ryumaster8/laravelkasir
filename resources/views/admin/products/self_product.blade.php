@@ -44,9 +44,15 @@
                         <td class="px-6 py-4 text-sm text-gray-900">{{ $product->supplier->supplier_name ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-gray-900">
                             @if ($product->has_serial_number)
-                                @foreach ($product->serials as $serial)
+                                @php
+                                    $availableSerials = $product->serials->where('status', 'tersedia');
+                                @endphp
+                                @foreach ($availableSerials as $serial)
                                     {{ $serial->serial_number }}{{ !$loop->last ? ', ' : '' }}
                                 @endforeach
+                                @if ($availableSerials->isEmpty())
+                                    -
+                                @endif
                             @else
                                 -
                             @endif

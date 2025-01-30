@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\ModelProducts;
 use App\Models\ModelSuppliers;
 use App\Models\ModelCategories;
+use App\Models\ModelActivityLog;
 use App\Models\ModelProductStock;
+use App\Models\StockNotification;
 use App\Models\ModelProductImages;
 use App\Models\ModelProductSerials;
 use App\Models\ModelProductTransit;
@@ -255,30 +257,54 @@ class ProductsController extends Controller
         // Ambil data user yang login
         $user = Auth::user();
         $outletId = $user->outlet_id;
-
-
         $quantity = $request->input('quantity');
-
 
         // Cek apakah record stok untuk produk dan outlet sudah ada
         $productStock = ModelProductStock::where('product_id', $product->product_id)
             ->where('outlet_id', $outletId)
             ->first();
 
-        // Jika record stok sudah ada, update stoknya
+        // Simpan stok awal sebelum penambahan
+        $stockSebelum = $productStock ? $productStock->stock : 0;
+
+        // Update atau buat stock baru
         if ($productStock) {
             $productStock->stock += $quantity;
             $productStock->save();
-            // Jika record stok belum ada, buat record baru
         } else {
-            $productStock = new ModelProductStock();
-            $productStock->product_id = $product->product_id;
-            $productStock->outlet_id = $outletId;
-            $productStock->stock = $quantity;
-            $productStock->save();
+            $productStock = ModelProductStock::create([
+                'product_id' => $product->product_id,
+                'outlet_id' => $outletId,
+                'stock' => $quantity
+            ]);
         }
 
-        $message = 'Stok produk ' . $product->product_name . ' berhasil ditambahkan sebanyak ' . $quantity . '. Total stok saat ini: ' . $productStock->stock;
+        // Log aktivitas penambahan stok
+        ModelActivityLog::createLog(
+            $user->user_id,
+            $user->outlet_id,
+            'ADD_STOCK',
+            sprintf(
+                "Penambahan stok | Produk: %s | Jumlah: +%d %s | " .
+                "Stok Sebelum: %d | Stok Setelah: %d | " .
+                "Operator: %s | Outlet: %s",
+                $product->product_name,
+                $quantity,
+                $product->unit ?? 'unit',
+                $stockSebelum,
+                $productStock->stock,
+                $user->username,
+                $user->outlet->outlet_name
+            )
+        );
+
+        $message = sprintf(
+            'Stok produk %s berhasil ditambahkan sebanyak %d. Total stok saat ini: %d',
+            $product->product_name,
+            $quantity,
+            $productStock->stock
+        );
+
         return redirect()->route('products-all-outlets')->with('success', $message);
     }
 
@@ -326,14 +352,52 @@ class ProductsController extends Controller
         if (!$productStock) {
             $message = 'Stok produk ' . $product->product_name . ' gagal dikurangi, stok belum tersedia dioutlet ini!';
             return redirect()->route('self-products')->with('error', $message);
-        } else {
-            // Jika record stok sudah ada, kurangi stoknya
-            $productStock->stock -= $quantity;
-            $productStock->save();
         }
-        $message = 'Stok produk ' . $product->product_name . ' berhasil dikurangi sebanyak ' . $quantity . '. Total stok saat ini: ' . $productStock->stock;
+
+        // Simpan stok awal sebelum pengurangan
+        $stockSebelum = $productStock->stock;
+        
+        // Kurangi stok
+        $productStock->stock -= $quantity;
+        $productStock->save();
+
+        // Log aktivitas pengurangan stok
+        ModelActivityLog::createLog(
+            $user->user_id,
+            $user->outlet_id,
+            'REDUCE_STOCK',
+            sprintf(
+                "Pengurangan stok | Produk: %s | Jumlah: -%d %s | " .
+                "Stok Sebelum: %d | Stok Setelah: %d | " .
+                "Operator: %s | Outlet: %s",
+                $product->product_name,
+                $quantity,
+                $product->unit ?? 'unit',
+                $stockSebelum,
+                $productStock->stock,
+                $user->username,
+                $user->outlet->outlet_name
+            )
+        );
+
+        $message = sprintf(
+            'Stok produk %s berhasil dikurangi sebanyak %d. Total stok saat ini: %d',
+            $product->product_name,
+            $quantity,
+            $productStock->stock
+        );
+
+        // Setelah mengurangi stok, cek apakah perlu membuat notifikasi
+        $newStock = $productStock->stock;
+        if ($newStock <= 0) {
+            $this->checkAndCreateNotification($product, $newStock, 'critical');
+        } elseif ($newStock <= $product->min_stock) {
+            $this->checkAndCreateNotification($product, $newStock, 'low');
+        }
+
         return redirect()->route('self-products')->with('success', $message);
     }
+
     public function transferStock(ModelProduct $product)
     {
         // ambil user yang login
@@ -379,29 +443,51 @@ class ProductsController extends Controller
         ]);
 
         $quantity = $request->input('quantity');
+        $toOutlet = ModelOutlet::find($request->input('to_outlet_id'));
 
-
-        // Simpan data pada tabel product_transits
-        ModelProductTransit::create([
+        // Create transfer record
+        $transit = ModelProductTransit::create([
             'product_id' => $product->product_id,
             'from_outlet_id' =>  $outletId,
             'to_outlet_id' => $request->input('to_outlet_id'),
-            'user_id' => Auth::user()->user_id,
-            'operator_sender' => Auth::user()->user_id,
+            'user_id' => $user->user_id,
+            'operator_sender' => $user->user_id,
             'has_serial_number' => 0,
             'quantity' => $quantity,
             'status' => 'transit'
         ]);
 
-
-        //Update Data Stok (Pengirim)
+        // Update stock
         if ($productStock) {
             $productStock->stock -= $quantity;
             $productStock->save();
         }
 
+        // Log the activity
+        ModelActivityLog::createLog(
+            $user->user_id,
+            $user->outlet_id,
+            'TRANSFER_STOCK',
+            sprintf(
+                "Transfer stok | Produk: %s | Jumlah: %d %s | Dari: %s | Ke: %s | Sisa Stok: %d",
+                $product->product_name,
+                $quantity,
+                $product->unit ?? 'unit',
+                $user->outlet->outlet_name,
+                $toOutlet->outlet_name,
+                $productStock->stock
+            )
+        );
 
-        $message = 'Stok produk ' . $product->product_name . ' berhasil dipindahkan sebanyak ' . $quantity . ' dari outlet ' . $user->outlet->outlet_name .  ' ke outlet ' . ModelOutlet::find($request->input('to_outlet_id'))->outlet_name .  '. Sisa stok saat ini: ' . ($productStock->stock ?? 0);
+        $message = sprintf(
+            'Stok produk %s berhasil dipindahkan sebanyak %d dari outlet %s ke outlet %s. Sisa stok saat ini: %d',
+            $product->product_name,
+            $quantity,
+            $user->outlet->outlet_name,
+            $toOutlet->outlet_name,
+            $productStock->stock ?? 0
+        );
+
         return redirect()->route('products-all-outlets')->with('success', $message);
     }
 
@@ -446,9 +532,31 @@ class ProductsController extends Controller
             'brand' => 'nullable|string|max:255',
             'category_id' => 'required|exists:categories,category_id',
             'supplier_id' => 'required|exists:suppliers,supplier_id',
-            'price_modal' => 'required|numeric|min:0',
-            'price_grosir' => 'required|numeric|min:0',
-            'price' => 'required|numeric|min:0',
+            'price_modal' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
+            'price_grosir' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($value <= $request->price_modal) {
+                        $fail('Harga grosir harus lebih besar dari harga modal');
+                    }
+                }
+            ],
+            'price' => [
+                'required',
+                'numeric',
+                'min:0',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($value <= $request->price_grosir) {
+                        $fail('Harga ecer harus lebih besar dari harga grosir');
+                    }
+                }
+            ],
             'unit' => 'nullable|string|max:50',
             'stock' => 'required_if:has_serial_number,==,0|integer|min:0',
             'has_serial_number' => 'required|boolean'
@@ -458,6 +566,17 @@ class ProductsController extends Controller
         try {
             // Ambil data dari request
             $productData = $request->except('_token', 'serial', 'stock');
+            
+            // Generate barcode for non-serial products
+            if (!$request->has_serial_number) {
+                do {
+                    $barcode = 'BC' . mt_rand(10000000, 99999999);
+                    $exists = ModelProduct::where('product_code', $barcode)->exists();
+                } while ($exists);
+                
+                $productData['product_code'] = $barcode;
+            }
+
             //jika produk tidak memiliki serial number
             if (!$request->has_serial_number) {
                 $product = ModelProduct::create(array_merge($productData, ['user_id' => $user->user_id, 'outlet_id' =>  $user->outlet_id]));
@@ -487,7 +606,7 @@ class ProductsController extends Controller
                 }
             }
             DB::commit();
-            return redirect()->route('products-all-outlets')->with('success', 'Product added successfully!');
+            return redirect()->route('self-products')->with('success', 'Product added successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to add product. Error: ' . $e->getMessage());
@@ -658,6 +777,184 @@ class ProductsController extends Controller
             return view('admin.products.transfer_requests_submission', compact('transits', 'user'));
         }
     
+        public function cancelTransfer(ModelProductTransit $transit)
+        {
+            if ($transit->status !== 'transit') {
+                return redirect()->back()->with('error', 'Hanya pengajuan dengan status transit yang dapat dibatalkan.');
+            }
+        
+            $user = Auth::user();
+        
+            // Log the cancellation activity
+            ModelActivityLog::createLog(
+                $user->user_id,
+                $user->outlet_id,
+                'CANCEL_TRANSFER',
+                sprintf(
+                    "Pembatalan transfer stok | Produk: %s | Jumlah: %d | Dari: %s | Ke: %s | %s",
+                    $transit->product->product_name,
+                    $transit->quantity ?? 1,
+                    $transit->fromOutlet->outlet_name,
+                    $transit->toOutlet->outlet_name,
+                    $transit->has_serial_number ? 
+                        "Serial: " . ($transit->serial?->serial_number ?? 'N/A') : 
+                        "Non-Serial"
+                )
+            );
+        
+            // Return stock/serial to original outlet
+            if ($transit->has_serial_number) {
+                $serial = $transit->serial;
+                if ($serial) {
+                    $serial->status = 'available';
+                    $serial->outlet_id = $transit->from_outlet_id;
+                    $serial->save();
+                }
+            } else {
+                // Return non-serial product stock
+                $productStock = ModelProductStock::where('product_id', $transit->product_id)
+                    ->where('outlet_id', $transit->from_outlet_id)
+                    ->first();
+                    
+                if ($productStock) {
+                    $productStock->stock += $transit->quantity;
+                    $productStock->save();
+                }
+            }
+        
+            // Delete the transit record
+            $transit->delete();
+        
+            return redirect()->route('products.transfer-requests-submission')
+                ->with('success', 'Pengajuan pemindahan stok berhasil dibatalkan.');
+        }
+    
+        public function getDailyProductCount($outletGroupId)
+        {
+            return ModelProduct::getTodayProductCount($outletGroupId);
+        }
     
         // ... (other methods) ...
+    
+    public function lowStock()
+    {
+        $user = Auth::user();
+        $outlet = $user->outlet;
+    
+        // Check if outlet has low stock reminder feature
+        if (!$outlet->membership->low_stock_reminder_feature) {
+            return redirect()->back()->with('error', 'Fitur pengingat stok tidak tersedia untuk membership Anda.');
+        }
+    
+        // Get products with serial numbers
+        $serialProducts = ModelProduct::with(['serials'])
+            ->where('outlet_id', $outlet->outlet_id)
+            ->where('has_serial_number', true)
+            ->get()
+            ->map(function($product) {
+                $availableCount = $product->serials()->where('status', 'tersedia')->count();
+                return [
+                    'product_id' => $product->product_id,
+                    'product_name' => $product->product_name,
+                    'type' => 'serial',
+                    'available_stock' => $availableCount,
+                    'min_stock' => $product->min_stock,
+                    'status' => $this->getStockStatus($availableCount, $product->min_stock)
+                ];
+            });
+    
+        // Get products without serial numbers
+        $nonSerialProducts = ModelProduct::with(['productStock'])
+            ->where('outlet_id', $outlet->outlet_id)
+            ->where('has_serial_number', false)
+            ->get()
+            ->map(function($product) {
+                $stock = $product->productStock->first();
+                $currentStock = $stock ? $stock->stock : 0;
+                return [
+                    'product_id' => $product->product_id,
+                    'product_name' => $product->product_name,
+                    'type' => 'non-serial',
+                    'available_stock' => $currentStock,
+                    'min_stock' => $product->min_stock,
+                    'status' => $this->getStockStatus($currentStock, $product->min_stock)
+                ];
+            });
+    
+        $products = $serialProducts->concat($nonSerialProducts)
+                                 ->filter(function($product) {
+                                     return $product['status'] !== 'normal';
+                                 })
+                                 ->sortBy('available_stock');
+    
+        return view('admin.products.low_stock', compact('products'));
     }
+    
+    private function getStockStatus($currentStock, $minStock)
+    {
+        if ($currentStock <= 0) {
+            return 'critical';
+        } elseif ($currentStock <= $minStock) {
+            return 'low';
+        }
+        return 'normal';
+    }
+    
+    public function updateMinStock(Request $request, ModelProduct $product)
+    {
+        $request->validate([
+            'min_stock' => 'required|integer|min:0'
+        ]);
+    
+        $product->min_stock = $request->min_stock;
+        $product->save();
+    
+        return redirect()->back()->with('success', 'Batas minimum stok berhasil diperbarui');
+    }
+
+    private function checkAndCreateNotification($product, $currentStock, $status)
+    {
+        // Hanya buat notifikasi jika outlet memiliki fitur low stock reminder
+        if (!$product->outlet->membership->low_stock_reminder_feature) {
+            return;
+        }
+
+        $message = sprintf(
+            'Stok produk %s %s (tersisa %d dari minimum %d)',
+            $product->product_name,
+            $status === 'critical' ? 'sudah habis' : 'hampir habis',
+            $currentStock,
+            $product->min_stock
+        );
+
+        StockNotification::create([
+            'outlet_id' => $product->outlet_id,
+            'product_id' => $product->product_id,
+            'status' => $status,
+            'message' => $message
+        ]);
+    }
+
+    // Tambahkan method untuk mengambil notifikasi
+    public function getNotifications()
+    {
+        $user = Auth::user();
+        $notifications = StockNotification::where('outlet_id', $user->outlet_id)
+            ->where('is_read', false)
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return response()->json($notifications);
+    }
+
+    // Method untuk menandai notifikasi sudah dibaca
+    public function markNotificationAsRead($id)
+    {
+        $notification = StockNotification::find($id);
+        if ($notification) {
+            $notification->is_read = true;
+            $notification->save();
+        }
+        return response()->json(['success' => true]);
+    }
+}

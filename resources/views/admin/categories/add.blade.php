@@ -60,53 +60,89 @@
                 <h3 class="text-xl font-semibold text-white">Data Kategori</h3>
             </div>
             <div class="p-6">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <div class="relative overflow-x-auto">
+                    <table id="categoryTable" class="w-full text-sm text-left">
+                        <thead class="text-xs uppercase bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3">No</th>
-                                <th scope="col" class="px-6 py-3">ID Kategori</th>
-                                <th scope="col" class="px-6 py-3">Nama Kategori</th>
-                                <th scope="col" class="px-6 py-3">Aksi</th>
+                                <th class="px-6 py-3">No</th>
+                                <th class="px-6 py-3">ID Kategori</th>
+                                <th class="px-6 py-3">Nama Kategori</th>
+                                <th class="px-6 py-3">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @forelse($categories as $index => $category)
-                            <tr class="bg-white border-b hover:bg-gray-50">
-                                <td class="px-6 py-4">{{ $index + 1 }}</td>
-                                <td class="px-6 py-4">{{ $category->category_id }}</td>
-                                <td class="px-6 py-4">{{ $category->category_name }}</td>
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-3">
-                                        <a href="{{ route('categories.edit', $category->category_id) }}" 
-                                           class="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
-                                            <i class="fas fa-edit mr-1"></i> Edit
-                                        </a>
-                                        <button type="button"
-                                                onclick="confirmDelete('{{ $category->category_id }}', '{{ $category->category_name }}')"
-                                                class="px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300">
-                                            <i class="fas fa-trash-alt mr-1"></i> Hapus
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr class="bg-white border-b">
-                                <td colspan="4" class="px-6 py-4 text-center">Tidak ada data kategori</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
+    @push('scripts')
     <script>
+        $(document).ready(function() {
+            $('#categoryTable').DataTable({
+                processing: true,
+                serverSide: false,
+                ajax: {
+                    url: "{{ route('categories.data') }}",
+                    type: 'GET'
+                },
+                columns: [
+                    { 
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    { data: 'category_id' },
+                    { data: 'category_name' },
+                    {
+                        data: null,
+                        render: function(data) {
+                            return `
+                                <div class="flex space-x-3">
+                                    <a href="/dashboard/categories/${data.category_id}/edit" 
+                                       class="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <button onclick="confirmDelete('${data.category_id}', '${data.category_name}')" 
+                                            class="px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </button>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',
+                },
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
         function confirmDelete(categoryId, categoryName) {
-            if (confirm(`Peringatan!\n\nAnda akan menghapus kategori "${categoryName}"\n\nPastikan kategori ini tidak digunakan pada data diskon atau data lainnya.\nTindakan ini tidak dapat dibatalkan.\n\nLanjutkan menghapus?`)) {
-                window.location.href = "{{ route('categories.delete', '') }}/" + categoryId;
-            }
+            Swal.fire({
+                title: 'Konfirmasi Penghapusan',
+                html: `Anda akan menghapus kategori <strong>${categoryName}</strong><br><br>
+                       Pastikan kategori ini tidak digunakan pada data lainnya.<br>
+                       Tindakan ini tidak dapat dibatalkan.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/dashboard/categories/${categoryId}/delete`;
+                }
+            });
         }
     </script>
+    @endpush
 @endsection

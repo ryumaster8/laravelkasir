@@ -16,6 +16,7 @@ class ActivityLogController extends Controller
             ->orderBy('timestamp', 'desc')
             ->get()
             ->map(function ($log) {
+                $badgeClass = $this->getActionBadgeClass($log->action);
                 return [
                     'id' => $log->activity_log_id,
                     'timestamp' => Carbon::parse($log->timestamp)->format('d-m-Y H:i:s'),
@@ -28,11 +29,22 @@ class ActivityLogController extends Controller
                         'id' => $log->outlet->outlet_id
                     ] : null,
                     'action' => $log->action,
+                    'badge_class' => $badgeClass,
                     'description' => $log->description
                 ];
             });
 
         return view('admin.activity-logs.index', compact('logs'));
+    }
+
+    private function getActionBadgeClass($action)
+    {
+        $classes = [
+            'CANCEL_TRANSFER' => 'bg-red-100 text-red-800',
+            // ...existing action classes...
+        ];
+
+        return $classes[$action] ?? 'bg-gray-100 text-gray-800';
     }
 
     public function destroy($id)

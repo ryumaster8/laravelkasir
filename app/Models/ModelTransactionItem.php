@@ -46,7 +46,8 @@ class ModelTransactionItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(ModelProduct::class, 'product_id', 'product_id');
+        return $this->belongsTo(ModelProduct::class, 'product_id', 'product_id')
+            ->withDefault(['product_name' => 'Unknown', 'product_code' => 'N/A']);
     }
 
     public function outlet()

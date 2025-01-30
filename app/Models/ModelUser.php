@@ -34,7 +34,7 @@ class ModelUser extends Authenticatable
         'profile_photo',
         'is_owner',
         'last_login',
-        'status',
+        'status', // Add status to fillable
         'is_parent',
         'is_verified',
         'verification_token',
@@ -65,6 +65,10 @@ class ModelUser extends Authenticatable
         'updated_at' => 'datetime'
     ];
 
+    protected $attributes = [
+        'status' => 'active' // Set default value
+    ];
+
     /**
      * Get the outlet associated with the user.
      */
@@ -86,5 +90,15 @@ class ModelUser extends Authenticatable
     public function userPermissions()
     {
         return $this->hasMany(ModelUserPermission::class, 'user_id');
+    }
+
+    /**
+     * Get user count for outlet group
+     */
+    public static function getOutletGroupUserCount($outletGroupId)
+    {
+        return self::whereHas('outlet', function($query) use ($outletGroupId) {
+            $query->where('outlet_group_id', $outletGroupId);
+        })->count();
     }
 }

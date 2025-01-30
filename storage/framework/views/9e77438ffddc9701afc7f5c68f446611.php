@@ -3,19 +3,54 @@
     <div class="sidebar-header p-4 border-b border-gray-700">
         <a href="/dashboard" class="text-white text-2xl font-semibold">Dashboard</a>
         
-        <!-- Outlet & Operator Info -->
+        <!-- Outlet Status, Membership & Info -->
         <div class="mt-4 space-y-2">
+            <!-- Outlet Status -->
             <div class="flex items-center text-sm">
-                <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                </svg>
-                <span class="text-gray-300">Outlet: <?php echo e(session('outlet_name')); ?> (<?php echo e(session('outlet_id')); ?>)</span>
+            <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span class="text-gray-300">Status: 
+            <span class="font-medium <?php echo e(session('is_parent') ? 'text-green-400' : 'text-blue-400'); ?>">
+            <?php echo e(session('is_parent') ? 'Outlet Induk' : 'Outlet Cabang'); ?>
+
+            </span>
+            </span>
+            </div>
+
+            <!-- Membership Info -->
+            <?php
+            $outlet = \App\Models\ModelOutlet::with('membership')
+            ->where('outlet_id', session('outlet_id'))
+            ->first();
+            $membershipName = $outlet->membership->membership_name ?? 'Free';
+            ?>
+            <div class="flex items-center text-sm">
+            <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+            <span class="text-gray-300">Membership: <span class="font-medium text-blue-400"><?php echo e($membershipName); ?></span></span>
+            </div>
+
+            <!-- Existing Outlet Info -->
+            <div class="flex items-center text-sm">
+            <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            <span class="text-gray-300">Outlet: <?php echo e(session('outlet_name')); ?> (<?php echo e(session('outlet_id')); ?>)</span>
             </div>
             <div class="flex items-center text-sm">
-                <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-                <span class="text-gray-300">Operator: <?php echo e(session('username')); ?> (<?php echo e(session('user_id')); ?>)</span>
+            <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="text-gray-300">Operator: <?php echo e(session('username')); ?> (<?php echo e(session('user_id')); ?>)</span>
+            </div>
+            <!-- Role Info -->
+            <div class="flex items-center text-sm">
+            <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+            <span class="text-gray-300">Role: <?php echo e(session('role')); ?></span>
             </div>
         </div>
 
@@ -109,6 +144,7 @@
                         <li>
                             <a href="/dashboard/kas-akhir" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kas Akhir</a>
                         </li>
+                        <?php if(session('role') == 'superadmin' || session('role') == 'admin'): ?>
                         <li>
                             <a href="<?php echo e(route('kas.akurasi')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
                                 <span class="flex items-center">
@@ -119,9 +155,8 @@
                                 </span>
                             </a>
                         </li>
-                        <li>
-                            <a href="/dashboard/serviceFunds" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Uang Servis</a>
-                        </li>
+                        <?php endif; ?>
+                        
                     </ul>
                 </li>
 
@@ -180,9 +215,18 @@
                         <li>
                             <a href="<?php echo e(route('products.history-transfer-requests')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Riwayat Pemindahan Stok</a>
                         </li>
-                        
-                        <!-- Tipe Produk sebagai submenu -->
-                        
+                        <?php if(Auth::user()->outlet->membership->low_stock_reminder_feature): ?>
+                        <li>
+                            <a href="<?php echo e(route('products.low-stock')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Pengingat Stok Menipis
+                                </span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
                     </ul>
                 </li>
 
@@ -365,6 +409,7 @@
             </li>
 
             <!-- Pengaturan -->
+            <?php if(session('role') == 'superadmin' || session('role') == 'admin'): ?>
             <li class="menu-item">
                 <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
                     <span class="flex items-center">
@@ -383,8 +428,10 @@
                     <li><a href="<?php echo e(route('user-permissions.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Pengaturan User Permissions</a></li>
                 </ul>
             </li>
+            <?php endif; ?>
 
             <!-- Log Aktivitas -->
+            <?php if(session('role') == 'superadmin' || session('role') == 'admin'): ?>
             <li class="menu-item">
                 <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
                     <span class="flex items-center">
@@ -401,6 +448,7 @@
                     <li><a href="<?php echo e(route('activity-logs.index')); ?>" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tampilkan Log Aktivitas</a></li>
                 </ul>
             </li>
+            <?php endif; ?>
 
             <!-- Manajemen Penjualan -->
             <li class="menu-item">
@@ -421,6 +469,7 @@
             </li>
 
             <!-- Outlet -->
+            <?php if(session('role') == 'superadmin' || session('role') == 'admin'): ?>
             <li class="menu-item">
                 <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
                     <span class="flex items-center">
@@ -435,52 +484,56 @@
                 </button>
                 <ul class="submenu ml-6 mt-1 space-y-1 hidden">
                     <li><a href="/dashboard/outlet/profile/edit" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Edit Profil Outlet</a></li>
-                    
+                    <li><a href="/dashboard/outlet/change-membership" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Ubah Membership</a></li>
                     <li><a href="/dashboard/outlet/billing" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Tagihan</a></li>
                     <li><a href="/dashboard/outlet/outlet/payment-history" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Riwayat Pembayaran</a></li>
                     <li><a href="/dashboard/outlet/billing/info-outlet" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Info Outlet</a></li>
                 </ul>
             </li>
+            <?php endif; ?>
+        </li>
 
-            <!-- Tampilkan Semua Session -->
-            <li>
-                <a href="<?php echo e(route('tampilkan-semua-session')); ?>" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                    </svg>
-                    Tampilkan Semua Session
-                </a>
-            </li>
+        <!-- Tampilkan Semua Session -->
+        <li>
+            <a href="<?php echo e(route('tampilkan-semua-session')); ?>" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                Tampilkan Semua Session
+            </a>
+        </li>
 
-            <!-- Saran -->
-            <li class="menu-item">
-                <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
-                    <span class="flex items-center">
-                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2v-12z"/>
-                        </svg>
-                        Saran
-                    </span>
-                    <svg class="w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <ul class="submenu ml-6 mt-1 space-y-1 hidden">
-                    <li><a href="/dashboard/saran/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kirim Saran</a></li>
-                </ul>
-            </li>
+        <!-- Saran -->
+        <?php if(session('role') == 'superadmin' || session('role') == 'admin'): ?>
+        <li class="menu-item">
+            <button class="w-full flex items-center justify-between px-4 py-2 text-gray-300 hover:bg-gray-700">
+            <span class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2v-12z"/>
+                </svg>
+                Saran
+            </span>
+            <svg class="w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+            </button>
+            <ul class="submenu ml-6 mt-1 space-y-1 hidden">
+            <li><a href="/dashboard/saran/create" class="block px-4 py-2 text-sm text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">Kirim Saran</a></li>
+            </ul>
+        </li>
+        <?php endif; ?>
 
-            <!-- Logout -->
-            <li>
-                <a href="/auth/logout" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h10a3 3 0 013 3v1"/>
-                    </svg>
-                    Logout
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <!-- Logout -->
+        <li>
+            <a href="/auth/logout" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h10a3 3 0 013 3v1"/>
+                </svg>
+                Logout
+            </a>
+        </li>
+    </ul>
+</nav>
 </div>
 </aside><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/partials/sidebar.blade.php ENDPATH**/ ?>

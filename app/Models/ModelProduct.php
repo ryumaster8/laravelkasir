@@ -134,4 +134,16 @@ class ModelProduct extends Model
     {
         return $this->hasMany(ModelProductStock::class, 'product_id', 'product_id');
     }
+
+    /**
+     * Get today's product count for a specific outlet group.
+     */
+    public static function getTodayProductCount($outletGroupId)
+    {
+        return self::whereHas('outlet', function($query) use ($outletGroupId) {
+                $query->where('outlet_group_id', $outletGroupId);
+            })
+            ->whereDate('created_at', now())
+            ->count();
+    }
 }

@@ -329,15 +329,73 @@ class TransactionController extends Controller
 
     public function show($id)
     {
-        $transaction = ModelTransaction::with([
-            'items.product', 
-            'user', 
-            'outlet', 
-            'wholesaleCustomer'
-        ])
-        ->findOrFail($id);
+        try {
+            $transaction = ModelTransaction::with([
+                'items.product', 
+                'user', 
+                'outlet',
+                'wholesaleCustomer'
+            ])->findOrFail($id);
 
-        return view('transactions.show', compact('transaction'));
+            return view('transactions.show', compact('transaction'));
+            
+        } catch (\Exception $e) {
+            Log::error('Error showing transaction details:', [
+                'id' => $id,
+                'error' => $e->getMessage()
+            ]);
+            
+            return redirect()->route('sales.report')
+                ->with('error', 'Transaksi tidak ditemukan');
+        }
+    }
+
+    public function detail($id)
+    {
+        try {
+            $transaction = ModelTransaction::with([
+                'items.product', // Make sure product relationship is loaded
+                'items.productSerial',  // Add this line to load serial numbers
+                'user',
+                'outlet',
+                'wholesaleCustomer'
+            ])->findOrFail($id);
+
+            // Debug to check data
+            Log::info('Transaction Detail Data:', [
+                'transaction_id' => $id,
+                'sample_product' => $transaction->items->first()->product ?? null
+            ]);
+
+            // Add debug logging
+            Log::info('Transaction Detail Debug:', [
+                'transaction_id' => $id,
+                'items_count' => $transaction->items->count(),
+                'first_item' => [
+                    'product_id' => $transaction->items->first()->product_id ?? null,
+                    'product' => $transaction->items->first()->product ?? null,
+                    'product_code' => $transaction->items->first()->product->product_code ?? null,
+                    'relationship_loaded' => $transaction->items->first()->relationLoaded('product'),
+                ],
+                'all_items' => $transaction->items->map(function($item) {
+                    return [
+                        'item_id' => $item->transaction_item_id,
+                        'product_id' => $item->product_id,
+                        'product_name' => $item->product->product_name ?? 'N/A',
+                        'product_code' => $item->product->product_code ?? 'N/A'
+                    ];
+                })
+            ]);
+
+            return view('transactions.detail', compact('transaction'));
+        } catch (\Exception $e) {
+            Log::error('Error showing transaction details:', [
+                'id' => $id,
+                'error' => $e->getMessage()
+            ]);
+            
+            return back()->with('error', 'Transaksi tidak ditemukan');
+        }
     }
 
     public function printReceipt($id)
@@ -468,62 +526,50 @@ class TransactionController extends Controller
 
     public function salesReport(Request $request)
     {
-        $query = ModelTransaction::with(['user', 'outlet', 'items.product', 'wholesaleCustomer'])
-            ->select([
-                'transactions.transaction_id',
-                'transactions.user_id',
-                'transactions.outlet_id',
-                'transactions.wholesale_customer_id',
-                'transactions.total_amount',
-                'transactions.payment_method',
-                'transactions.status',
-                'transactions.created_at',
-                DB::raw('COUNT(transaction_items.transaction_item_id) as items_count'),
-                DB::raw('SUM(transaction_items.quantity) as total_items')
-            ])
-            ->leftJoin('transaction_items', 'transactions.transaction_id', '=', 'transaction_items.transaction_id')
-            ->where('transactions.outlet_id', session('outlet_id'))
-            ->groupBy(
-                'transactions.transaction_id',
-                'transactions.user_id',
-                'transactions.outlet_id',
-                'transactions.wholesale_customer_id',
-                'transactions.total_amount',
-                'transactions.payment_method',
-                'transactions.status',
-                'transactions.created_at'
-            );
+        try {
+            $transactions = ModelTransaction::with(['user', 'outlet'])
+                ->where('outlet_id', session('outlet_id'))
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-        // Date filter
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('transactions.created_at', [
-                $request->start_date . ' 00:00:00',
-                $request->end_date . ' 23:59:59'
+            // Group transactions by date
+            $dailySummaries = $transactions->groupBy(function($transaction) {
+                return $transaction->created_at->format('Y-m-d');
+            })->map(function($dayTransactions) {
+                return [
+                    'date' => $dayTransactions->first()->created_at->format('Y-m-d'),
+                    'transactions' => $dayTransactions,
+                    'total_amount' => $dayTransactions->sum('total_amount')
+                ];
+            });
+
+            // Get last 30 days chart data
+            $chartData = ModelTransaction::getChartData(session('outlet_id'), 30);
+            
+            // Get monthly statistics
+            $monthlyStats = ModelTransaction::getMonthlyStatistics(session('outlet_id'));
+
+            $summary = [
+                'total_transactions' => $transactions->count(),
+                'total_sales' => $transactions->sum('total_amount'),
+                'retail_sales' => $transactions->where('sale_type', 'ecer')->sum('total_amount'),
+                'wholesale_sales' => $transactions->where('sale_type', 'grosir')->sum('total_amount')
+            ];
+
+            return view('reports.sales', [
+                'dailySummaries' => $dailySummaries,
+                'summary' => $summary,
+                'chartData' => $chartData,
+                'monthlyStats' => $monthlyStats
             ]);
+
+        } catch (\Exception $e) {
+            Log::error('Sales Report Error:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return back()->with('error', 'Error: ' . $e->getMessage());
         }
-
-        // Status filter
-        if ($request->filled('status')) {
-            $query->where('transactions.status', $request->status);
-        }
-
-        // Payment method filter
-        if ($request->filled('payment_method')) {
-            $query->where('transactions.payment_method', $request->payment_method);
-        }
-
-        $transactions = $query->orderBy('transactions.created_at', 'desc')->get();
-
-        $summary = [
-            'total_transactions' => $transactions->count(),
-            'total_sales' => $transactions->sum('total_amount'),
-            'total_items' => $transactions->sum('total_items'),
-            'average_transaction' => $transactions->count() > 0 
-                ? $transactions->sum('total_amount') / $transactions->count() 
-                : 0
-        ];
-
-        return view('reports.sales', compact('transactions', 'summary'));
     }
 
     public function groupSalesReport(Request $request)
@@ -544,55 +590,29 @@ class TransactionController extends Controller
         }
 
         $query = ModelTransaction::with(['user', 'outlet', 'items.product', 'wholesaleCustomer'])
-            ->select([
-                'transactions.transaction_id',
-                'transactions.user_id',
-                'transactions.outlet_id',
-                'transactions.wholesale_customer_id',
-                'transactions.total_amount',
-                'transactions.payment_method',
-                'transactions.status',
-                'transactions.created_at',
-                DB::raw('COUNT(transaction_items.transaction_item_id) as items_count'),
-                DB::raw('SUM(transaction_items.quantity) as total_items')
-            ])
-            ->leftJoin('transaction_items', 'transactions.transaction_id', '=', 'transaction_items.transaction_id')
             ->whereHas('outlet', function($q) use ($currentOutlet) {
                 $q->where('outlet_group_id', $currentOutlet->outlet_group_id);
-            })
-            ->groupBy(
-                'transactions.transaction_id',
-                'transactions.user_id',
-                'transactions.outlet_id',
-                'transactions.wholesale_customer_id',
-                'transactions.total_amount',
-                'transactions.payment_method',
-                'transactions.status',
-                'transactions.created_at'
-            );
+            });
 
         // Apply filters
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('transactions.created_at', [
+        if ($request->filled(['start_date', 'end_date'])) {
+            $query->whereBetween('created_at', [
                 $request->start_date . ' 00:00:00',
                 $request->end_date . ' 23:59:59'
             ]);
         }
 
-        if ($request->filled('status')) {
-            $query->where('transactions.status', $request->status);
-        }
-
-        if ($request->filled('payment_method')) {
-            $query->where('transactions.payment_method', $request->payment_method);
-        }
-
         if ($request->filled('outlet_id')) {
-            $query->where('transactions.outlet_id', $request->outlet_id);
+            $query->where('outlet_id', $request->outlet_id);
         }
 
-        $transactions = $query->orderBy('transactions.created_at', 'desc')->get();
+        if ($request->filled('sale_type')) {
+            $query->where('sale_type', $request->sale_type);
+        }
+
+        $transactions = $query->orderBy('created_at', 'desc')->get();
         
+        // Get all outlets in same group
         $outlets = ModelOutlet::where('outlet_group_id', $currentOutlet->outlet_group_id)
             ->select('outlet_id', 'outlet_name')
             ->get();
@@ -600,12 +620,43 @@ class TransactionController extends Controller
         $summary = [
             'total_transactions' => $transactions->count(),
             'total_sales' => $transactions->sum('total_amount'),
-            'total_items' => $transactions->sum('total_items'),
+            'total_items' => $transactions->sum('items_count'),
             'average_transaction' => $transactions->count() > 0 
                 ? $transactions->sum('total_amount') / $transactions->count() 
                 : 0
         ];
 
-        return view('reports.sales', compact('transactions', 'summary', 'outlets'));
+        return view('reports.sales-group', compact('transactions', 'summary', 'outlets'));
+    }
+
+    public function getDailyTransactionCount($outletGroupId)
+    {
+        return ModelTransaction::getTodayTransactionCount($outletGroupId);
+    }
+
+    public function showDailyTransactions($date)
+    {
+        try {
+            $transactions = ModelTransaction::with(['user', 'outlet'])
+                ->where('outlet_id', session('outlet_id'))
+                ->whereDate('created_at', $date)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            if ($transactions->isEmpty()) {
+                return redirect()->route('sales.report')
+                    ->with('error', 'Tidak ada transaksi pada tanggal tersebut');
+            }
+
+            return view('transactions.show', compact('transactions', 'date'));
+        } catch (\Exception $e) {
+            Log::error('Error showing daily transactions:', [
+                'date' => $date,
+                'error' => $e->getMessage()
+            ]);
+            
+            return redirect()->route('sales.report')
+                ->with('error', 'Terjadi kesalahan saat memuat data');
+        }
     }
 }

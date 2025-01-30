@@ -185,7 +185,7 @@
                                        placeholder="Scan atau ketik barcode produk..."
                                        autofocus>
                                 <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v-4m6 0h-2m2 0v4m-6-4h2m2 0h-2m-4 6h2m0-4h-2m2 0v4m6-4v4m-6 0v-4m6 4h-2m2 0v-4m-6 4h-2m2 0v-4"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v-4m6 0h-2m2 0v4m-6-4h2m2 0h-2m-4 6h2m0-4h-2m2 0v4m6-4v4m-6 4v-4m6 4h-2m2 0v-4m-6 4h-2m2 0v-4"/>
                                 </svg>
                             </div>
                         </div>
@@ -593,30 +593,28 @@
                 console.group('🛒 Cart.addSerialItem');
                 console.log('Adding serial product:', product);
                 
-                // Check if serial already exists in cart
-                const serialExists = this.items.some(item => 
-                    item.has_serial && item.selected_serial === product.selected_serial
-                );
-                
-                if (serialExists) {
-                    console.warn('Serial already in cart');
-                    alert('Serial number ini sudah ada di keranjang!');
-                    console.groupEnd();
-                    return false;
-                }
-                
-                // Add new serial item
+                // Always add serial products as new line items
                 const newItem = {
                     product_id: product.product_id,
                     product_name: product.product_name,
                     product_code: product.product_code,
                     price: product.price,
-                    quantity: 1, // Serial products always have quantity 1
+                    quantity: 1, // Always 1 for serial products
                     subtotal: product.price,
                     has_serial: true,
                     selected_serial: product.selected_serial,
-                    stock: 1 // Serial products always have stock 1
+                    stock: 1, // Always 1 for serial products
+                    // Add unique identifier for cart item using serial number
+                    cart_item_id: `${product.product_id}-${product.selected_serial}`
                 };
+                
+                // Check if this exact serial is already in cart
+                if (this.items.some(item => item.selected_serial === product.selected_serial)) {
+                    console.warn('Serial already in cart');
+                    alert('Serial number ini sudah ada di keranjang!');
+                    console.groupEnd();
+                    return false;
+                }
                 
                 console.log('New serial item to be added:', newItem);
                 this.items.push(newItem);
@@ -626,39 +624,73 @@
                 return true;
             },
             
-            removeItem(productId) {
-                const index = this.items.findIndex(item => item.product_id === productId);
-                if (index > -1) {
-                    this.items.splice(index, 1);
-                    this.updateCart();
+            removeItem(itemId) {
+                console.group('🗑️ Removing item');
+                console.log('Removing item with ID:', itemId);
+                
+                const tr = document.querySelector(`tr[data-cart-item-id="${itemId}"]`);
+                if (tr) {
+                    // Add fade-out animation
+                    tr.style.transition = 'all 0.3s ease-out';
+                    tr.style.opacity = '0';
+                    tr.style.transform = 'translateY(10px)';
+                    
+                    // Remove element after animation
+                    setTimeout(() => {
+                        tr.remove();
+                        // Remove from items array
+                        const index = this.items.findIndex(item => 
+                            (item.cart_item_id || item.product_id).toString() === itemId.toString()
+                        );
+                        if (index > -1) {
+                            this.items.splice(index, 1);
+                            this.updateTotals();
+                        }
+                    }, 300);
                 }
+                
+                console.groupEnd();
             },
             
-            updateQuantity(productId, newQuantity) {
-                const item = this.items.find(item => item.product_id === productId);
+            updateQuantity(itemId, newQuantity) {
+                console.group('🔄 Updating quantity');
+                console.log('Item ID:', itemId);
+                console.log('New quantity:', newQuantity);
+                
+                // Find item by either cart_item_id or product_id
+                const item = this.items.find(item => 
+                    (item.cart_item_id || item.product_id).toString() === itemId.toString()
+                );
+
                 if (item) {
-                    // Verify stock availability first
-                    fetch(`/kasir/get-product/${productId}`)
-                        .then(response => response.json())
-                        .then(product => {
-                            if (newQuantity <= product.stock) {
-                                item.quantity = newQuantity;
-                                item.subtotal = item.quantity * item.price;
-                                this.updateCart();
-                            } else {
-                                alert('Stok tidak mencukupi!');
-                            }
-                        });
+                    if (newQuantity <= 0) {
+                        console.warn('Invalid quantity');
+                        return;
+                    }
+
+                    // For non-serial items, check stock
+                    if (!item.has_serial) {
+                        if (newQuantity <= item.stock) {
+                            item.quantity = newQuantity;
+                            item.subtotal = item.quantity * item.price;
+                            this.updateCart();
+                            console.log('Quantity updated successfully');
+                        } else {
+                            console.warn('Insufficient stock');
+                            alert('Stok tidak mencukupi!');
+                        }
+                    }
+                } else {
+                    console.warn('Item not found');
                 }
+                
+                console.groupEnd();
             },
             
             updateCart() {
                 if (!Array.isArray(this.items)) {
                     this.items = [];
                 }
-                
-                // First render cart items
-                this.renderCart();
                 
                 // Calculate totals after all discounts are fetched
                 Promise.all(this.items.map(item => 
@@ -680,106 +712,93 @@
                     animateNumber('ppn', ppn);
                     animateNumber('total', total);
                     animateNumber('big-total', total);
+                    
+                    // Update individual items
+                    this.items.forEach((item, index) => this.updateCartItem(item, index));
                 });
             },
-            
-            renderCart() {
+
+            updateCartItem(item, index) {
                 const tbody = document.querySelector('#cart-items');
-                let promises = this.items.map(item => {
-                    return new Promise((resolve) => {
-                        let tr = tbody.querySelector(`[data-product-id="${item.product_id}"]`);
-                        let isNewRow = false;
+                const itemId = item.has_serial ? item.cart_item_id : item.product_id;
+                let tr = tbody.querySelector(`tr[data-cart-item-id="${itemId}"]`);
+                
+                // If row doesn't exist, create it
+                if (!tr) {
+                    tr = document.createElement('tr');
+                    tr.setAttribute('data-cart-item-id', itemId);
+                    tbody.appendChild(tr);
+                }
+
+                fetch(`/kasir/get-discount/${item.product_id}`)
+                    .then(response => response.json())
+                    .then(discountInfo => {
+                        const discount = discountInfo.discount_type === 'percentage' 
+                            ? (item.price * (discountInfo.value / 100))
+                            : discountInfo.discount;
+                            
+                        const discountDisplay = discountInfo.discount_type === 'percentage' 
+                            ? `${discountInfo.value}%` 
+                            : (discountInfo.discount > 0 ? formatRupiah(discountInfo.discount) : '-');
                         
-                        if (!tr) {
-                            tr = document.createElement('tr');
-                            tr.setAttribute('data-product-id', item.product_id);
-                            isNewRow = true;
-                        }
+                        const priceAfterDiscount = item.price - discount;
+                        const subtotal = priceAfterDiscount * item.quantity;
+                        
+                        item.subtotal = subtotal;
 
-                        fetch(`/kasir/get-discount/${item.product_id}`)
-                            .then(response => response.json())
-                            .then(discountInfo => {
-                                const discount = discountInfo.discount_type === 'percentage' 
-                                    ? (item.price * (discountInfo.value / 100))
-                                    : discountInfo.discount;
-                                    
-                                const discountDisplay = discountInfo.discount_type === 'percentage' 
-                                    ? `${discountInfo.value}%` 
-                                    : (discountInfo.discount > 0 ? formatRupiah(discountInfo.discount) : '-');
-                                
-                                const priceAfterDiscount = item.price - discount;
-                                const subtotal = priceAfterDiscount * item.quantity;
-                                
-                                // Update item subtotal
-                                item.subtotal = subtotal;
+                        // Create quantity control HTML based on item type
+                        const quantityControlHtml = item.has_serial 
+                            ? '<span class="text-sm text-gray-600">1</span>'
+                            : `
+                                <div class="flex justify-center items-center space-x-2">
+                                    <button onclick="cart.updateQuantity('${itemId}', ${item.quantity - 1})" 
+                                            class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                                            ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+                                    <input type="number" 
+                                           class="w-16 text-center border rounded-lg" 
+                                           value="${item.quantity}" 
+                                           min="1"
+                                           onchange="cart.updateQuantity('${itemId}', parseInt(this.value))">
+                                    <button onclick="cart.updateQuantity('${itemId}', ${item.quantity + 1})"
+                                            class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">+</button>
+                                </div>
+                            `;
 
-                                // Update row content
-                                tr.innerHTML = `
-                                    <td class="px-4 py-3">
-                                        <div class="text-sm font-medium text-gray-900">${item.product_name}</div>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <div class="text-sm text-gray-500">${item.has_serial ? item.selected_serial : item.product_code}</div>
-                                    </td>
-                                    <td class="px-4 py-3 text-right">
-                                        <div class="text-sm text-gray-900">${formatRupiah(item.price)}</div>
-                                    </td>
-                                    <td class="px-4 py-3 text-center">
-                                        <div class="text-sm text-gray-600">${item.has_serial ? '1' : item.stock}</div>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex justify-center items-center space-x-2">
-                                            <button onclick="cart.updateQuantity(${item.product_id}, ${item.quantity - 1})" 
-                                                    class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-                                                    ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
-                                            <input type="number" class="w-16 text-center border rounded-lg" 
-                                                   value="${item.quantity}" min="1"
-                                                   onchange="cart.updateQuantity(${item.product_id}, parseInt(this.value))">
-                                            <button onclick="cart.updateQuantity(${item.product_id}, ${item.quantity + 1})"
-                                                    class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">+</button>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3 text-right">
-                                        <div class="text-sm text-green-600">${discountDisplay}</div>
-                                    </td>
-                                    <td class="px-4 py-3 text-right">
-                                        <div class="text-sm font-medium text-gray-900">${formatRupiah(subtotal)}</div>
-                                    </td>
-                                    <td class="px-4 py-3 text-center">
-                                        <button onclick="cart.removeItem(${item.product_id})" class="text-red-500 hover:text-red-700">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </td>
-                                `;
-
-                                if (isNewRow) {
-                                    tr.classList.add('opacity-0', 'transform', 'translate-y-2');
-                                    tbody.appendChild(tr);
-                                    setTimeout(() => {
-                                        tr.classList.remove('opacity-0', 'translate-y-2');
-                                        tr.classList.add('transition-all', 'duration-300', 'ease-out');
-                                    }, 50);
-                                }
-                                
-                                resolve();
-                            });
+                        tr.innerHTML = `
+                            <td class="px-4 py-3">
+                                <div class="text-sm font-medium text-gray-900">${item.product_name}</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="text-sm text-gray-500">${item.has_serial ? item.selected_serial : (item.barcode || item.product_code)}</div>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="text-sm text-gray-900">${formatRupiah(item.price)}</div>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <div class="text-sm text-gray-600">${item.has_serial ? '1' : item.stock}</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                ${quantityControlHtml}
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="text-sm text-green-600">${discountDisplay}</div>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="text-sm font-medium text-gray-900">${formatRupiah(subtotal)}</div>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button onclick="cart.removeItem('${itemId}')" 
+                                        class="text-red-500 hover:text-red-700 transition duration-150">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        `;
                     });
-                });
-
-                // Clean up removed items
-                const currentIds = this.items.map(item => item.product_id);
-                tbody.querySelectorAll('tr[data-product-id]').forEach(tr => {
-                    const id = tr.getAttribute('data-product-id');
-                    if (!currentIds.includes(parseInt(id))) {
-                        tr.classList.add('transition-all', 'duration-300', 'ease-out');
-                        tr.classList.add('opacity-0', 'transform', 'translate-y-2');
-                        setTimeout(() => tr.remove(), 300);
-                    }
-                });
             },
-            
+
             updateTotals() {
                 const subtotal = this.items.reduce((sum, item) => sum + Number(item.subtotal || 0), 0);
                 const ppn = subtotal * ({{$pajak}} / 100);

@@ -12,7 +12,7 @@
             <a href="#features" class="btn btn-light btn-lg me-2">
                 <i class="fas fa-search me-2"></i> Pelajari Lebih Lanjut
             </a>
-            <a href="#cta" class="btn btn-outline-light btn-lg">
+            <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-user-plus me-2"></i> Daftar Sekarang
             </a>
         </div>
@@ -78,6 +78,163 @@
                     Integrasi dengan berbagai e-wallet, transfer bank, dan kartu kredit, untuk memberikan kemudahan dan kenyamanan transaksi bagi pelanggan Anda. Kami mendukung berbagai metode pembayaran populer untuk memastikan semua transaksi berjalan lancar.
                 </p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solusi untuk Berbagai Bisnis -->
+<section id="business-solutions" class="business-solutions bg-dark text-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Solusi Sempurna untuk Berbagai Jenis Usaha</h2>
+        <div class="row g-4">
+            <!-- Retail/Minimarket -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-store me-2"></i>Retail/Minimarket</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen stok real-time</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Pencatatan transaksi otomatis</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Laporan penjualan detail</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Multi outlet support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toko HP & Aksesoris -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-mobile-alt me-2"></i>Toko HP & Aksesoris</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Tracking stok akurat</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen supplier</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Laporan pendapatan detail</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Sistem garansi produk</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fashion/Pakaian -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-tshirt me-2"></i>Fashion/Pakaian</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen inventori size</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Kategori produk detail</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Laporan tren penjualan</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Multiple cabang toko</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cafe/Restaurant -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-utensils me-2"></i>Cafe/Restaurant</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen menu digital</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Tracking bahan baku</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Laporan penjualan menu</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Sistem meja/reservasi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toko Kosmetik -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-pump-soap me-2"></i>Toko Kosmetik</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Monitoring expired date</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Tracking batch produk</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen supplier</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Sistem membership</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toko Buku/ATK -->
+            <div class="col-md-4">
+                <div class="business-card">
+                    <div class="card bg-dark text-light p-4 h-100 solution-card">
+                        <h4><i class="fas fa-book me-2"></i>Toko Buku/ATK</h4>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Katalog produk lengkap</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Manajemen inventori</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Laporan best seller</li>
+                            <li><i class="fas fa-check-circle me-2 text-success"></i>Sistem diskon/promo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Paket Membership -->
+<section id="membership" class="membership bg-dark text-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Pilih Paket yang Sesuai untuk Bisnis Anda</h2>
+        <div class="row g-4 justify-content-center">
+            @foreach($memberships as $membership)
+            <div class="col-md-4">
+                <div class="card bg-dark membership-card h-100">
+                    <div class="card-header text-center border-bottom border-light border-opacity-25">
+                        <h3 class="membership-title mb-0">{{ $membership->membership_name }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="price-tag text-center mb-4">
+                            <h4 class="text-primary mb-2">Rp {{ number_format($membership->biaya_bulanan, 0, ',', '.') }}</h4>
+                            <span class="text-muted">per bulan</span>
+                        </div>
+                        <ul class="feature-list list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                {{ $membership->branch_limit }} Cabang
+                            </li>
+                            @if($membership->service_feature)
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Fitur Layanan Service
+                            </li>
+                            @endif
+                            @if($membership->product_image_feature)
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Gambar Produk
+                            </li>
+                            @endif
+                            @if($membership->discount_feature)
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Fitur Diskon
+                            </li>
+                            @endif
+                            @if($membership->stock_correction_feature)
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Koreksi Stok
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    <div class="card-footer text-center border-top border-light border-opacity-25">
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg w-100">
+                            Pilih Paket
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -186,5 +343,74 @@
         display: flex;
         flex-direction: row; /* Ensure items are in a row */
         align-items: flex-start; /* Align items to the start of the row (top) */
+    }
+    .solution-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .solution-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .solution-card h4 {
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+
+    .solution-card ul li {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .solution-card i.fas.fa-check-circle {
+        color: #28a745;
+    }
+
+    .business-solutions {
+        padding: 80px 0;
+        background: linear-gradient(to bottom, #1a1c1e, #2d3436);
+    }
+
+    .membership-card {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .membership-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .membership-title {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .price-tag h4 {
+        font-size: 2rem;
+        color: #4285f4;
+    }
+
+    .feature-list li {
+        padding: 8px 0;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .membership-card .btn-primary {
+        background: linear-gradient(45deg, #007bff, #00264d);
+        border: none;
+        padding: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .membership-card .btn-primary:hover {
+        background: linear-gradient(45deg, #00264d, #007bff);
+        transform: translateY(-2px);
     }
 </style>

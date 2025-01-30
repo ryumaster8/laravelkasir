@@ -10,46 +10,113 @@
 
     <style>
         body {
-            background-color: #f8f9fa; /* Latar belakang putih ala Google */
-            color: #212529; /* Warna teks gelap ala Google */
+            background-color: #1a1c1e;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+                radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+                linear-gradient(135deg, rgba(66, 133, 244, 0.3) 0%, rgba(45, 52, 54, 0.8) 100%);
+            background-size: 100px 100px, 100px 100px, 100% 100%;
+            background-position: 0 0;
+            background-attachment: fixed; /* Keep background fixed while scrolling */
+            animation: animateBackground 30s linear infinite;
+            color: #e4e6eb;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-             font-family: 'Roboto', sans-serif; /* Font Google */
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            padding: 20px 0; /* Add padding to prevent content touching edges */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
-        .register-card {
-           width: 100%;
-            max-width: 400px;
-            margin: 20px;
-             padding: 30px; /* Padding untuk konten di dalam card */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
-            border-radius: 8px;
-            background-color: #fff; /* Latar belakang card putih */
-             border: 1px solid #e0e0e0; /* Border tipis */
 
+        /* Modify floating shapes to stay fixed */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed; /* Keep elements fixed while scrolling */
+            width: 300px;
+            height: 300px;
+            background: rgba(66, 133, 244, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        body::before {
+            top: -100px;
+            right: -100px;
+            animation: float 15s infinite;
+        }
+
+        body::after {
+            bottom: -100px;
+            left: -100px;
+            animation: float 20s infinite reverse;
+        }
+
+        @keyframes animateBackground {
+            0% {
+                background-position: 0 0, 0 0, 0 0;
+            }
+            100% {
+                background-position: 100px 100px, -100px -100px, 0 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(50px, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-50px, 50px) rotate(270deg);
+            }
+        }
+
+        .register-box {
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 500px; /* Increased from 400px */
+            margin: 20px;
+            padding: 40px; /* Increased padding */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
         .card-header {
-          background-color: transparent;
-             color: #212529; /* Warna teks gelap ala Google */
+            background-color: transparent;
+            color: #ffffff;
             padding: 10px;
             text-align: center;
             font-size: 1.5rem;
             margin-bottom: 20px;
-              position: relative; /* Tambahkan ini untuk styling bagian judul */
-
+            position: relative;
         }
-       .card-header::before{
-            content: ''; /* Tambahkan pseudo-element untuk style tambahan pada judul*/
+        .card-header::before {
+            content: '';
             position: absolute;
-             top: 0;
-             left: 50%;
+            top: 0;
+            left: 50%;
             transform: translateX(-50%);
-            width: 100px; /* Lebar garis batas */
-             height: 2px; /* Tebal garis batas */
-             background-color: #4285f4; /* warna biru google */
-       }
-
+            width: 100px;
+            height: 2px;
+            background-color: #4285f4;
+        }
         .card-header h1 {
              margin-top: 10px; /* Tambahkan margin top untuk styling bagian judul */
              font-weight: 500; /* Font weight lebih tebal */
@@ -60,60 +127,87 @@
           .input-group-text {
            background-color: transparent; /* Latar belakang transparan pada input-group */
             border: none;
-              color: #212529; /* Warna ikon input */
-
+              color: #ffffff; /* Warna ikon input */
+            font-size: 1.2rem; /* Larger icons */
+            padding: 0 12px; /* Adjusted padding */
+            width: 40px; /* Fixed width for icons container */
+            height: 55px; /* Match input height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-group-prepend {
+            margin-right: 15px; /* Increased spacing */
+            display: flex;
+            align-items: center;
         }
         .form-control {
-           border: 1px solid #ced4da;
-             padding: 12px 15px;
-            border-radius: 4px;
-            transition: border-color 0.3s ease; /* Transisi hover */
-             box-shadow: none; /* hilangkan shadow default */
-            color: #212529; /* Warna teks input */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 16px 20px; /* Increased padding */
+            font-size: 1.1rem; /* Larger font size */
+            height: 55px; /* Fixed height for all inputs */
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .form-control::placeholder {
-             color: #999; /* Warna placeholder abu-abu */
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .form-control:focus {
-          outline: none;
-           border-color: #4285f4; /* Warna biru google saat focus */
-           box-shadow: 0 0 0 0.2rem rgba(66, 133, 244, 0.25); /* Shadow pada input ketika focus*/
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #4285f4; /* Warna biru google saat focus */
+            color: #ffffff;
         }
          select.form-control {
-          appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg fill='#999' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-             background-repeat: no-repeat;
-            background-position: right 10px top 50%;
-             padding-right: 30px;
-            color: #212529;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            height: 55px; /* Fixed height for select */
+            font-size: 1.1rem;
+            padding-right: 40px; /* Space for dropdown arrow */
+        }
+        select.form-control option {
+            background-color: #2d3436;
+            color: #ffffff;
         }
         .btn-primary {
-           background-color: #4285f4; /* Biru Google */
+            background: linear-gradient(45deg, #4285f4, #34495e);
             border: none;
-           padding: 12px 20px;
+            padding: 16px 24px; /* Larger button */
+            font-size: 1.1rem;
             border-radius: 4px;
             color: #fff;
-            transition: background-color 0.3s ease;
-             display: block;
-            width: 100%;
-             font-weight: 500; /* Font weight lebih tebal */
-
+            transition: all 0.3s ease;
+            height: 55px; /* Match input height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
          .btn-primary:hover {
-           background-color: #3367d6; /* Warna biru google saat hover */
+            background: linear-gradient(45deg, #34495e, #4285f4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
         }
         .text-muted {
             color: #999 !important;
         }
 
+         .text-gray-300 {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
          .text-gray-300:hover {
-               color: #4285f4;
-             transition: color 0.3s ease;
+            color: #4285f4;
+            transition: color 0.3s ease;
+        }
+
+        /* Add flex container class for consistent alignment */
+        .flex.items-center {
+            min-height: 55px;
         }
     </style>
 </head>
@@ -185,7 +279,7 @@
                             value="{{ old('email') }}" required>
                     </div>
 
-                    <div class="mb-3 flex items-center hidden">
+                    <div class="mb-3 flex items-center"> <!-- removed 'hidden' class -->
                          <div class="input-group-prepend mr-2">
                             <div class="input-group-text">
                                 <span class="fas fa-id-card text-bg-dark"></span>

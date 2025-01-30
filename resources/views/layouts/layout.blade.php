@@ -18,6 +18,9 @@
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+    <!-- Add SweetAlert2 CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- Google Font -->
@@ -27,6 +30,22 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <!-- DataTables & Extensions -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+    
+    <!-- DataTables JavaScript -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
     <style>
         /* Kustomisasi DataTables */
         /* .dataTables_wrapper .dataTables_length select {
@@ -447,6 +466,20 @@
         .select2-results__option--highlighted[aria-selected] {
             background-color: #3B82F6 !important;
         }
+
+        /* DataTables Custom Styling */
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            @apply border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            @apply bg-blue-600 text-white border-0 hover:bg-blue-700;
+        }
+        
+        .dataTables_wrapper .dt-buttons button {
+            @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mr-2 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -471,6 +504,55 @@
 
     <!-- Tambahkan overlay untuk mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Dalam tag <body>, tambahkan sebelum content utama -->
+    @if(Auth::user()->outlet->membership->low_stock_reminder_feature)
+    <div id="notificationArea" class="fixed top-4 right-4 z-50">
+    </div>
+
+    @push('scripts')
+    <script>
+    function checkNotifications() {
+        $.get("{{ route('notifications.stock') }}", function(data) {
+            const notifArea = $('#notificationArea');
+            notifArea.empty();
+            
+            data.forEach(notification => {
+                const notif = $(`
+                    <div class="bg-white shadow-lg rounded-lg p-4 mb-4 border-l-4 
+                        ${notification.status === 'critical' ? 'border-red-500' : 'border-yellow-500'}">
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-gray-800">${notification.message}</p>
+                            <button onclick="markAsRead(${notification.notification_id})" 
+                                    class="ml-4 text-gray-400 hover:text-gray-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `);
+                notifArea.append(notif);
+            });
+        });
+    }
+
+    function markAsRead(id) {
+        $.post(`/notifications/${id}/read`, {
+            _token: '{{ csrf_token() }}'
+        }).done(function() {
+            checkNotifications();
+        });
+    }
+
+    // Check notifications every 5 minutes
+    $(document).ready(function() {
+        checkNotifications();
+        setInterval(checkNotifications, 300000);
+    });
+    </script>
+    @endpush
+    @endif
 
     <script>
         // Inisialisasi Select2

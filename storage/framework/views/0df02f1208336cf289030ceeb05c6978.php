@@ -69,7 +69,7 @@
                                     Edit
                                 </a>
                                 <button type="button"
-                                        onclick="confirmDelete('<?php echo e($customer->wholesale_customer_id); ?>', '<?php echo e($customer->customer_name); ?>')"
+                                        onclick="showDeleteConfirmation('<?php echo e($customer->wholesale_customer_id); ?>', '<?php echo e($customer->customer_name); ?>')"
                                         class="inline-flex items-center px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700">
                                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -87,6 +87,45 @@
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('DELETE'); ?>
             </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Konfirmasi Penghapusan</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Anda akan menghapus data pelanggan <span id="customerNameToDelete" class="font-bold"></span>.
+                        Semua data yang terkait dengan pelanggan ini juga akan terhapus, termasuk:
+                    </p>
+                    <ul class="text-sm text-left text-gray-500 mt-2 list-disc pl-5">
+                        <li>Riwayat transaksi pelanggan</li>
+                        <li>Data pembelian dan pembayaran</li>
+                        <li>Informasi kredit dan hutang</li>
+                        <li>Catatan aktivitas pelanggan</li>
+                    </ul>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Tindakan ini tidak dapat dibatalkan.
+                    </p>
+                </div>
+                <div class="flex justify-center gap-4 mt-4">
+                    <button id="confirmDelete" 
+                            class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">
+                        Ya, Hapus
+                    </button>
+                    <button id="cancelDelete"
+                            class="px-4 py-2 bg-gray-100 text-gray-700 text-base font-medium rounded-md border shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Batal
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -108,13 +147,34 @@
             });
         });
 
-        function confirmDelete(id, name) {
-            if (confirm('Apakah Anda yakin ingin menghapus pelanggan ' + name + '?')) {
-                var form = document.getElementById('delete-form');
-                form.action = '/wholesale-customer/' + id;
+        let customerIdToDelete = null;
+
+        function showDeleteConfirmation(id, name) {
+            customerIdToDelete = id;
+            document.getElementById('customerNameToDelete').textContent = name;
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            if (customerIdToDelete) {
+                const form = document.getElementById('delete-form');
+                form.action = '/wholesale-customer/' + customerIdToDelete;
                 form.submit();
             }
-        }
+        });
+
+        document.getElementById('cancelDelete').addEventListener('click', function() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            customerIdToDelete = null;
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+                customerIdToDelete = null;
+            }
+        });
     </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravelkasir\resources\views/admin/wholesale_customer/index.blade.php ENDPATH**/ ?>

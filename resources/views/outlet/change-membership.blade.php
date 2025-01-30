@@ -3,7 +3,7 @@
 @section('content')
 <div class="py-6 px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-900">Upgrade Membership</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Upgrade / Downgrade Membership</h1>
         <button onclick="openGuideModal()" 
                 class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,20 +44,91 @@
                 <!-- Basic Limits -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                     <div class="bg-white p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Batas Cabang</p>
-                        <p class="text-lg font-semibold">{{ $outlet->membership->branch_limit }}</p>
+                        <p class="text-sm text-gray-600">Batas Cabang / Jumlah Saat Ini</p>
+                        <p class="text-lg font-semibold">
+                            {{ $outlet->membership->branch_limit }} / {{ $outlet->branch_count }}
+                        </p>
+                        @php
+                            $branchPercent = ($outlet->membership->branch_limit > 0) 
+                                ? ($outlet->branch_count / $outlet->membership->branch_limit) * 100 
+                                : 0;
+                        @endphp
+                        <div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" 
+                                 style="width: {{ min($branchPercent, 100) }}%">
+                            </div>
+                        </div>
+                        @if($branchPercent >= 80)
+                            <p class="text-xs text-yellow-600 mt-1">
+                                Mendekati batas maksimal
+                            </p>
+                        @endif
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Batas User</p>
-                        <p class="text-lg font-semibold">{{ $outlet->membership->user_limit }}</p>
+                        <p class="text-sm text-gray-600">Batas User / Jumlah Saat Ini</p>
+                        <p class="text-lg font-semibold">
+                            {{ $outlet->membership->user_limit }} / 
+                            {{ App\Models\ModelUser::getOutletGroupUserCount($outlet->outlet_group_id) }}
+                        </p>
+                        @php
+                            $userPercent = ($outlet->membership->user_limit > 0) 
+                                ? (App\Models\ModelUser::getOutletGroupUserCount($outlet->outlet_group_id) / $outlet->membership->user_limit) * 100 
+                                : 0;
+                        @endphp
+                        <div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" 
+                                 style="width: {{ min($userPercent, 100) }}%">
+                            </div>
+                        </div>
+                        @if($userPercent >= 80)
+                            <p class="text-xs text-yellow-600 mt-1">
+                                Mendekati batas maksimal
+                            </p>
+                        @endif
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm">
                         <p class="text-sm text-gray-600">Transaksi/Hari</p>
-                        <p class="text-lg font-semibold">{{ $outlet->membership->daily_transaction_limit }}</p>
+                        <p class="text-lg font-semibold">
+                            {{ $outlet->membership->daily_transaction_limit }} / 
+                            {{ \App\Models\ModelTransaction::getTodayTransactionCount($outlet->outlet_group_id) }}
+                        </p>
+                        @php
+                            $transactionPercent = ($outlet->membership->daily_transaction_limit > 0) 
+                                ? (\App\Models\ModelTransaction::getTodayTransactionCount($outlet->outlet_group_id) / $outlet->membership->daily_transaction_limit) * 100 
+                                : 0;
+                        @endphp
+                        <div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" 
+                                 style="width: {{ min($transactionPercent, 100) }}%">
+                            </div>
+                        </div>
+                        @if($transactionPercent >= 80)
+                            <p class="text-xs text-yellow-600 mt-1">
+                                Mendekati batas maksimal
+                            </p>
+                        @endif
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm">
                         <p class="text-sm text-gray-600">Produk/Hari</p>
-                        <p class="text-lg font-semibold">{{ $outlet->membership->daily_product_addition_limit }}</p>
+                        <p class="text-lg font-semibold">
+                            {{ $outlet->membership->daily_product_addition_limit }} / 
+                            {{ \App\Models\ModelProduct::getTodayProductCount($outlet->outlet_group_id) }}
+                        </p>
+                        @php
+                            $productPercent = ($outlet->membership->daily_product_addition_limit > 0) 
+                                ? (\App\Models\ModelProduct::getTodayProductCount($outlet->outlet_group_id) / $outlet->membership->daily_product_addition_limit) * 100 
+                                : 0;
+                        @endphp
+                        <div class="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 rounded-full" 
+                                 style="width: {{ min($productPercent, 100) }}%">
+                            </div>
+                        </div>
+                        @if($productPercent >= 80)
+                            <p class="text-xs text-yellow-600 mt-1">
+                                Mendekati batas maksimal
+                            </p>
+                        @endif
                     </div>
                 </div>
 

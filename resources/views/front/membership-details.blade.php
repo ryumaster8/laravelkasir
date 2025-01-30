@@ -25,73 +25,79 @@
 
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Nama Paket</th>
-                    <th>Batas Cabang</th>
-                    <th>Transaksi Harian</th>
-                    <th>Penambahan Produk Harian</th>
-                    <th>Batas Pengguna</th>
-                    <th>Fitur Service</th>
-                    <th>Fitur Grosir</th>
-                    <th>Cetak Resi Service</th>
-                    <th>Fitur Lokasi Produk</th>
-                    <th>Fitur Audit Stok</th>
-                    <th>Fitur Cetak Resi Kasir</th>
-                    <th>Fitur Diskon</th>
-                    <th>Fitur Gambar Produk</th>
-                    <th>Fitur Pengingat Stok Rendah</th>
-                    <th>Fitur Koreksi Stok</th>
-                    <th>Fitur Chat</th>
-                    <th>Fitur Laporan Penjualan</th>
-                    <th>Fitur Laporan Transaksi</th>
-                    <th>Fitur Shortcut</th>
-                    <th>Fitur Custom Shortcut</th>
-                    <th>Fitur Log Aktifitas</th>
-                     <th>Fitur Kontak Pelanggan</th>
-                    <th>Biaya Pendaftaran</th>
-                    <th>Biaya Bulanan</th>
-                    <th>Biaya Upgrade</th>
-                    <th>Biaya Downgrade</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($memberships as $membership)
-                <tr>
-                    <td>{{ $membership->membership_name }}</td>
-                     <td>{{ $membership->branch_limit === null ? "Tidak Terbatas" : $membership->branch_limit }}</td>
-                    <td>{{ $membership->daily_transaction_limit === null ? "Tidak Terbatas" : $membership->daily_transaction_limit }}</td>
-                    <td>{{ $membership->daily_product_addition_limit === null ? "Tidak Terbatas" : $membership->daily_product_addition_limit }}</td>
-                    <td>{{ $membership->user_limit === null ? "Tidak Terbatas" : $membership->user_limit }}</td>
-                    <td>{{ $membership->service_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->wholesale_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->service_receipt_printing ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->product_location_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->stock_audit_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->cashier_receipt_printing ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->discount_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->product_image_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->low_stock_reminder_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->stock_correction_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->chat_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->sales_report_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->transaction_report_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->shortcut_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->custom_shortcut_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->log_activity_feature ? 'Ya' : 'Tidak' }}</td>
-                    <td>{{ $membership->customer_contact_feature ? 'Ya' : 'Tidak'}}</td>
-                    <td>Rp. {{ number_format($membership->biaya_pendaftaran, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($membership->biaya_bulanan, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($membership->biaya_upgrade, 0, ',', '.') }}</td>
-                    <td>Rp. {{ number_format($membership->biaya_downgrade, 0, ',', '.') }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        @if($memberships->isEmpty())
+            <div class="text-center py-8">
+                <p class="text-gray-500">Tidak ada paket membership yang tersedia saat ini.</p>
+            </div>
+        @else
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nama Paket</th>
+                        <th>Batas Cabang</th>
+                        <th>Transaksi Harian</th>
+                        <th>Penambahan Produk Harian</th>
+                        <th>Batas Pengguna</th>
+                        <th>Fitur Service</th>
+                        <th>Fitur Grosir</th>
+                        <th>Cetak Resi Service</th>
+                        <th>Fitur Lokasi Produk</th>
+                        <th>Fitur Audit Stok</th>
+                        <th>Fitur Cetak Resi Kasir</th>
+                        <th>Fitur Diskon</th>
+                        <th>Fitur Gambar Produk</th>
+                        <th>Fitur Pengingat Stok Rendah</th>
+                        <th>Fitur Koreksi Stok</th>
+                        <th>Fitur Chat</th>
+                        <th>Fitur Laporan Penjualan</th>
+                        <th>Fitur Laporan Transaksi</th>
+                        <th>Fitur Shortcut</th>
+                        <th>Fitur Custom Shortcut</th>
+                        <th>Fitur Log Aktifitas</th>
+                        <th>Fitur Kontak Pelanggan</th>
+                        <th>Biaya Pendaftaran</th>
+                        <th>Biaya Bulanan</th>
+                        <th>Biaya Upgrade</th>
+                        <th>Biaya Downgrade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($memberships as $membership)
+                    <tr>
+                        <td>{{ $membership->membership_name }}</td>
+                        <td>{{ $membership->branch_limit === null ? "Tidak Terbatas" : $membership->branch_limit }}</td>
+                        <td>{{ $membership->daily_transaction_limit === null ? "Tidak Terbatas" : $membership->daily_transaction_limit }}</td>
+                        <td>{{ $membership->daily_product_addition_limit === null ? "Tidak Terbatas" : $membership->daily_product_addition_limit }}</td>
+                        <td>{{ $membership->user_limit === null ? "Tidak Terbatas" : $membership->user_limit }}</td>
+                        <td>{{ $membership->service_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->wholesale_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->service_receipt_printing ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->product_location_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->stock_audit_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->cashier_receipt_printing ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->discount_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->product_image_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->low_stock_reminder_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->stock_correction_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->chat_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->sales_report_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->transaction_report_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->shortcut_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->custom_shortcut_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->log_activity_feature ? 'Ya' : 'Tidak' }}</td>
+                        <td>{{ $membership->customer_contact_feature ? 'Ya' : 'Tidak'}}</td>
+                        <td>Rp. {{ number_format($membership->biaya_pendaftaran, 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($membership->biaya_bulanan, 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($membership->biaya_upgrade, 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($membership->biaya_downgrade, 0, ',', '.') }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 
-      <h3 class="mt-4 mb-3">Pilihan Paket Membership</h3>
+    <h3 class="mt-4 mb-3">Pilihan Paket Membership</h3>
     <div class="mb-4">
         <p>
             <strong>1. Paket Free</strong>

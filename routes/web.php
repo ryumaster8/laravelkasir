@@ -81,6 +81,8 @@ Route::get('/dashboard/users', [UserController::class, 'index'])->name('user.ind
 Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
 Route::post('/dashboard/users/update/{user}', [UserController::class, 'update'])->name('user.update');
 Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user.delete');
+// Add this new route for toggling user status
+Route::post('/dashboard/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('user.toggle-status');
 
 //Manajemen Kasir
 Route::prefix('kasir')->middleware(['web', 'auth'])->group(function () {
@@ -414,8 +416,8 @@ Route::get('/debug/transactions/api-test', function() {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard/outlet/upgrade-membership', [OutletController::class, 'showUpgradeMembership'])
-        ->name('outlet.upgrade-membership');
+    // Route::get('/dashboard/outlet/upgrade-membership', [OutletController::class, 'showUpgradeMembership'])
+    //     ->name('outlet.upgrade-membership');
     Route::post('/dashboard/outlet/request-upgrade', [OutletController::class, 'requestUpgrade'])
         ->name('outlet.request-upgrade');
     Route::post('/dashboard/outlet/request-downgrade', [OutletController::class, 'requestDowngrade'])
@@ -464,6 +466,9 @@ Route::prefix('owner')->middleware(['auth'])->group(function () {
     Route::get('/outlet/{id}/membership-history', [OutletController::class, 'membershipHistory'])
         ->name('owner.outlets.membership-history');
     Route::get('/outlet/{id}/detail', [OutletController::class, 'detail'])->name('owner.outlets.detail');
+    
+    // Add new membership management routes
+    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
 });
 
 // Update any route that references the view directly
@@ -561,4 +566,118 @@ Route::post('/dashboard/kas/tutup', [KasController::class, 'storeTutupKas'])->na
 // Add this route in your web.php file
 Route::get('/dashboard/kas/akurasi', [KasController::class, 'showAkurasi'])->name('kas.akurasi');
 
+// ...existing code...
+
+// Inside the existing routes group
+Route::delete('/dashboard/products/cancel-transfer/{transit}', [ProductsController::class, 'cancelTransfer'])
+    ->name('products.cancel-transfer');
+
+// ...existing code...
+
+// ...existing code...
+Route::get('/sales/report/group', [TransactionController::class, 'groupSalesReport'])->name('sales.report.group');
+// ...existing code...
+
+Route::middleware(['auth'])->group(function () {
+    // ...existing routes...
+    
+    // Sales report routes
+    Route::get('/transactions/daily/{date}', [TransactionController::class, 'showDailyTransactions'])
+        ->name('transactions.daily.show');
+    
+    // ...existing routes...
+});
+
+Route::middleware(['auth'])->group(function () {
+    // ...existing routes...
+    Route::get('/transactions/{id}/detail', [TransactionController::class, 'detail'])->name('transactions.detail');
+    // ...existing routes...
+});
+
+
+// Tambahkan route debug
+Route::get('/debug/wholesale-customer/{id}', function($id) {
+    $customer = \App\Models\ModelWholesaleCustomer::find($id);
+    return response()->json([
+        'customer_exists' => !is_null($customer),
+        'customer_data' => $customer,
+        'session' => [
+            'outlet_id' => session('outlet_id'),
+            'user_id' => session('user_id')
+        ]
+    ]);
+});
+// Pastikan route ini ada dan benar
+Route::get('/wholesale-customer/{id}/edit', [WholesaleCustomersController::class, 'edit'])
+    ->name('wholesale-customer.edit');
+Route::put('/wholesale-customer/{id}', [WholesaleCustomersController::class, 'update'])
+    ->name('wholesale-customer.update');
+
+// ...existing code...
+
+// Low Stock Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard/products/low-stock', [ProductsController::class, 'lowStock'])
+        ->name('products.low-stock');
+    Route::put('/dashboard/products/{product}/update-min-stock', [ProductsController::class, 'updateMinStock'])
+        ->name('products.update-min-stock');
+});
+
+// ...existing code...
+
+// Notification Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications/stock', [ProductsController::class, 'getNotifications'])
+        ->name('notifications.stock');
+    Route::post('/notifications/{id}/read', [ProductsController::class, 'markNotificationAsRead'])
+        ->name('notifications.read');
+});
+
+// ...existing code...
+
+// Kelompokkan semua route dashboard dengan middleware auth
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index']);
+    
+    // Kas
+    Route::get('/kas-awal', [KasController::class, 'kasAwal'])->name('bukakasir');
+    Route::post('/store-kas-awal', [KasController::class, 'store'])->name('store.kas_awal');
+    Route::get('/cash-register/{id}/edit', [KasController::class, 'edit'])->name('edit.cash_register');
+    Route::delete('/cash-register/{id}', [KasController::class, 'destroy'])->name('delete.cash_register');
+    Route::put('/cash-register/{id}', [KasController::class, 'update'])->name('update.cash_register');
+    Route::get('/penambahan', [KasController::class, 'penambahan'])->name('penambahan');
+    Route::post('/penambahan/store', [KasController::class, 'storePenambahan'])->name('penambahan.store');
+    
+    // Categories
+    Route::get('/categories', [CategoriesController::class, 'create'])->name('categories.index');
+    Route::get('/categories/data', [CategoriesController::class, 'data'])->name('categories.data');
+    
+    // Products
+    Route::get('/products-all-outlets', [ProductOutletsController::class, 'index'])->name('products-all-outlets');
+    Route::get('/products/add', [ProductsController::class, 'create'])->name('products.index');
+    Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
+    
+    // Users
+    Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/users/create', [UserController::class, 'store'])->name('user.store');
+    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+    
+    // Settings
+    Route::get('/settings/theme', [SettingsController::class, 'theme'])->name('settings.theme');
+    Route::get('/settings/privacy', [SettingsController::class, 'privacy'])->name('settings.privacy');
+    Route::get('/settings/dashboard-customization', [SettingsController::class, 'dashboardCustomization'])
+        ->name('settings.dashboard-customization');
+    Route::get('/settings/access-control', [SettingsController::class, 'accessControl'])
+        ->name('settings.access-control');
+    Route::get('/settings/security', [SettingsController::class, 'security'])
+        ->name('settings.security');
+
+    // Semua route dashboard lainnya...
+});
+
+// Route di luar dashboard tetap seperti semula
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/features', [FrontController::class, 'features'])->name('features');
+Route::get('/membership/details', [FrontController::class, 'membershipDetails'])->name('membership.details');
 // ...existing code...

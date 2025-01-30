@@ -15,11 +15,19 @@ class MembershipController extends Controller
 {
     public function details()
     {
-        $memberships = ModelMembership::orderBy('rank', 'asc')->get();
+        $memberships = ModelMembership::active()
+            ->orderBy('rank', 'asc')
+            ->get();
         return view('front.membership-details', compact('memberships'));
     }
     
-    // ...existing code...
+    public function index()
+    {
+        $memberships = ModelMembership::active()
+            ->orderBy('rank', 'asc')
+            ->get();
+        return view('membership.index', compact('memberships'));
+    }
 
     public function upgradeRequests()
     {

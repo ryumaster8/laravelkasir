@@ -120,6 +120,26 @@
             this.value = max;
         }
     });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const qty = document.getElementById('quantity').value;
+        const toOutlet = document.getElementById('to_outlet_id');
+        const outletName = toOutlet.options[toOutlet.selectedIndex].text;
+        
+        if(confirm(
+            `Apakah Anda yakin ingin memindahkan stok?\n\n` +
+            `Detail Pemindahan:\n` +
+            `- Produk: {{ $product->product_name }}\n` +
+            `- Jumlah: ${qty} {{ $product->unit ?? 'unit' }}\n` +
+            `- Dari: {{ $user->outlet->outlet_name }}\n` +
+            `- Ke: ${outletName}\n` +
+            `- Sisa Stok Saat Ini: {{ $productStock->stock ?? 0 }}\n\n` +
+            `Setelah pemindahan, stok akan berkurang sebanyak ${qty} unit.`
+        )) {
+            this.submit();
+        }
+    });
 </script>
 @endpush
 

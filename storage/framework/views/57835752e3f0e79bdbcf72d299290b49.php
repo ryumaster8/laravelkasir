@@ -40,6 +40,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -82,10 +83,25 @@
                                 <?php echo e($transit->created_at->format('d/m/Y H:i')); ?>
 
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <?php if($transit->status === 'transit'): ?>
+                                    <form action="<?php echo e(route('products.cancel-transfer', $transit->transit_id)); ?>" 
+                                          method="POST" 
+                                          onsubmit="return confirmCancel('<?php echo e($transit->product->product_name); ?>', <?php echo e($transit->quantity); ?>, '<?php echo e($transit->toOutlet->outlet_name); ?>')"
+                                          class="inline">
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
+                                        <button type="submit" 
+                                                class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm">
+                                            Batalkan
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
-                            <td colspan="10" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada data</td>
+                            <td colspan="11" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada data</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -96,6 +112,17 @@
 
 <?php $__env->startPush('scripts'); ?>
 <script>
+    function confirmCancel(productName, quantity, outletName) {
+        return confirm(
+            `Apakah Anda yakin ingin membatalkan pengajuan pemindahan stok ini?\n\n` +
+            `Detail Pengajuan:\n` +
+            `- Produk: ${productName}\n` +
+            `- Jumlah: ${quantity}\n` +
+            `- Tujuan: ${outletName}\n\n` +
+            `Catatan: Stok akan dikembalikan ke outlet asal.`
+        );
+    }
+
     $(document).ready(function() {
         $('#transferRequestsTable').DataTable({
             responsive: true,

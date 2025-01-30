@@ -42,6 +42,10 @@ class ModelUserPermission extends Model
         'can_see_barcode',
         'can_see_unit_barcode',
         'can_see_product_id',
+        // Add new wholesale customer permissions
+        'can_add_wholesale_customer',
+        'can_edit_wholesale_customer',
+        'can_delete_wholesale_customer',
     ];
     public function operator() //ubah dari user ke operator
     {

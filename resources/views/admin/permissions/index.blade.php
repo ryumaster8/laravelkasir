@@ -43,6 +43,9 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lihat Barcode</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lihat Barcode Unit</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lihat Product ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tambah Pelanggan Grosir</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit Pelanggan Grosir</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hapus Pelanggan Grosir</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
@@ -186,6 +189,21 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="{{ $permission->can_see_product_id ? 'text-green-600' : 'text-red-600' }}">
                                 {{ $permission->can_see_product_id ? 'Ya' : 'Tidak'}}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="{{ $permission->can_add_wholesale_customer ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $permission->can_add_wholesale_customer ? 'Ya' : 'Tidak'}}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="{{ $permission->can_edit_wholesale_customer ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $permission->can_edit_wholesale_customer ? 'Ya' : 'Tidak'}}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="{{ $permission->can_delete_wholesale_customer ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $permission->can_delete_wholesale_customer ? 'Ya' : 'Tidak'}}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
