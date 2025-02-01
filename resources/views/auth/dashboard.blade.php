@@ -5,7 +5,7 @@
 
 <div class="p-8">
     <div class="text-center mb-8">
-        <h2 class="text-3xl font-semibold">Dashboard Admin</h2>
+        <h2 class="text-3xl font-semibold">Dashboard Admins</h2>
         <p class="text-gray-600">Selamat datang di dashboard admin!</p>
     </div>
 
@@ -69,7 +69,7 @@
                 <p class="mb-4"><strong>Rp 10.000.000,-</strong></p>
                 <a href="#" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Lihat Detail</a>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Baris 2 -->
         {{-- 
@@ -104,10 +104,10 @@
                 <p class="mb-4"><strong></strong> layanan servis telah terdaftar.</p>
                 <a href="/admin/services" class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Lihat Detail</a>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Baris 3 -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        {{-- <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="bg-gray-600 text-white p-4">
                 Permintaan Pemindahan Stok
             </div>
@@ -138,8 +138,8 @@
                 <p class="mb-4">Lihat log aktivitas terbaru sistem.</p>
                 <a href="/dashboard/activity-logs" class="inline-block px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700">Lihat Log</a>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
+    </div>
 </div>
 
 @push('scripts')

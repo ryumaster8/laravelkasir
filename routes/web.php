@@ -5,17 +5,20 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckRetailType;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\KasirController;
-use App\Http\Controllers\SaranController;
-use App\Http\Controllers\BranchController;
 //use test remoteadsdd
 
+use App\Http\Controllers\SaranController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeknisiController;
+use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
@@ -31,8 +34,6 @@ use App\Http\Controllers\UserPermissionsController;
 use App\Http\Controllers\WholesaleCustomersController;
 use App\Http\Controllers\PaymentConfirmationController;
 use App\Http\Controllers\MembershipChangeRequestController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ContactController; // Tambahkan import ContactController
 
 // Front Pages Routes
@@ -680,4 +681,38 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/features', [FrontController::class, 'features'])->name('features');
 Route::get('/membership/details', [FrontController::class, 'membershipDetails'])->name('membership.details');
+// ...existing code...
+
+// ...existing code...
+
+Route::get('/owner/database/show-create_table', [DatabaseController::class, 'showCreateTable'])->name('database.show-create-table');
+Route::post('/owner/database/show-tables', [DatabaseController::class, 'showTables'])->name('database.show-tables');
+
+// ...existing code...
+
+// ...existing code...
+Route::get('/owner/database/backup', [DatabaseController::class, 'backupView'])->name('database.export'); // Change name to export
+Route::post('/owner/database/backup/generate', [DatabaseController::class, 'generateBackup'])->name('database.export.generate'); // Change name to export.generate
+Route::get('/owner/database/export', [DatabaseController::class, 'backupView'])->name('database.export');
+Route::post('/owner/database/export/generate', [DatabaseController::class, 'generateBackup'])->name('database.export.generate');
+
+// ...existing code...
+
+// ...existing code...
+
+Route::get('/owner/database/restore', [DatabaseController::class, 'restoreView'])->name('database.restore.view');
+Route::post('/owner/database/restore', [DatabaseController::class, 'restore'])->name('database.restore');
+
+// ...existing code...
+
+// ...existing code...
+
+Route::get('/owner/database/models', [DatabaseController::class, 'showModels'])->name('database.models');
+
+// ...existing code...
+
+// ...existing code...
+
+Route::get('/owner/database/controllers', [DatabaseController::class, 'showControllers'])->name('database.controllers');
+
 // ...existing code...
